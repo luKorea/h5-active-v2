@@ -1,8 +1,8 @@
 import Vue from "vue";
-import { Button, Dialog, Popup } from "vant";
+import { Button, Dialog, Popup, Image } from "vant";
 import "vant/lib/index.css"; // 全局引入样式
 
-const components = [Button, Popup];
+const components = [Button, Popup, Image];
 
 Vue.use(Dialog);
 

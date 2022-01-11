@@ -13,7 +13,8 @@
         />
       </template>
     </korea-dialog>
-
+    <shopping-link />
+    <send-link />
     <desc-component />
     <footer-component></footer-component>
   </div>
@@ -26,9 +27,17 @@ import descComponent from "./components/desc";
 import KoreaDialog from "@/components/korea-dialog/korea-dialog";
 import { tipDialog } from "@/utils/dialog";
 import FooterComponent from "@/views/home/components/footer";
+import ShoppingLink from "@/views/home/components/shopping-link";
+import SendLink from "@/views/home/components/send-link";
 export default {
   name: "Home",
-  components: { FooterComponent, KoreaDialog, descComponent },
+  components: {
+    SendLink,
+    ShoppingLink,
+    FooterComponent,
+    KoreaDialog,
+    descComponent,
+  },
   data() {
     return {
       showDialog: false,
@@ -62,5 +71,6 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: #000000;
+  width: 100%;
 }
 </style>

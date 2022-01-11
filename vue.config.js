@@ -2,7 +2,7 @@ module.exports = {
   publicPath: "./",
   devServer: {
     hot: true,
-    open: false,
+    open: true,
     proxy: {
       "^/api": {
         target: "http://www.baidu.com",

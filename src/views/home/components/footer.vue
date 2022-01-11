@@ -2,11 +2,11 @@
   <div class="footer-container">
     <div class="wrap">
       <div class="logo">
-        <img :src="logoImg" alt="logo" />
+        <img :src="logoImg" referrerpolicy="no-referrer" alt="logo" />
       </div>
       <div class="driver"></div>
       <div class="qrcode">
-        <img :src="qrcode" alt="" />
+        <img :src="qrcode" referrerpolicy="no-referrer" alt="" />
       </div>
     </div>
     <div class="copyright">{{ copyTitle }}</div>
@@ -36,13 +36,32 @@ export default {
     justify-content: space-between;
     align-items: center;
     .logo {
-      width: 230px;
-      height: 177px;
+      width: 140px;
+      height: 100px;
       img {
         width: 100%;
         height: 100%;
       }
     }
+    .driver {
+      width: 1px;
+      height: 10px;
+      background-color: #fff;
+    }
+    .qrcode {
+      width: 100px;
+      height: 100px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .copyright {
+    text-align: center;
+    font-size: 12px;
+    color: rgb(145, 145, 145);
+    margin-top: 30px;
   }
 }
 </style>

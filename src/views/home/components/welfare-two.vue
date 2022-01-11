@@ -1,10 +1,10 @@
 <template>
-  <div>shop</div>
+  <div>福利二</div>
 </template>
 
 <script>
 export default {
-  name: "more-shopping",
+  name: "welfare-two",
 };
 </script>
 
