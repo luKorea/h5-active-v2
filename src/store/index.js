@@ -31,8 +31,8 @@ export default new Vuex.Store({
     getLocalStorageInit({ commit }) {
       const token = localCache.getCache("token"),
         userInfo = localCache.getCache("userInfo");
-      if (token) commit("SET_TOKEN", token);
-      if (userInfo) commit("SET_USERINFO", userInfo);
+      token && commit("SET_TOKEN", token);
+      userInfo && commit("SET_USERINFO", userInfo);
     },
   },
 });
