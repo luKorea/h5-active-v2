@@ -15,6 +15,7 @@
     </korea-dialog>
 
     <desc-component />
+    <footer-component></footer-component>
   </div>
 </template>
 
@@ -24,9 +25,10 @@ import descComponent from "./components/desc";
 
 import KoreaDialog from "@/components/korea-dialog/korea-dialog";
 import { tipDialog } from "@/utils/dialog";
+import FooterComponent from "@/views/home/components/footer";
 export default {
   name: "Home",
-  components: { KoreaDialog, descComponent },
+  components: { FooterComponent, KoreaDialog, descComponent },
   data() {
     return {
       showDialog: false,
