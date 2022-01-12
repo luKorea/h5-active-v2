@@ -1,13 +1,16 @@
 <!-- 可自定义内容弹框 -->
 <template>
-  <van-dialog
-    v-model="isShow"
-    v-bind="dialogOptions"
-    @confirm="handleConfirm"
-    @cancel="handleCancel"
-  >
-    <slot name="content"></slot>
-  </van-dialog>
+  <div class="modal-bg" v-show="showDialog">
+    <div class="modal-content">
+      <div class="modal-info animate__animated animate__fadeInDown">
+        <div class="close-btn" @click="closeDialog"></div>
+        <div class="bg-img" :style="bgStyle">
+          <img :src="bgImg" alt="" />
+        </div>
+        <slot name="content"></slot>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -18,30 +21,22 @@ export default {
       type: Boolean,
       required: true,
     },
-    dialogOptions: {
+    bgImg: {
+      type: String,
+      default: require("@/assets/image/modal-bg.png"),
+    },
+    bgStyle: {
       type: Object,
       default: () => ({
-        title: "添加用户",
-        showConfirmButton: true, // 显示确认按钮
-        showCancelButton: true, // 显示关闭按钮
-        confirmButtonText: "确认", // 确认按钮文字
-        confirmButtonColor: "", // 	确认按钮颜色
-        cancelButtonText: "取消", // 取消按钮文案
-        cancelButtonColor: "", //	取消按钮颜色
+        width: "100%",
+        height: "100%",
       }),
     },
   },
-  computed: {
-    isShow: {
-      get() {
-        return this.showDialog;
-      },
-      set(newValue) {
-        console.log(newValue);
-      },
-    },
-  },
   methods: {
+    closeDialog() {
+      this.$emit("closeDialog", false);
+    },
     handleConfirm() {
       this.$emit("confirm", false);
     },
@@ -52,4 +47,26 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.modal-info {
+  position: relative;
+  .bg-img {
+    //width: 100%;
+    //height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+  }
+}
+</style>

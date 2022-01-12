@@ -34,7 +34,7 @@ export default {
   font-family: Source Han Sans CN;
   font-weight: 300;
   color: #efefef;
-  line-height: 20px;
-  margin: 40px;
+  line-height: 25px;
+  margin: 20px 40px 30px 40px;
 }
 </style>

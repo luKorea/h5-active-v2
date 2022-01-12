@@ -1,9 +1,147 @@
 <template>
-  <div></div>
+  <korea-dialog :show-dialog="showDialog" @closeDialog="closeDialog">
+    <template #content>
+      <div class="login-content" v-if="status === 1">
+        <div class="title">用户登录</div>
+        <div class="input-wrap">
+          <input
+            placeholder="请输入你的手机号"
+            type="text"
+            class="input-text"
+            style="margin-bottom: 6px"
+          />
+          <input placeholder="请输入密码" class="input-text" type="text" />
+        </div>
+        <div class="btn-wrap">
+          <div class="btn">登录</div>
+          <div class="btn" @click="handleRegister">注册</div>
+        </div>
+      </div>
+      <div
+        class="animate__animated animate__backInLeft register-content"
+        v-else
+      >
+        <div class="title">请前往Pofi无限人偶App注册账号</div>
+        <div class="app-img" @click="goApp">
+          <img :src="appImg" alt="" />
+        </div>
+      </div>
+    </template>
+  </korea-dialog>
 </template>
 
 <script>
-export default {};
+import koreaDialog from "@/components/korea-dialog/korea-dialog";
+import { openUrl } from "@/utils";
+import urlLink from "@/utils/link";
+
+export default {
+  name: "loginAndRegister",
+  components: { koreaDialog },
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      status: 1, // 1. 登录 2. 注册
+      appImg: require("@/assets/image/go-app.png"),
+    };
+  },
+  methods: {
+    closeDialog() {
+      if (this.status === 2) {
+        this.status = 1;
+      } else {
+        this.$emit("closeDialog", false);
+      }
+    },
+    handleRegister() {
+      this.status = 2;
+    },
+    goApp() {
+      openUrl(urlLink.appLink);
+    },
+  },
+};
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.login-content {
+  position: absolute;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 23px;
+  font-family: Source Han Sans CN;
+  font-weight: 500;
+  color: #c9c9c9;
+  .input-wrap {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    .input-text {
+      width: 275px;
+      height: 35px;
+      line-height: 35px;
+      background: #737373;
+      border-radius: 18px;
+      border-color: #737373;
+      padding: 10px 0 15px 14px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .btn-wrap {
+    display: flex;
+    .btn {
+      width: 102px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ff264a;
+      border-radius: 15px;
+      font-size: 14px;
+      font-family: Source Han Sans CN;
+      font-weight: 300;
+      color: #f9f9f9;
+      margin-top: 20px;
+      margin-right: 22px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+.register-content {
+  position: absolute;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 13px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #b8b8b8;
+  line-height: 18px;
+  .app-img {
+    width: 165px;
+    height: 30px;
+    margin-top: 46px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+</style>

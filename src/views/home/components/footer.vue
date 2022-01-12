@@ -4,7 +4,9 @@
       <div class="logo">
         <img :src="logoImg" referrerpolicy="no-referrer" alt="logo" />
       </div>
-      <div class="driver"></div>
+      <div class="driver">
+        <img :src="drivar" alt="" />
+      </div>
       <div class="qrcode">
         <img :src="qrcode" referrerpolicy="no-referrer" alt="" />
       </div>
@@ -18,8 +20,9 @@ export default {
   name: "footerComponent",
   data() {
     return {
-      logoImg: "https://f3.pofiapp.com/draw/pofi_logo.png",
-      qrcode: "https://f3.pofiapp.com/draw/pofi_wechat_qrcode.jpg",
+      logoImg: require("@/assets/image/logo.png"),
+      qrcode: require("@/assets/image/qrcode.png"),
+      drivar: require("@/assets/image/drivar.png"),
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
     };
   },
@@ -30,14 +33,16 @@ export default {
 .footer-container {
   display: flex;
   flex-direction: column;
-  margin: 40px;
+  align-items: center;
+  width: 100%;
   .wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
     .logo {
-      width: 140px;
-      height: 100px;
+      width: 135px;
+      height: 103px;
+      margin-right: 30px;
       img {
         width: 100%;
         height: 100%;
@@ -45,12 +50,16 @@ export default {
     }
     .driver {
       width: 1px;
-      height: 10px;
-      background-color: #fff;
+      height: 13px;
+      margin-right: 30px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .qrcode {
-      width: 100px;
-      height: 100px;
+      width: 102px;
+      height: 102px;
       img {
         width: 100%;
         height: 100%;
@@ -62,6 +71,7 @@ export default {
     font-size: 12px;
     color: rgb(145, 145, 145);
     margin-top: 30px;
+    margin-bottom: 30px;
   }
 }
 </style>

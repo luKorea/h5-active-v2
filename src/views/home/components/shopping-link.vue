@@ -7,13 +7,13 @@
 </template>
 
 <script>
+import urlLink from "@/utils/link";
 export default {
   name: "shoppingLink",
   data() {
     return {
-      shoppingImg: "https://f3.pofiapp.com/draw/xmas_2021/event-20211224_1.png",
-      shopUrl:
-        'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
+      shoppingImg: require("@/assets/image/shopping.png"),
+      shopUrl: urlLink.shoppingLink,
     };
   },
   methods: {

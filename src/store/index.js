@@ -16,6 +16,11 @@ export default new Vuex.Store({
     SET_TOKEN(state, payload) {
       state.token = payload;
     },
+    SET_LOGOUT(state) {
+      state.token = null;
+      state.userInfo = {};
+      localCache.cleanCache();
+    },
   },
   actions: {
     async loginAction({ commit }, payload) {
@@ -27,6 +32,9 @@ export default new Vuex.Store({
       const loginInfo = await userRegister(payload);
       localCache.setCache("userInfo", loginInfo);
       commit("SET_USERINFO", loginInfo);
+    },
+    async logoutAction({ commit }) {
+      commit("SET_LOGOUT");
     },
     getLocalStorageInit({ commit }) {
       const token = localCache.getCache("token"),
