@@ -74,11 +74,17 @@
       @closeDialog="closeDialog"
     >
     </login-and-register>
+    <!--退出弹框-->
     <logout
       :show-dialog="showLogoutDialog"
       @logout="logout"
       @closeDialog="closeDialog"
     />
+    <!--我的奖品弹框-->
+    <prize-modal
+      :show-dialog="showPrizeDialog"
+      @closeDialog="closeDialog"
+    ></prize-modal>
   </div>
 </template>
 
@@ -99,10 +105,12 @@ import LoginAndRegister from "@/views/login-and-register/login-and-register";
 import Logout from "@/views/login-and-register/logout";
 
 import { successInfo } from "@/utils";
+import PrizeModal from "@/views/home/components/prize-modal";
 
 export default {
   name: "Home",
   components: {
+    PrizeModal,
     Logout,
     LoginAndRegister,
     WelfareTwo,
@@ -127,7 +135,7 @@ export default {
        *  fuliOne 用户点击福利一按钮
        *  fuliTwo 用户点击福利二按钮
        */
-      openType: "logout",
+      openType: "fuliTwo",
       successIcon: require("@/assets/image/pay-success.png"),
       aliPay: require("@/assets/image/alipay.png"),
       wechatPay: require("@/assets/image/wechatpay.png"),
@@ -159,6 +167,7 @@ export default {
       this.showPrizeDialog = status;
     },
     closeDialog(status) {
+      console.log(status);
       this.showPrizeDialog = status;
       this.showLoginDialog = status;
       this.showLogoutDialog = status;
@@ -188,6 +197,7 @@ export default {
   align-items: center;
   background-color: #000000;
   width: 100%;
+
   .logout-info {
     position: absolute;
     top: 100px;

@@ -84,7 +84,7 @@ export default {
   .input-wrap {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
     .input-text {
       width: 275px;
       height: 35px;
