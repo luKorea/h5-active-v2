@@ -52,13 +52,14 @@
 
     <!--抽奖区域-->
     <div class="blind-container">
-      <blind-box-lottery @showDialog="openDialog" />
+      <blind-box-lottery @showDifferentDialog="openDialog" />
     </div>
     <!--自选盲盒开奖区域，状态逻辑看 status -->
     <korea-dialog
       :bg-img="modalBgImg"
       :show-dialog="showDialog"
       @closeDialog="closeDialog"
+      close-btn-top="26px"
     >
       <template #content>
         <div
@@ -117,14 +118,28 @@
             <template v-if="status === 1 || status === 2">
               <div class="show-footer-btn">
                 <div class="btn-wrap">
-                  <div class="btn" :class="status === 1 && 'active'">是</div>
-                  <div class="btn" :class="status === 2 && 'active'">否</div>
+                  <div
+                    class="btn"
+                    :class="status === 1 && 'active'"
+                    @click="receivePrize"
+                  >
+                    是
+                  </div>
+                  <div
+                    class="btn"
+                    :class="status === 2 && 'active'"
+                    @click="closeDialog"
+                  >
+                    否
+                  </div>
                 </div>
               </div>
             </template>
             <template v-if="status === 5">
               <div class="prize-desc-wrap">
-                <div class="desc-btn">我已知晓 开启抽奖</div>
+                <div class="desc-btn" @click="receivePrize">
+                  我已知晓 开启抽奖
+                </div>
               </div>
             </template>
             <template v-if="status === 3 || status === 4 || status === 6">
@@ -169,7 +184,7 @@ export default {
        * 5. 盲盒：抽中的商品已拥有，显示是否开始抽奖，开启抽奖后显示状态
        * 6. 盲盒：抽中已有商品，显示商品转P币
        */
-      status: 2,
+      status: 1,
     };
   },
   computed: {
@@ -210,14 +225,23 @@ export default {
     },
   },
   methods: {
+    receivePrize() {
+      if (this.status === 1) {
+        this.status = 3;
+      }
+      if (this.status === 5) {
+        this.status = 4;
+      } else this.status = 6;
+    },
     showPayDialog() {
       this.$emit("handleDialog", "fuliTwo");
     },
     closeDialog() {
-      this.showDialog = false;
-    },
-    openDialog() {
       this.showDialog = !this.showDialog;
+    },
+    openDialog(status) {
+      this.showDialog = !this.showDialog;
+      this.status = status;
     },
     copyLink() {
       copyShareLink(window.location.href, this);

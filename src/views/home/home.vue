@@ -145,7 +145,17 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route.query._id, "判断当前用户是否是被邀请人");
+    // console.log(this.$route.query, "判断当前用户是否是被邀请人");
+    // let el = this.$refs[this.$route.query.ref].$el;
+    // console.log(el);
+    // this.$nextTick(() => {
+    //   setTimeout(() => {
+    //     if (el)
+    //       el.scrollIntoView({
+    //         behavior: "smooth",
+    //       });
+    //   });
+    // });
   },
   methods: {
     goAnchor(el) {
@@ -167,11 +177,16 @@ export default {
       this.showPrizeDialog = status;
     },
     closeDialog(status) {
-      console.log(status);
-      this.showPrizeDialog = status;
-      this.showLoginDialog = status;
-      this.showLogoutDialog = status;
-      this.showDialog = status;
+      let result;
+      if (typeof status === "boolean") {
+        result = status;
+      } else {
+        result = false;
+      }
+      this.showPrizeDialog = result;
+      this.showLoginDialog = result;
+      this.showLogoutDialog = result;
+      this.showDialog = result;
     },
     handleConfirm(e) {
       this.showDialog = e;

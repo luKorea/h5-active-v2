@@ -1,16 +1,32 @@
 <!-- 可自定义内容弹框 -->
 <template>
-  <div class="modal-bg" v-show="showDialog">
+  <van-overlay :show="showDialog" z-index="99" :lock-scroll="false">
     <div class="modal-content">
-      <div class="modal-info animate__animated animate__fadeInDown">
-        <div class="close-btn" @click="closeDialog"></div>
+      <div class="modal-info">
+        <div class="close-wrap" :style="{ top: closeBtnTop }">
+          <div class="close-btn">
+            <img @click.stop.prevent="closeDialog" :src="closeBtnImg" alt="" />
+          </div>
+        </div>
         <div class="bg-img" :style="bgStyle">
           <img :src="bgImg" style="width: 100%; height: 100%" alt="" />
         </div>
         <slot name="content"></slot>
       </div>
     </div>
-  </div>
+  </van-overlay>
+
+  <!--  <div class="modal-bg" v-show="showDialog">-->
+  <!--    <div class="modal-content">-->
+  <!--      <div class="modal-info animate__animated animate__fadeInDown">-->
+  <!--        <div class="close-btn" @click.stop="closeDialog"></div>-->
+  <!--        <div class="bg-img" :style="bgStyle">-->
+  <!--          <img :src="bgImg" style="width: 100%; height: 100%" alt="" />-->
+  <!--        </div>-->
+  <!--        <slot name="content"></slot>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </template>
 
 <script>
@@ -20,6 +36,10 @@ export default {
     showDialog: {
       type: Boolean,
       required: true,
+    },
+    closeBtnTop: {
+      type: String,
+      default: "20px",
     },
     bgImg: {
       type: String,
@@ -33,7 +53,32 @@ export default {
       }),
     },
   },
+  data() {
+    return {
+      closeBtnImg: require("@/assets/image/close-btn.png"),
+    };
+  },
+  // watch: {
+  //   showDialog: {
+  //     handler() {
+  //       this.showDialog ? this.noSliding() : this.sliding();
+  //     },
+  //   },
+  // },
   methods: {
+    bodyScroll(event) {
+      event.preventDefault();
+    },
+    /**禁止页面滑动*/
+    noSliding() {
+      document.body.style.overflow = "hidden";
+      document.addEventListener("touchmove", this.bodyScroll, false); //禁止页面滑动
+    },
+    /**允许页面滑动*/
+    sliding() {
+      document.body.style.overflow = ""; //出现滚动条
+      document.removeEventListener("touchmove", this.bodyScroll, false);
+    },
     closeDialog() {
       this.$emit("closeDialog", false);
     },
@@ -88,15 +133,21 @@ export default {
     }
   }
 
-  .close-btn {
+  .close-wrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
     position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-    border-radius: 50%;
-    //background: #ff264a;
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      margin-right: 30px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }
 </style>
