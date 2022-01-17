@@ -1,12 +1,12 @@
 <!-- 可自定义内容弹框 -->
 <template>
   <van-overlay :show="showDialog" z-index="99" :lock-scroll="false">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 540px">
       <div class="modal-info">
         <div class="close-wrap" :style="{ top: closeBtnTop }">
-          <div class="close-btn">
-            <img @click.stop.prevent="closeDialog" :src="closeBtnImg" alt="" />
-          </div>
+          <a class="close-btn" @click="closeDialog($event)">
+            <img :src="closeBtnImg" alt="" />
+          </a>
         </div>
         <div class="bg-img" :style="bgStyle">
           <img :src="bgImg" style="width: 100%; height: 100%" alt="" />
@@ -58,13 +58,13 @@ export default {
       closeBtnImg: require("@/assets/image/close-btn.png"),
     };
   },
-  // watch: {
-  //   showDialog: {
-  //     handler() {
-  //       this.showDialog ? this.noSliding() : this.sliding();
-  //     },
-  //   },
-  // },
+  watch: {
+    showDialog: {
+      handler() {
+        this.showDialog ? this.noSliding() : this.sliding();
+      },
+    },
+  },
   methods: {
     bodyScroll(event) {
       event.preventDefault();
@@ -79,7 +79,8 @@ export default {
       document.body.style.overflow = ""; //出现滚动条
       document.removeEventListener("touchmove", this.bodyScroll, false);
     },
-    closeDialog() {
+    closeDialog(event) {
+      console.log(event.cancelable);
       this.$emit("closeDialog", false);
     },
     handleConfirm() {
@@ -139,13 +140,17 @@ export default {
     align-items: center;
     width: 100%;
     position: absolute;
+    cursor: pointer;
+    z-index: 99999;
     .close-btn {
       width: 32px;
       height: 32px;
       margin-right: 30px;
+      cursor: pointer;
       img {
         width: 100%;
         height: 100%;
+        cursor: pointer;
       }
     }
   }

@@ -6,7 +6,7 @@
   >
     <template #content>
       <div class="logout-content">
-        <div class="title">用户登录</div>
+        <div class="title">是否退出登录</div>
         <div class="btn-wrap">
           <div class="yes" @click="logout">是</div>
           <div class="no" @click="closeDialog">否</div>

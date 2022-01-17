@@ -7,6 +7,9 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script>
+      /(pad|pod|iPad|iPod|iOS)/i.test(navigator.userAgent)&&(head=document.getElementsByTagName('head'),viewport=document.createElement('meta'),viewport.name='viewport',viewport.content='target-densitydpi=device-dpi, width=480px, user-scalable=no',head.length>0&&head[head.length-1].appendChild(viewport));
+    </script>
+    <script>
       //禁止双指放大
       document.documentElement.addEventListener('touchstart', function (event) {
         if (event.touches.length > 1) {
@@ -52,7 +55,7 @@
       })(document);
     </script>
   </head>
-  <body>
+  <body style="max-width: 540px">
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

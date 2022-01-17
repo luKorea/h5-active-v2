@@ -3,12 +3,13 @@
     <div class="bg-img">
       <img :src="bgImg" alt="" />
     </div>
-    <div class="user-info">
+
+    <div class="user-info" v-show="uid">
       <div class="common-user-id">
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">Pofi ID : 2568926</div>
+          <div class="right-text">POfi ID: {{ uid }}</div>
         </div>
       </div>
     </div>
@@ -37,13 +38,16 @@
     </div>
 
     <div class="join-success">
-      <div class="user-join-success">组队成功</div>
+      <div class="user-join-success">
+        组队成功！现在可以开始选择奖品方案啦！
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { copyShareLink } from "@/utils";
+import { mapState } from "vuex";
 
 export default {
   name: "welfare-one",
@@ -52,12 +56,17 @@ export default {
       bgImg: require("@/assets/image/welfare-bg-one.png"),
     };
   },
+  computed: {
+    ...mapState(["uid"]),
+  },
   methods: {
     showPayDialog() {
       this.$emit("handleDialog", "fuliOne");
     },
     copyLink() {
-      copyShareLink(window.location.href, this);
+      if (this.uid) {
+        copyShareLink(window.location.href, this);
+      } else this.$emit("handleLoginDialog", true);
     },
   },
 };

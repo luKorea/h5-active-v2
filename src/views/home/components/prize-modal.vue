@@ -1,12 +1,12 @@
 <template>
   <div class="bg-1" v-if="showDialog">
-    <div class="content-1">
+    <div class="content-1" style="max-width: 540px">
       <div class="modal-info-1 animate__animated animate__fadeInDown">
         <div class="close-wrap-1">
           <div
             class="close-btn-1"
-            @click.stop.prevent="closeDialog"
-            style="margin-right: 20px !important; margin-top: 20px"
+            @click="closeDialog"
+            style="margin-right: 24px !important; margin-top: 24px"
           >
             <img :src="closeBtnImg" alt="" />
           </div>
@@ -144,10 +144,30 @@ export default {
       ],
     };
   },
+  watch: {
+    showDialog: {
+      handler() {
+        this.showDialog ? this.noSliding() : this.sliding();
+      },
+    },
+  },
   mounted() {
     this.showDifferentImg();
   },
   methods: {
+    bodyScroll(event) {
+      event.preventDefault();
+    },
+    /**禁止页面滑动*/
+    noSliding() {
+      document.body.style.overflow = "hidden";
+      document.addEventListener("touchmove", this.bodyScroll, false); //禁止页面滑动
+    },
+    /**允许页面滑动*/
+    sliding() {
+      document.body.style.overflow = ""; //出现滚动条
+      document.removeEventListener("touchmove", this.bodyScroll, false);
+    },
     showDifferentImg() {
       if (this.status === 1) {
         this.showImg = this.prizeImg;
@@ -187,6 +207,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.7);
   .content-1 {
     position: fixed;
+    z-index: 2002;
     top: 45%;
     left: 50%;
     width: 100%;
@@ -219,6 +240,7 @@ export default {
         width: 32px;
         height: 32px;
         margin-right: 30px;
+        z-index: 9999;
         img {
           width: 100%;
           height: 100%;

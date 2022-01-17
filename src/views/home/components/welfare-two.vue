@@ -3,12 +3,12 @@
     <div class="bg-img">
       <img :src="bgImg" alt="" />
     </div>
-    <div class="user-info">
+    <div class="user-info" v-show="uid">
       <div class="common-user-id">
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">Pofi ID : 2568926</div>
+          <div class="right-text">Pofi ID : {{ uid }}</div>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
 
     <div class="join-us">
       <div class="user-join-wrap">
-        <div class="user-join-item" @click="openDialog">
+        <div class="user-join-item" @click="copyLink">
           <div class="item-add"></div>
           <div class="item-title">邀请队友</div>
         </div>
@@ -37,22 +37,24 @@
       </div>
     </div>
     <div class="join-success">
-      <div class="user-join-success">组队成功</div>
+      <div class="user-join-success">
+        组队成功！现在可以开始选择奖品方案啦！
+      </div>
     </div>
 
-    <div class="user-info-join">
+    <div class="user-info-join" v-show="uid">
       <div class="common-user-id">
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">Pofi ID : 2568926</div>
+          <div class="right-text">Pofi ID : {{ uid }}</div>
         </div>
       </div>
     </div>
 
     <!--抽奖区域-->
     <div class="blind-container">
-      <blind-box-lottery @showDifferentDialog="openDialog" />
+      <blind-box-lottery ref="blindBox" @showDifferentDialog="openDialog" />
     </div>
     <!--自选盲盒开奖区域，状态逻辑看 status -->
     <korea-dialog
@@ -161,6 +163,7 @@ import koreaDialog from "@/components/korea-dialog/korea-dialog";
 import { copyShareLink, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import BlindBoxLottery from "@/views/home/components/blind-box-lottery";
+import { mapState } from "vuex";
 
 export default {
   name: "welfare-two",
@@ -188,6 +191,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["uid"]),
     computedInfo() {
       let title = "";
       let tip = "";
@@ -230,13 +234,16 @@ export default {
         this.status = 3;
       }
       if (this.status === 5) {
-        this.status = 4;
+        // this.status = 4;
+        this.showDialog = false;
+        this.$refs["blindBox"].startRoll();
       } else this.status = 6;
     },
     showPayDialog() {
       this.$emit("handleDialog", "fuliTwo");
     },
-    closeDialog() {
+    closeDialog(event) {
+      console.log(event, "event");
       this.showDialog = !this.showDialog;
     },
     openDialog(status) {
@@ -244,7 +251,9 @@ export default {
       this.status = status;
     },
     copyLink() {
-      copyShareLink(window.location.href, this);
+      if (this.uid) {
+        copyShareLink(window.location.href, this);
+      } else this.$emit("handleLoginDialog", true);
     },
     goApp() {
       openUrl(urlLink.appLink);

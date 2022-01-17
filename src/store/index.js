@@ -8,8 +8,12 @@ export default new Vuex.Store({
   state: {
     token: "",
     userInfo: {},
+    uid: null,
   },
   mutations: {
+    SET_UID(state, payload) {
+      state.uid = payload;
+    },
     SET_USERINFO(state, payload) {
       state.userInfo = payload;
     },
@@ -19,14 +23,27 @@ export default new Vuex.Store({
     SET_LOGOUT(state) {
       state.token = null;
       state.userInfo = {};
+      state.uid = null;
       localCache.cleanCache();
     },
   },
   actions: {
-    async loginAction({ commit }, payload) {
-      const loginInfo = await userLogin(payload);
-      localCache.setCache("userInfo", loginInfo);
-      commit("SET_USERINFO", loginInfo);
+    loginAction({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        userLogin(payload).then((res) => {
+          if (res.code === 200) {
+            localCache.setCache("userInfo", res.data);
+            localCache.setCache("uid", res.data?.uid);
+            localCache.setCache("token", res.data?.loginKey);
+            commit("SET_USERINFO", res.data);
+            commit("SET_UID", res.data?.uid);
+            commit("SET_TOKEN", res.data?.loginKey);
+            resolve(res.data);
+          } else {
+            reject(res.msg);
+          }
+        });
+      });
     },
     async registerAction({ commit }, payload) {
       const loginInfo = await userRegister(payload);
@@ -38,9 +55,11 @@ export default new Vuex.Store({
     },
     getLocalStorageInit({ commit }) {
       const token = localCache.getCache("token"),
-        userInfo = localCache.getCache("userInfo");
+        userInfo = localCache.getCache("userInfo"),
+        uid = localCache.getCache("uid");
       token && commit("SET_TOKEN", token);
       userInfo && commit("SET_USERINFO", userInfo);
+      uid && commit("SET_UID", uid);
     },
   },
 });

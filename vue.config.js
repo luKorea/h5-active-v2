@@ -5,10 +5,10 @@ module.exports = {
     open: true,
     proxy: {
       "^/api": {
-        target: "http://www.baidu.com",
-        pathRewrite: {
-          "^/api": "",
-        },
+        target: "https://test.pofi.pro",
+        // pathRewrite: {
+        //   "^/api": "",
+        // },
         changeOrigin: true,
       },
     },

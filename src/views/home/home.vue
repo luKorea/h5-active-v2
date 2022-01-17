@@ -4,13 +4,22 @@
     <flex-btn
       @handleLoginDialog="handleLoginDialog"
       @handlePrizeDialog="handlePrizeDialog"
+      @handleLogout="showLogoutDialog = true"
     />
     <!--红包区域-->
     <red-envelopes @anchor="goAnchor" />
     <!--福利一-->
-    <welfare-one ref="one" @handleDialog="openDifferentDialog" />
+    <welfare-one
+      ref="one"
+      @handleDialog="openDifferentDialog"
+      @handleLoginDialog="showLoginDialog = true"
+    />
     <!-- 福利二-->
-    <welfare-two ref="two" @handleDialog="openDifferentDialog" />
+    <welfare-two
+      ref="two"
+      @handleLoginDialog="showLoginDialog = true"
+      @handleDialog="openDifferentDialog"
+    />
     <!--购物链接-->
     <shopping-link />
     <!--分享链接-->
@@ -49,7 +58,7 @@
             <div class="left-text">当前用户</div>
             <div class="right-white">
               <div class="left-circle"></div>
-              <div class="right-text">Pofi ID : 2568926</div>
+              <div class="right-text">Pofi ID : {{ uid }}</div>
             </div>
           </div>
           <div class="fuli-tip">
@@ -72,6 +81,7 @@
     <login-and-register
       :show-dialog="showLoginDialog"
       @closeDialog="closeDialog"
+      @handleLogin="phoneLogin"
     >
     </login-and-register>
     <!--退出弹框-->
@@ -104,8 +114,9 @@ import WelfareTwo from "@/views/home/components/welfare-two";
 import LoginAndRegister from "@/views/login-and-register/login-and-register";
 import Logout from "@/views/login-and-register/logout";
 
-import { successInfo } from "@/utils";
+import { errorInfo, successInfo } from "@/utils";
 import PrizeModal from "@/views/home/components/prize-modal";
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
@@ -145,9 +156,20 @@ export default {
     };
   },
   mounted() {
+    const script = document.createElement("script");
+    script.src =
+      "https://s4.cnzz.com/z_stat.php?id=1280511914&web_id=1280511914";
+    script.language = "JavaScript";
+    document.body.appendChild(script);
+    console.log(window);
     // console.log(this.$route.query, "判断当前用户是否是被邀请人");
-    // let el = this.$refs[this.$route.query.ref].$el;
-    // console.log(el);
+    if (this.$route.query.ref) {
+      let el = this.$refs[this.$route.query.ref].$el;
+      console.log(el);
+      setTimeout(() => {
+        el.scrollIntoView();
+      }, 2000);
+    }
     // this.$nextTick(() => {
     //   setTimeout(() => {
     //     if (el)
@@ -157,7 +179,20 @@ export default {
     //   });
     // });
   },
+  computed: {
+    ...mapState(["uid", "userInfo"]),
+  },
   methods: {
+    phoneLogin(data) {
+      const _this = this;
+      this.$store
+        .dispatch("loginAction", data)
+        .then(() => {
+          successInfo("登录成功");
+          _this.showLoginDialog = false;
+        })
+        .catch((err) => errorInfo(err));
+    },
     goAnchor(el) {
       this.$refs[el].$el.scrollIntoView({
         behavior: "smooth",
@@ -165,8 +200,10 @@ export default {
     },
     // 福利弹框
     openDifferentDialog(type) {
-      this.showDialog = true;
-      this.openType = type;
+      if (this.uid) {
+        this.showDialog = true;
+        this.openType = type;
+      } else this.showLoginDialog = true;
     },
     // 登录弹框
     handleLoginDialog(status) {

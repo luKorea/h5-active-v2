@@ -9,11 +9,17 @@
             type="text"
             class="input-text"
             style="margin-bottom: 6px"
+            v-model="formData.no"
           />
-          <input placeholder="请输入密码" class="input-text" type="text" />
+          <input
+            placeholder="请输入密码"
+            v-model="formData.pwd"
+            class="input-text"
+            type="password"
+          />
         </div>
         <div class="btn-wrap">
-          <div class="btn">登录</div>
+          <div class="btn" @click="handleLogin">登录</div>
           <div class="btn" @click="handleRegister">注册</div>
         </div>
       </div>
@@ -34,6 +40,7 @@
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
+import md5 from "md5";
 
 export default {
   name: "loginAndRegister",
@@ -48,6 +55,10 @@ export default {
     return {
       status: 1, // 1. 登录 2. 注册
       appImg: require("@/assets/image/go-app.png"),
+      formData: {
+        no: "15360461319",
+        pwd: "123456",
+      },
     };
   },
   methods: {
@@ -60,6 +71,12 @@ export default {
     },
     handleRegister() {
       this.status = 2;
+    },
+    handleLogin() {
+      this.$emit("handleLogin", {
+        no: this.formData.no,
+        pwd: md5(this.formData.pwd).toUpperCase(),
+      });
     },
     goApp() {
       openUrl(urlLink.appLink);
@@ -92,11 +109,12 @@ export default {
       background: #737373;
       border-radius: 18px;
       border-color: #737373;
-      padding: 10px 0 15px 14px;
+      padding: 10px 0 8px 14px;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 14px;
     }
   }
   .btn-wrap {

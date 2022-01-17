@@ -1,5 +1,5 @@
 import axios from "axios";
-import nprogress from "nprogress";
+import { Toast } from "vant";
 
 const DEFAULT_LOADING = true;
 
@@ -31,7 +31,13 @@ class KoreaRequest {
         // loading
         if (this.showLoading) {
           // this.loading = "";
-          nprogress.start();
+          this.loading = Toast.loading({
+            message: "加载中...",
+            forbidClick: true,
+            loadingType: "spinner",
+            overlay: true,
+          });
+          console.log(this.loading, "loading");
           // this.loading = ElLoading.service({
           //   lock: true,
           //   text: "加载中",
@@ -48,12 +54,10 @@ class KoreaRequest {
     this.instance.interceptors.response.use(
       (response) => {
         // this.loading?.close();
-        nprogress.done();
         return response.data;
       },
       (error) => {
         // this.loading?.close();
-        nprogress.done();
         return error;
       }
     );

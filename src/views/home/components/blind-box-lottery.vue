@@ -120,7 +120,7 @@ export default {
       count: 6, // 总共有多少个位置
       times: 0, // 转动跑格子次数,
       cycle: 10, // 转动基本次数：即至少需要转动多少次再进入抽奖环节
-      speed: 200, // 初始转动速度
+      speed: 100, // 初始转动速度
       prize: 1,
     };
   },
@@ -167,8 +167,8 @@ export default {
       else this.$emit("showDifferentDialog", 1);
     },
     getSixToOne() {
-      this.startRoll();
-      // this.$emit("showDifferentDialog", 5);
+      // this.startRoll();
+      this.$emit("showDifferentDialog", 5);
     },
     //  抽奖区域
     // 开始转动
@@ -193,6 +193,7 @@ export default {
         clearTimeout(this.timer); // 清除转动定时器
         this.times = 0; // 转动跑格子次数初始化为0，可以开始下次抽奖
         //   根据后台结果返回显示对应弹框
+        this.$emit("showDifferentDialog", 6);
       } else {
         if (this.times < this.cycle - 20) {
           this.speed -= 4; // 加快转动速度

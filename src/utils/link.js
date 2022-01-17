@@ -1,7 +1,8 @@
 export default {
   appLink: "https://a.app.qq.com/o/simple.jsp?pkgname=com.rn.pofi",
   weiboLink: "https://weibo.com/pofiapp",
-  redBookLink: "",
+  redBookLink:
+    "https://www.xiaohongshu.com/user/profile/603381480000000001005d5a?xhsshare=CopyLink&appuid=603381480000000001005d5a&apptime=1642390741",
   shareToFriendLink: window.location.href,
   wechatOpenQQLink:
     "https://work.weixin.qq.com/gm/e13e073d78c03479eb357c7510ee2a2a",

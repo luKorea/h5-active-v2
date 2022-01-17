@@ -2,8 +2,7 @@ import { request } from "@/request";
 
 export const userLogin = (data) => {
   return request.post({
-    url: "/login",
-    data: data,
+    url: `/api/doll/user/phone/login?no=${data.no}&pwd=${data.pwd}`,
   });
 };
 export const userRegister = (params) => {
