@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 import { Toast } from "vant";
 
 const DEFAULT_LOADING = true;
@@ -100,6 +101,7 @@ class KoreaRequest {
   }
 
   post(config) {
+    qs.stringify(config.data);
     return this.request({ ...config, method: "POST" });
   }
 

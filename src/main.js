@@ -12,6 +12,8 @@ Vue.config.productionTip = false;
 import "normalize.css";
 import "animate.css";
 import "@/style/index.less";
+import Vconsole from "vconsole";
+new Vconsole();
 
 store.dispatch("getLocalStorageInit").then((r) => console.log(r));
 Vue.use(globalRegister);

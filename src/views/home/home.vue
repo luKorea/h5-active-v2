@@ -66,10 +66,10 @@
             {{ $route.query._id ? fuliOur : fuliOnce }}
           </div>
           <div class="pay-btn">
-            <div class="wechat-pay">
+            <div class="wechat-pay" @click="payWechat">
               <img :src="wechatPay" alt="" />
             </div>
-            <div class="ali-pay">
+            <div class="ali-pay" @click="payAli">
               <img :src="aliPay" alt="" />
             </div>
           </div>
@@ -114,9 +114,11 @@ import WelfareTwo from "@/views/home/components/welfare-two";
 import LoginAndRegister from "@/views/login-and-register/login-and-register";
 import Logout from "@/views/login-and-register/logout";
 
-import { errorInfo, successInfo } from "@/utils";
+import { errorInfo, successInfo, _isWechatPay } from "@/utils";
 import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
+import urlLink from "@/utils/link";
+import { wechatPay, ailPay } from "@/api";
 
 export default {
   name: "Home",
@@ -156,33 +158,15 @@ export default {
     };
   },
   mounted() {
-    const script = document.createElement("script");
-    script.src =
-      "https://s4.cnzz.com/z_stat.php?id=1280511914&web_id=1280511914";
-    script.language = "JavaScript";
-    document.body.appendChild(script);
-    console.log(window);
-    // console.log(this.$route.query, "判断当前用户是否是被邀请人");
-    if (this.$route.query.ref) {
-      let el = this.$refs[this.$route.query.ref].$el;
-      console.log(el);
-      setTimeout(() => {
-        el.scrollIntoView();
-      }, 2000);
-    }
-    // this.$nextTick(() => {
-    //   setTimeout(() => {
-    //     if (el)
-    //       el.scrollIntoView({
-    //         behavior: "smooth",
-    //       });
-    //   });
-    // });
+    this.$store.dispatch("getGroupConfigAction");
   },
   computed: {
     ...mapState(["uid", "userInfo"]),
   },
   methods: {
+    _isWechat() {
+      return navigator.userAgent.match(/micromessenger/i);
+    },
     phoneLogin(data) {
       const _this = this;
       this.$store
@@ -236,6 +220,64 @@ export default {
         successInfo("退出成功");
         window.location.reload();
       });
+    },
+    payWechat() {
+      const {
+        payConfig: { fuliOneSnId, fuliTwoSnId },
+        uid,
+        token,
+      } = this.$store.state;
+      const type = this.openType === "fuliOne";
+      let data = {
+        snId: type ? fuliOneSnId : fuliTwoSnId,
+        chargeType: 0,
+        uid: uid,
+        loginKey: token,
+        appid: this._isWechat() ? urlLink.wechatAPPID : null,
+        from: 2,
+        remark: JSON.stringify({}),
+      };
+      wechatPay(data)
+        .then((res) => {
+          if (res.code === 200) {
+            if (this._isWechat()) {
+              _isWechatPay(res.data.wxRes)
+                .then((res) => {
+                  console.log(res, "测试");
+                })
+                .catch((err) => {
+                  console.log(err, "错误");
+                });
+            } else {
+              window.location.href = res.data.wxRes.mweburl;
+            }
+          } else errorInfo(res.msg);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    payAli() {
+      const {
+        payConfig: { fuliOneSnId, fuliTwoSnId },
+        uid,
+        token,
+      } = this.$store.state;
+      const type = this.openType === "fuliOne";
+      let data = {
+        snId: type ? fuliOneSnId : fuliTwoSnId,
+        chargeType: 2,
+        uid: uid,
+        loginKey: token,
+        appid: urlLink.alipayAPPID,
+      };
+      ailPay(data)
+        .then((res) => {
+          window.location.href = res.data.aliRes;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

@@ -1,4 +1,6 @@
 export default {
+  wechatAPPID: "wx7df5ddc552c5c3fc",
+  alipayAPPID: "2016120703987922",
   appLink: "https://a.app.qq.com/o/simple.jsp?pkgname=com.rn.pofi",
   weiboLink: "https://weibo.com/pofiapp",
   redBookLink:

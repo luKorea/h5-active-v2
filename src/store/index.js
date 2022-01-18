@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import localCache from "@/utils/cache";
-import { userLogin, userRegister } from "@/api";
+import { getGroupConfig, userLogin } from "@/api";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -9,8 +9,12 @@ export default new Vuex.Store({
     token: "",
     userInfo: {},
     uid: null,
+    payConfig: {},
   },
   mutations: {
+    SET_PAY_CONFIG(state, payload) {
+      state.payConfig = payload;
+    },
     SET_UID(state, payload) {
       state.uid = payload;
     },
@@ -45,12 +49,7 @@ export default new Vuex.Store({
         });
       });
     },
-    async registerAction({ commit }, payload) {
-      const loginInfo = await userRegister(payload);
-      localCache.setCache("userInfo", loginInfo);
-      commit("SET_USERINFO", loginInfo);
-    },
-    async logoutAction({ commit }) {
+    logoutAction({ commit }) {
       commit("SET_LOGOUT");
     },
     getLocalStorageInit({ commit }) {
@@ -60,6 +59,20 @@ export default new Vuex.Store({
       token && commit("SET_TOKEN", token);
       userInfo && commit("SET_USERINFO", userInfo);
       uid && commit("SET_UID", uid);
+    },
+    // 获取组队活动配置
+    async getGroupConfigAction({ commit }) {
+      const result = await getGroupConfig();
+      let payload = {};
+      if (result.code === 200) {
+        result.data && result.data.length > 0
+          ? (((payload["fuliTwoSnId"] = result.data[1].snId),
+            (payload["fuliTwoPrice"] = result.data[1].price)),
+            ((payload["fuliOneSnId"] = result.data[0].snId),
+            (payload["fuliOnePrice"] = result.data[0].price)))
+          : (payload = {});
+      }
+      commit("SET_PAY_CONFIG", payload);
     },
   },
 });
