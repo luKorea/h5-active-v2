@@ -62,7 +62,7 @@ export default {
           break;
         case "share":
           console.log(item.url);
-          copyShareLink(item.url, this);
+          copyShareLink(`${item.url}?uid=${this.$store.state.uid}`, this);
       }
     },
     openDifferentWebsite(url) {

@@ -89,6 +89,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    list: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {

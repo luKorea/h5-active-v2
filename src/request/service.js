@@ -39,12 +39,6 @@ class KoreaRequest {
             overlay: true,
           });
           console.log(this.loading, "loading");
-          // this.loading = ElLoading.service({
-          //   lock: true,
-          //   text: "加载中",
-          //   background: "rgba(0,0,0,.4)",
-          //   spinner: "",
-          // });
         }
         return config;
       },

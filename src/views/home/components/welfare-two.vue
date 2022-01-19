@@ -252,7 +252,7 @@ export default {
     },
     copyLink() {
       if (this.uid) {
-        copyShareLink(window.location.href, this);
+        copyShareLink(`${window.location.href}?uid=${this.uid}&ref=two`, this);
       } else this.$emit("handleLoginDialog", true);
     },
     goApp() {

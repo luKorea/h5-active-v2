@@ -44,6 +44,7 @@ export function onBridgeReady(data) {
       timeStamp: data.timestamp,
       package: "prepay_id=" + data.prepayid,
       trade_type: "MWEB",
+      signType: "MD5",
     };
     window.WeixinJSBridge.invoke(
       "getBrandWCPayRequest",
@@ -62,18 +63,34 @@ export function onBridgeReady(data) {
 }
 
 export const _isWechatPay = (data) => {
-  if (typeof WeixinJSBridge == "undefined") {
-    if (document.addEventListener) {
-      document.addEventListener(
-        "WeixinJSBridgeReady",
-        onBridgeReady(data),
-        false
-      );
-    } else if (document.attachEvent) {
-      document.attachEvent("WeixinJSBridgeReady", onBridgeReady(data));
-      document.attachEvent("onWeixinJSBridgeReady", onBridgeReady(data));
+  return new Promise((resolve, reject) => {
+    if (typeof WeixinJSBridge == "undefined") {
+      if (document.addEventListener) {
+        document.addEventListener(
+          "WeixinJSBridgeReady",
+          onBridgeReady(data)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err)),
+          false
+        );
+      } else if (document.attachEvent) {
+        document.attachEvent(
+          "WeixinJSBridgeReady",
+          onBridgeReady(data)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err))
+        );
+        document.attachEvent(
+          "onWeixinJSBridgeReady",
+          onBridgeReady(data)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err))
+        );
+      }
+    } else {
+      onBridgeReady(data)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
     }
-  } else {
-    onBridgeReady(data);
-  }
+  });
 };

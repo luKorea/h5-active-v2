@@ -1,0 +1,5 @@
+export const stringUrl = `<form name="punchout_form" method="post" action="https://openapi.alipay.com/gateway.do?charset=UTF-8&method=alipay.trade.page.pay&sign=QEYCRvO6KjVj6f3%2BFaIYX48dcvEbzwnbq6XERx8DreP0ENNlpOtVRRL56uT2ZBk%2FxsdnKWhoi7M97KEeR%2FGy8Zx2AbeLV1244ePvwgxpnH0T1G%2BL2JNhpyYCDgfnT1S0WlB2%2FoMLkYbmhEhUIVsSVQhFpfYrhtK1mD9%2FVVh0DBNFiR%2Ff6MOYbkeHX%2FXKqWno6zKZkNXCnGOnODURgXPt7mE%2FciChIY%2BHrqhg8YaElGiGSKD9Ld8q9i8OV4eaqEccmgjpN1PIdieIM59afB%2F3%2F5SXEY5p%2F9qWr1EeLG8AwvF8Hals%2BSTPcMrgHff60xnkvqaqws352wEKwsNP1KqBNA%3D%3D&version=1.0&app_id=2016120703987922&sign_type=RSA2&timestamp=2022-01-19+09%3A44%3A27&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json">
+<input type="hidden" name="biz_content" value="{&quot;out_trade_no&quot;:&quot;doll2021081701010100129&quot;,&quot;total_amount&quot;:0.01,&quot;subject&quot;:&quot;测试商品&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}">
+<input type="submit" value="立即支付" style="display:none" >
+</form>
+<script>document.forms[0].submit();</script>`;

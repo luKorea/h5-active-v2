@@ -101,7 +101,6 @@
 <script>
 // @ is an alias to /src
 import descComponent from "./components/desc";
-
 import KoreaDialog from "@/components/korea-dialog/korea-dialog";
 import FooterComponent from "@/views/home/components/footer";
 import ShoppingLink from "@/views/home/components/shopping-link";
@@ -119,6 +118,7 @@ import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
 import { wechatPay, ailPay } from "@/api";
+import { stringUrl } from "./test";
 
 export default {
   name: "Home",
@@ -159,6 +159,15 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getGroupConfigAction");
+
+    this.$nextTick(() => {
+      console.log(this.$route.query.ref, "页面节点");
+      setTimeout(() => {
+        if (this.$route.query.ref) {
+          this.goAnchor(this.$route.query.ref);
+        }
+      }, 1000);
+    });
   },
   computed: {
     ...mapState(["uid", "userInfo"]),
@@ -269,11 +278,24 @@ export default {
         chargeType: 2,
         uid: uid,
         loginKey: token,
+        from: 2,
+        remark: JSON.stringify({}),
         appid: urlLink.alipayAPPID,
       };
       ailPay(data)
         .then((res) => {
-          window.location.href = res.data.aliRes;
+          console.log(res, "测试  ");
+          if (res.code === 200) {
+            console.log(res);
+            console.log(res.data);
+            const div = document.createElement("div");
+            const form = stringUrl;
+            div.id = "alipay";
+            div.innerHTML = form;
+            document.body.appendChild(div);
+            document.querySelector("#alipay").children[0].submit(); // 执行后会唤起支付宝
+            // window.location.href = `https://openapi.alipay.com/gateway.do?${res.data.aliRes}`;
+          } else errorInfo(res.msg);
         })
         .catch((err) => {
           console.log(err);
