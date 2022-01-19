@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-19 14:20:21
- * @LastEditors: your name
+ * @LastEditTime: 2022-01-19 18:14:20
+ * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/store/index.js
  */
@@ -18,7 +18,44 @@ export default new Vuex.Store({
     userInfo: {},
     uid: null,
     payConfig: {},
-    groupConfig: [],
+    groupConfig: [
+      {
+        record: [
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+        ]
+      },
+      {
+        record: [
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+          {
+            nickName: "korea",
+            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+          },
+        ]
+      }
+    ],
   },
   mutations: {
     SET_PAY_CONFIG(state, payload) {
@@ -84,7 +121,7 @@ export default new Vuex.Store({
             (payload["fuliOnePrice"] = result.data[0].price)))
           : (payload = {});
       }
-      commit("SET_GROUP_CONFIG", result.data);
+      // commit("SET_GROUP_CONFIG", result.data);
       commit("SET_PAY_CONFIG", payload);
     },
   },

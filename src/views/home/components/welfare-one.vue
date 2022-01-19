@@ -18,22 +18,55 @@
     </div>
     <div class="join-us">
       <div class="user-join-wrap">
-        <div class="user-join-item" @click="copyLink">
-          <div class="item-add"></div>
-          <div class="item-title">邀请队友</div>
-        </div>
-        <div class="user-join-item" @click="copyLink">
-          <div class="item-add"></div>
-          <div class="item-title">邀请队友</div>
-        </div>
-        <!--        <div class="user-join-item">-->
-        <!--          <div class="item-add"></div>-->
-        <!--          <div class="item-title">邀请队友</div>-->
-        <!--        </div>-->
-        <!--        <div class="user-join-item">-->
-        <!--          <div class="item-add"></div>-->
-        <!--          <div class="item-title">邀请队友</div>-->
-        <!--        </div>-->
+        <!-- 初始情况 -->
+        <template v-if="!groupInfo || groupInfo.record === null">
+          <div
+            class="user-join-item"
+            v-for="(item, index) in 2"
+            :key="index"
+            @click="copyLink"
+          >
+            <div class="item-add"></div>
+            <div class="item-title">邀请好友</div>
+          </div>
+        </template>
+        <!-- 只有一个用户 -->
+
+        <template
+          v-if="
+           (groupInfo && groupInfo.record !== null && groupInfo.record.length === 1)
+          "
+        >
+          <div class="user-join-item">
+            <div class="user-icon">
+              <img :src="groupInfo.record[0].iconUrl" alt="" />
+            </div>
+            <div class="item-title">{{ groupInfo.record[0].nickName }}</div>
+          </div>
+          <div class="user-join-item" @click="copyLink">
+            <div class="item-add"></div>
+            <div class="item-title">邀请好友</div>
+          </div>
+        </template>
+        <!-- 组队数目大于二的情况 -->
+        <template
+          v-if="
+            groupInfo &&
+            groupInfo.record !== null &&
+            groupInfo.record.length >= 2
+          "
+        >
+          <div
+            class="user-join-item"
+            v-for="(item, index) in groupInfo.record"
+            :key="index"
+          >
+            <div class="user-icon">
+              <img :src="item.iconUrl" alt="" />
+            </div>
+            <div class="item-title">{{ item.nickName }}</div>
+          </div>
+        </template>
       </div>
     </div>
 
@@ -51,13 +84,22 @@ import { mapState } from "vuex";
 
 export default {
   name: "welfare-one",
+  props: {
+    groupData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       bgImg: require("@/assets/image/welfare-bg-one.png"),
     };
   },
   computed: {
-    ...mapState(["uid"]),
+    ...mapState(["uid", "groupConfig", "userInfo"]),
+    groupInfo() {
+      return this.groupData;
+    },
   },
   methods: {
     showPayDialog() {

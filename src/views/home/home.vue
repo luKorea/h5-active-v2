@@ -13,12 +13,14 @@
       ref="one"
       @handleDialog="openDifferentDialog"
       @handleLoginDialog="showLoginDialog = true"
+      :group-data="groupData[0]"
     />
     <!-- 福利二-->
     <welfare-two
       ref="two"
       @handleLoginDialog="showLoginDialog = true"
       @handleDialog="openDifferentDialog"
+      :group-data="groupData[1]"
     />
     <!--购物链接-->
     <shopping-link />
@@ -117,7 +119,7 @@ import { errorInfo, successInfo, _isWechatPay } from "@/utils";
 import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
-import { wechatPay, ailPay } from "@/api";
+import { wechatPay, ailPay, getGroupConfig } from "@/api";
 
 export default {
   name: "Home",
@@ -155,10 +157,12 @@ export default {
       fuliOur:
         "注意：支付完成后将完成组队，您将无法开启组团，也无法再接受他人邀请。", // 组队文本
       queryInfo: {},
+      groupData: [],
     };
   },
   mounted() {
     this.$store.dispatch("getGroupConfigAction");
+    this.getGroupData();
     this.queryInfo = this.$route.query;
     this.$nextTick(() => {
       console.log(this.$route.query.ref, "页面节点");
@@ -173,6 +177,13 @@ export default {
     ...mapState(["uid", "userInfo"]),
   },
   methods: {
+    getGroupData() {
+      getGroupConfig().then(res => {
+        if(res.code === 200) {
+          this.groupData = res.data;
+        } else errorInfo(res.msg);
+      })
+    },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
     },
@@ -248,7 +259,7 @@ export default {
         remark: JSON.stringify({
           type: "7",
           eid: type ? groupConfig[0].id : groupConfig[1].id,
-          inviteCode: this.$route.query.code ?? null,
+          inviteCode: this.queryInfo.code ?? null,
         }),
       };
       wechatPay(data)
@@ -281,7 +292,7 @@ export default {
       const type = this.openType === "fuliOne";
       let data = {
         snId: type ? fuliOneSnId : fuliTwoSnId,
-        chargeType: 2,
+        chargeType: 1,
         uid: uid,
         loginKey: token,
         from: 2,
@@ -295,12 +306,13 @@ export default {
       ailPay(data)
         .then((res) => {
           if (res.code === 200) {
-            const div = document.createElement("div");
-            const form = res.data.aliRes;
-            div.id = "alipay";
-            div.innerHTML = form;
-            document.body.appendChild(div);
-            document.querySelector("#alipay").children[0].submit(); // 执行后会唤起支付宝
+            window.location.href = res.data.aliRes;
+            // const div = document.createElement("div");
+            // const form = res.data.aliRes;
+            // div.id = "alipay";
+            // div.innerHTML = form;
+            // document.body.appendChild(div);
+            // document.querySelector("#alipay").children[0].submit(); // 执行后会唤起支付宝
           } else errorInfo(res.msg);
         })
         .catch((err) => {
