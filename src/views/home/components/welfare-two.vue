@@ -247,8 +247,12 @@ export default {
       this.showDialog = !this.showDialog;
     },
     openDialog(status) {
-      this.showDialog = !this.showDialog;
-      this.status = status;
+      if (this.uid) {
+        this.showDialog = !this.showDialog;
+        this.status = status;
+      } else {
+        this.$emit("handleLoginDialog", true);
+      }
     },
     copyLink() {
       if (this.uid) {

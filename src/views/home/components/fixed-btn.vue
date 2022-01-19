@@ -80,7 +80,7 @@ export default {
       margin-bottom: 14px;
       width: 60px;
       background: linear-gradient(270deg, #81221d 26%, #fef6ea 100%);
-      opacity: 0.45;
+      opacity: 0.7;
       border-radius: 22px;
       padding: 4px 2px;
       img {

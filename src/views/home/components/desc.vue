@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-13 17:43:39
+ * @LastEditTime: 2022-01-19 11:05:39
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /h5-active-v2/src/views/home/components/desc.vue
+-->
 <template>
   <div class="desc-wrap">
     <template v-if="list && list.length > 0">
@@ -25,6 +33,14 @@ export default {
       ],
     };
   },
+  // mounted() {
+  //   this.getDescList();
+  // },
+  // methods: {
+  //   getDescList() {
+  //     this.list = [];
+  //   },
+  // },
 };
 </script>
 

@@ -118,7 +118,6 @@ import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
 import { wechatPay, ailPay } from "@/api";
-import { stringUrl } from "./test";
 
 export default {
   name: "Home",
@@ -155,16 +154,17 @@ export default {
       fuliOnce: "注意：支付成功后将开启新组队，您将无法接受其他发起人的邀请。", // 单人文本
       fuliOur:
         "注意：支付完成后将完成组队，您将无法开启组团，也无法再接受他人邀请。", // 组队文本
+      queryInfo: {},
     };
   },
   mounted() {
     this.$store.dispatch("getGroupConfigAction");
-
+    this.queryInfo = this.$route.query;
     this.$nextTick(() => {
       console.log(this.$route.query.ref, "页面节点");
       setTimeout(() => {
-        if (this.$route.query.ref) {
-          this.goAnchor(this.$route.query.ref);
+        if (this.queryInfo.ref) {
+          this.goAnchor(this.queryInfo.ref);
         }
       }, 1000);
     });
@@ -235,6 +235,7 @@ export default {
         payConfig: { fuliOneSnId, fuliTwoSnId },
         uid,
         token,
+        groupConfig,
       } = this.$store.state;
       const type = this.openType === "fuliOne";
       let data = {
@@ -244,7 +245,11 @@ export default {
         loginKey: token,
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: 2,
-        remark: JSON.stringify({}),
+        remark: JSON.stringify({
+          type: "7",
+          eid: type ? groupConfig[0].id : groupConfig[1].id,
+          inviteCode: this.$route.query.code ?? null,
+        }),
       };
       wechatPay(data)
         .then((res) => {
@@ -271,6 +276,7 @@ export default {
         payConfig: { fuliOneSnId, fuliTwoSnId },
         uid,
         token,
+        groupConfig,
       } = this.$store.state;
       const type = this.openType === "fuliOne";
       let data = {
@@ -279,22 +285,22 @@ export default {
         uid: uid,
         loginKey: token,
         from: 2,
-        remark: JSON.stringify({}),
+        remark: JSON.stringify({
+          type: "7",
+          eid: type ? groupConfig[0].id : groupConfig[1].id,
+          inviteCode: this.$route.query.code ?? null,
+        }),
         appid: urlLink.alipayAPPID,
       };
       ailPay(data)
         .then((res) => {
-          console.log(res, "测试  ");
           if (res.code === 200) {
-            console.log(res);
-            console.log(res.data);
             const div = document.createElement("div");
-            const form = stringUrl;
+            const form = res.data.aliRes;
             div.id = "alipay";
             div.innerHTML = form;
             document.body.appendChild(div);
             document.querySelector("#alipay").children[0].submit(); // 执行后会唤起支付宝
-            // window.location.href = `https://openapi.alipay.com/gateway.do?${res.data.aliRes}`;
           } else errorInfo(res.msg);
         })
         .catch((err) => {
