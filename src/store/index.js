@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-19 18:14:20
+ * @LastEditTime: 2022-01-20 16:44:32
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/store/index.js
@@ -18,51 +18,10 @@ export default new Vuex.Store({
     userInfo: {},
     uid: null,
     payConfig: {},
-    groupConfig: [
-      {
-        record: [
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-        ]
-      },
-      {
-        record: [
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-          {
-            nickName: "korea",
-            iconUrl: "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-          },
-        ]
-      }
-    ],
   },
   mutations: {
     SET_PAY_CONFIG(state, payload) {
       state.payConfig = payload;
-    },
-    SET_GROUP_CONFIG(state, payload) {
-      state.groupConfig = payload;
     },
     SET_UID(state, payload) {
       state.uid = payload;
@@ -114,14 +73,19 @@ export default new Vuex.Store({
       const result = await getGroupConfig();
       let payload = {};
       if (result.code === 200) {
-        result.data && result.data.length > 0
-          ? (((payload["fuliTwoSnId"] = result.data[1].snId),
-            (payload["fuliTwoPrice"] = result.data[1].price)),
-            ((payload["fuliOneSnId"] = result.data[0].snId),
-            (payload["fuliOnePrice"] = result.data[0].price)))
-          : (payload = {});
+        if(result.data && result.data.length > 0) {
+          payload = {
+            fuliOneEid: result.data[0].id,
+            fuliOneSnId: result.data[0].snId,
+            fuliOnePrice: result.data[0].price,
+            fuliTwoEid: result.data[1].id,
+            fuliTwoSnId: result.data[1].snId,
+            fuliTwoPrice: result.data[1].price,
+          }
+        } else {
+          payload = {}
+        }
       }
-      // commit("SET_GROUP_CONFIG", result.data);
       commit("SET_PAY_CONFIG", payload);
     },
   },

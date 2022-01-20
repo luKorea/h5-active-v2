@@ -19,7 +19,7 @@
     <div class="join-us">
       <div class="user-join-wrap">
         <!-- 初始情况 -->
-        <template v-if="!groupInfo || groupInfo.record === null">
+        <template v-if="eventOne">
           <div
             class="user-join-item"
             v-for="(item, index) in 2"
@@ -31,17 +31,14 @@
           </div>
         </template>
         <!-- 只有一个用户 -->
-
-        <template
-          v-if="
-           (groupInfo && groupInfo.record !== null && groupInfo.record.length === 1)
-          "
-        >
+        <template v-if="eventTwo">
           <div class="user-join-item">
             <div class="user-icon">
-              <img :src="groupInfo.record[0].iconUrl" alt="" />
+              <img :src="groupInfo.record.userInfo[0].iconUrl" alt="" />
             </div>
-            <div class="item-title">{{ groupInfo.record[0].nickName }}</div>
+            <div class="item-title">
+              {{ groupInfo.record.userInfo[0].nickName }}
+            </div>
           </div>
           <div class="user-join-item" @click="copyLink">
             <div class="item-add"></div>
@@ -49,16 +46,10 @@
           </div>
         </template>
         <!-- 组队数目大于二的情况 -->
-        <template
-          v-if="
-            groupInfo &&
-            groupInfo.record !== null &&
-            groupInfo.record.length >= 2
-          "
-        >
+        <template v-if="eventThree">
           <div
             class="user-join-item"
-            v-for="(item, index) in groupInfo.record"
+            v-for="(item, index) in groupInfo.record.userInfo"
             :key="index"
           >
             <div class="user-icon">
@@ -87,7 +78,7 @@ export default {
   props: {
     groupData: {
       type: Object,
-      default: () => {}
+      default: () => {},
     }
   },
   data() {
@@ -99,6 +90,23 @@ export default {
     ...mapState(["uid", "groupConfig", "userInfo"]),
     groupInfo() {
       return this.groupData;
+    },
+    eventOne() {
+      return !this.groupInfo || this.groupInfo.record === null;
+    },
+    eventTwo() {
+      return (
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length === 1
+      );
+    },
+    eventThree() {
+      return (
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length >= 2
+      );
     },
   },
   methods: {

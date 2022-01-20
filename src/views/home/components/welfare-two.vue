@@ -19,7 +19,7 @@
     <div class="join-us">
       <div class="user-join-wrap">
         <!-- 初始情况 -->
-       <template v-if="!groupInfo || groupInfo.record === null">
+        <template v-if="eventOne">
           <div
             class="user-join-item"
             v-for="(item, index) in 2"
@@ -31,18 +31,15 @@
           </div>
         </template>
         <!-- 只有一个用户 -->
-        <template
-          v-if="
-            groupInfo &&
-            groupInfo.record !== null &&
-            groupInfo.record.length === 1
-          "
-        >
+
+        <template v-if="eventTwo">
           <div class="user-join-item">
             <div class="user-icon">
-              <img :src="groupInfo.record[0].iconUrl" alt="" />
+              <img :src="groupInfo.record.userInfo[0].iconUrl" alt="" />
             </div>
-            <div class="item-title">{{ groupInfo.record[0].nickName }}</div>
+            <div class="item-title">
+              {{ groupInfo.record.userInfo[0].nickName }}
+            </div>
           </div>
           <div class="user-join-item" @click="copyLink">
             <div class="item-add"></div>
@@ -50,16 +47,10 @@
           </div>
         </template>
         <!-- 组队数目大于二的情况 -->
-        <template
-          v-if="
-            groupInfo &&
-            groupInfo.record !== null &&
-            groupInfo.record.length >= 2
-          "
-        >
+        <template v-if="eventThree">
           <div
             class="user-join-item"
-            v-for="(item, index) in groupInfo.record"
+            v-for="(item, index) in groupInfo.record.userInfo"
             :key="index"
           >
             <div class="user-icon">
@@ -89,7 +80,11 @@
 
     <!--抽奖区域-->
     <div class="blind-container">
-      <blind-box-lottery ref="blindBox" @showDifferentDialog="openDialog" />
+      <blind-box-lottery
+        ref="blindBox"
+        @showDifferentDialog="openDialog"
+        :list-data="listData"
+      />
     </div>
     <!--自选盲盒开奖区域，状态逻辑看 status -->
     <korea-dialog
@@ -99,18 +94,10 @@
       close-btn-top="26px"
     >
       <template #content>
-        <div
-          class="prize-content"
-          :style="{
-            top: status === 3 || status === 4 || status === 6 ? '4px' : '30px',
-          }"
-        >
+        <div class="prize-content" :style="prizeContentTop">
           <div class="show-modal-title">
             <!--撒花图片-->
-            <div
-              class="show-success-img"
-              v-if="status === 3 || status === 4 || status === 6"
-            >
+            <div class="show-success-img" v-if="showFlower">
               <img :src="successImg" alt="" />
             </div>
             <!--显示标题-->
@@ -129,24 +116,32 @@
                 class="center-img"
                 v-if="status === 1 || status === 3 || status === 4"
               >
-                <img :src="prizeImg" alt="" />
+                <img
+                  :src="showDifferentSuccessInfo.url"
+                  referrerpolicy="no-referrer"
+                  alt=""
+                />
               </div>
               <div class="center-arrow-wrap" v-else>
                 <!--盲盒兑换区域-->
                 <div class="left-img" v-if="status === 5">
-                  <img :src="prizeWhiteImg" alt="" />
+                  <img
+                    :src="prizeWhiteImg"
+                    referrerpolicy="no-referrer"
+                    alt=""
+                  />
                   <div class="tip">已拥有人偶</div>
                 </div>
                 <!--兑换区域-->
                 <div class="img-shadow" v-else>
                   <div class="shadow"></div>
-                  <img :src="prizeImg" alt="" />
+                  <img :src="showDifferentSuccessInfo.url" referrerpolicy="no-referrer" alt="" />
                 </div>
                 <div class="middle-img">
-                  <img :src="arrowImg" alt="" />
+                  <img :src="arrowImg" referrerpolicy="no-referrer" alt="" />
                 </div>
                 <div class="right-img">
-                  <img :src="p8Img" alt="" />
+                  <img :src="p8Img" referrerpolicy="no-referrer" alt="" />
                 </div>
               </div>
               <div class="center-tip">{{ computedInfo.tip }}</div>
@@ -182,7 +177,7 @@
             <template v-if="status === 3 || status === 4 || status === 6">
               <div class="app-wrap">
                 <div class="app-img" @click="goApp">
-                  <img :src="appImg" alt="" />
+                  <img :src="appImg" referrerpolicy="no-referrer" alt="" />
                 </div>
               </div>
             </template>
@@ -195,19 +190,24 @@
 
 <script>
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
-import { copyShareLink, openUrl } from "@/utils";
+import { copyShareLink, errorInfo, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import BlindBoxLottery from "@/views/home/components/blind-box-lottery";
 import { mapState } from "vuex";
+import { getPrizeToUser } from "@/api";
 
 export default {
   name: "welfare-two",
   components: { BlindBoxLottery, koreaDialog },
-   props: {
+  props: {
     groupData: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
+    listData: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -217,7 +217,7 @@ export default {
       arrowImg: require("@/assets/image/prize/arrow.png"),
       prizeWhiteImg: require("@/assets/image/prize/white-prize.png"),
       prizeImg: require("@/assets/image/prize/small.png"),
-      p8Img: require("@/assets/image/prize/p8.png"),
+      p8Img: require("@/assets/image/prize/qb.png"),
       appImg: require("@/assets/image/go-app.png"),
       showDialog: false,
       /**
@@ -229,12 +229,43 @@ export default {
        * 6. 盲盒：抽中已有商品，显示商品转P币
        */
       status: 1,
+      showDifferentSuccessInfo: {},
     };
   },
   computed: {
-    ...mapState(["uid", "groupConfig", "userInfo"]),
+    ...mapState(["uid", "groupConfig", "userInfo", "token", "payConfig"]),
     groupInfo() {
       return this.groupData;
+    },
+    eventOne() {
+      return !this.groupInfo || this.groupInfo.record === null;
+    },
+    eventTwo() {
+      return (
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length === 1
+      );
+    },
+    eventThree() {
+      return (
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length >= 2
+      );
+    },
+    // 文字距离顶部距离
+    prizeContentTop() {
+      return {
+        top:
+          this.status === 3 || this.status === 4 || this.status === 6
+            ? "4px"
+            : "30px",
+      };
+    },
+    // 显示撒花图片
+    showFlower() {
+      return this.status === 3 || this.status === 4 || this.status === 6;
     },
     computedInfo() {
       let title = "";
@@ -243,7 +274,7 @@ export default {
       switch (status) {
         case 1:
           title = "是否领取当前奖品";
-          tip = "BJD大Q";
+          tip = this.showDifferentSuccessInfo.name ?? "";
           break;
         case 2:
           title = "已拥有该人偶";
@@ -273,15 +304,41 @@ export default {
     },
   },
   methods: {
+    getPrizeSuccess(scheme, force = 0) {  
+      const data = {
+        eid: this.payConfig.fuliTwoEid,
+        force: force,
+        loginKey: this.token,
+        uid: this.uid,
+        rewardId: scheme === 1 ? this.showDifferentSuccessInfo.id : null,
+        scheme: scheme,
+      };
+      getPrizeToUser(data).then((res) => {
+        if(scheme === 2) {
+          this.$refs["blindBox"].startRoll();
+          localStorage.setItem("prizeSuccess", JSON.stringify(res));
+        }
+        if (res.code === 200) {
+          this.showDifferentSuccessInfo = res.data;
+          if(scheme === 1) this.status = 3;
+        } else if (res.code === 12) {
+          this.status = 2;
+        } else errorInfo(res.msg);
+      });
+    },
     receivePrize() {
-      if (this.status === 1) {
-        this.status = 3;
+      switch (this.status) {
+        case 1:
+          this.getPrizeSuccess(1);
+          break;
+        case 2:
+          this.getPrizeSuccess(1, 1);
+          break;
+        case 5:
+          this.showDialog = false;
+          this.getPrizeSuccess(2);
+          break;
       }
-      if (this.status === 5) {
-        // this.status = 4;
-        this.showDialog = false;
-        this.$refs["blindBox"].startRoll();
-      } else this.status = 6;
     },
     showPayDialog() {
       this.$emit("handleDialog", "fuliTwo");
@@ -290,10 +347,11 @@ export default {
       console.log(event, "event");
       this.showDialog = !this.showDialog;
     },
-    openDialog(status) {
+    openDialog(data) {
       if (this.uid) {
         this.showDialog = !this.showDialog;
-        this.status = status;
+        this.status = data.type;
+        this.showDifferentSuccessInfo = data;
       } else {
         this.$emit("handleLoginDialog", true);
       }

@@ -27,7 +27,7 @@
           <template v-if="threeToOneNameList && threeToOneNameList.length > 0">
             <van-radio
               v-for="(item, index) in threeToOneNameList"
-              :name="item.name"
+              :name="item"
               :key="index"
               checked-color="#D8986E"
               >{{ item.name }}</van-radio
@@ -49,7 +49,8 @@
               <img
                 class="item-img"
                 :src="item.url"
-                :class="{ active_move: index == i }"
+                referrerpolicy="no-referrer"
+                :class="{ active_move: index == item.id }"
                 alt=""
               />
             </div>
@@ -79,36 +80,20 @@ import { errorInfo } from "@/utils";
 
 export default {
   name: "blind-box-lottery",
+  props: {
+    listData: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       initImg: require("@/assets/image/init-state.png"),
       initLeftImg: require("@/assets/image/init-left.png"),
       initRightImg: require("@/assets/image/init-right.png"),
       threeToOne: require("@/assets/image/three-to-one.png"),
-      threeToOneNameList: [
-        {
-          id: 1,
-          name: "BJD大Q",
-        },
-        {
-          id: 2,
-          name: "BJD小Q",
-        },
-        {
-          id: 3,
-          name: "人鱼大Q",
-        },
-      ],
       threeToOneSelect: "",
       sixToOne: require("@/assets/image/six-to-one.png"),
-      sixToOneImageList: [
-        { id: 1, url: require("@/assets/image/prize/pro.png") },
-        { id: 2, url: require("@/assets/image/prize/p8.png") },
-        { id: 3, url: require("@/assets/image/prize/qb.png") },
-        { id: 4, url: require("@/assets/image/prize/big.png") },
-        { id: 5, url: require("@/assets/image/prize/small.png") },
-        { id: 6, url: require("@/assets/image/prize/fihsh.png") },
-      ],
       showImg: null,
       status: 1, // 1.初始化显示 2. 选择三选一 3. 盲盒抽取
       activeClassName: "animate__animated animate__fadeIn delay-3s",
@@ -116,13 +101,21 @@ export default {
 
       //  盲盒抽奖
       timer: null,
-      index: 1, // 当前转动到哪个位置，第一次起点位置0,
+      index: 0, // 当前转动到哪个位置，第一次起点位置0,
       count: 6, // 总共有多少个位置
       times: 0, // 转动跑格子次数,
       cycle: 10, // 转动基本次数：即至少需要转动多少次再进入抽奖环节
       speed: 100, // 初始转动速度
       prize: 1,
     };
+  },
+  computed: {
+    threeToOneNameList() {
+      return this.listData.filter((item) => item.type === 1);
+    },
+    sixToOneImageList() {
+      return this.listData.filter((item) => item.type === 2);
+    },
   },
   mounted() {
     // this.status = 1; // 进入页面初始化状态
@@ -164,18 +157,49 @@ export default {
     },
     getThreeToOne() {
       if (this.threeToOneSelect === "") errorInfo("请先选择对应的物品");
-      else this.$emit("showDifferentDialog", 1);
+      else
+        this.$emit("showDifferentDialog", {
+          type: 1,
+          ...this.threeToOneSelect,
+        });
     },
     getSixToOne() {
       // this.startRoll();
-      this.$emit("showDifferentDialog", 5);
+      this.$emit("showDifferentDialog", {
+        type: 5,
+      });
     },
     //  抽奖区域
     // 开始转动
     startRoll() {
       this.times += 1; // 转动次数
       this.oneRoll(); // 转动过程调用的每一次转动方法，这里是第一次调用初始化
-      this.usePrize();
+      // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
+      if (this.times > this.cycle + 1 && this.prize === this.index) {
+        clearTimeout(this.timer); // 清除转动定时器
+        this.times = 0; // 转动跑格子次数初始化为0，可以开始下次抽奖
+        let res = JSON.parse(localStorage.getItem("prizeSuccess"));
+        this.index = res.data.id;
+        if (res.code === 200) {
+          this.$emit("showDifferentDialog", {
+            type: 4,
+            ...res.data,
+          });
+        }
+        if (res.code === 12) {
+          this.$emit("showDifferentDialog", {
+            type: 6,
+            ...res.data,
+          });
+        }
+      } else {
+        if (this.times < this.cycle - 20) {
+          this.speed -= 4; // 加快转动速度
+        } else {
+          this.speed += 10; // 抽奖即将结束，放慢转动速度
+        }
+        this.timer = setTimeout(this.startRoll, this.speed); //开始转动
+      }
     },
     // 每一次转动
     oneRoll() {
@@ -186,22 +210,6 @@ export default {
         index = 0;
       }
       this.index = index;
-    },
-    usePrize() {
-      // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
-      if (this.times > this.cycle + 10 && this.prize === this.index) {
-        clearTimeout(this.timer); // 清除转动定时器
-        this.times = 0; // 转动跑格子次数初始化为0，可以开始下次抽奖
-        //   根据后台结果返回显示对应弹框
-        this.$emit("showDifferentDialog", 6);
-      } else {
-        if (this.times < this.cycle - 20) {
-          this.speed -= 4; // 加快转动速度
-        } else {
-          this.speed += 10; // 抽奖即将结束，放慢转动速度
-        }
-        this.timer = setTimeout(this.startRoll, this.speed); //开始转动
-      }
     },
   },
 };

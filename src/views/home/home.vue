@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <home-header />
+    <home-header v-once />
     <flex-btn
       @handleLoginDialog="handleLoginDialog"
       @handlePrizeDialog="handlePrizeDialog"
@@ -21,6 +21,7 @@
       @handleLoginDialog="showLoginDialog = true"
       @handleDialog="openDifferentDialog"
       :group-data="groupData[1]"
+      :list-data="welfareListData"
     />
     <!--购物链接-->
     <shopping-link />
@@ -96,6 +97,7 @@
     <prize-modal
       :show-dialog="showPrizeDialog"
       @closeDialog="closeDialog"
+      :list="prizeInfo"
     ></prize-modal>
   </div>
 </template>
@@ -119,7 +121,13 @@ import { errorInfo, successInfo, _isWechatPay } from "@/utils";
 import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
-import { wechatPay, ailPay, getGroupConfig } from "@/api";
+import {
+  wechatPay,
+  ailPay,
+  getGroupConfig,
+  getUserPrize,
+  getPrizeConfig,
+} from "@/api";
 
 export default {
   name: "Home",
@@ -158,11 +166,20 @@ export default {
         "注意：支付完成后将完成组队，您将无法开启组团，也无法再接受他人邀请。", // 组队文本
       queryInfo: {},
       groupData: [],
+      prizeInfo: null,
+      welfareListData: [],
     };
   },
   mounted() {
+    // if (this.$store.state.uid) {
+    //   this.getUserPrizeInfo({
+    //     loginKey: this.$store.state.token,
+    //     uid: this.$store.state.uid,
+    //   });
+    // }
     this.$store.dispatch("getGroupConfigAction");
     this.getGroupData();
+    this.getWelfareList();
     this.queryInfo = this.$route.query;
     this.$nextTick(() => {
       console.log(this.$route.query.ref, "页面节点");
@@ -177,12 +194,36 @@ export default {
     ...mapState(["uid", "userInfo"]),
   },
   methods: {
+    /* 获取组队信息 */
     getGroupData() {
-      getGroupConfig().then(res => {
-        if(res.code === 200) {
+      getGroupConfig().then((res) => {
+        if (res.code === 200) {
           this.groupData = res.data;
+          this.groupData.forEach((item) => {
+            item.record = {};
+            item.record.userInfo = [
+              {
+                nickName: "korea",
+                iconUrl:
+                  "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+              },
+              {
+                nickName: "korea",
+                iconUrl:
+                  "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
+              },
+            ];
+          });
         } else errorInfo(res.msg);
-      })
+      });
+    },
+    // 获取福利二配置信息
+    getWelfareList() {
+      getPrizeConfig().then((res) => {
+        if (res.code === 200) {
+          this.welfareListData = res.data;
+        } else errorInfo(res.msg);
+      });
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
@@ -191,11 +232,24 @@ export default {
       const _this = this;
       this.$store
         .dispatch("loginAction", data)
-        .then(() => {
+        .then((res) => {
+          console.log(res);
           successInfo("登录成功");
+          // _this.getUserPrizeInfo({
+          //   loginKey: res.loginKey,
+          //   uid: res.uid,
+          // });
           _this.showLoginDialog = false;
         })
         .catch((err) => errorInfo(err));
+    },
+    //  获取用户中奖信息
+    getUserPrizeInfo(params) {
+      getUserPrize(params).then((res) => {
+        if (res.code === 200) {
+          this.prizeInfo = res.data;
+        } else errorInfo(res.msg);
+      });
     },
     goAnchor(el) {
       this.$refs[el].$el.scrollIntoView({
