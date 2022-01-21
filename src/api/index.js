@@ -1,12 +1,19 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-20 16:29:11
+ * @LastEditTime: 2022-01-21 15:11:35
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/api/index.js
  */
 import { request } from "@/request";
+
+// 获取页面基础配置
+export const getPageConfig = () => {
+  return request.post({
+    url: "/api/event/group/h5Config",
+  });
+};
 
 // 用户登录
 export const userLogin = (params) => {
@@ -17,15 +24,24 @@ export const userLogin = (params) => {
 };
 
 // 获取组队活动配置
-export const getGroupConfig = () => {
+export const getGroupConfig = (params) => {
   return request.post({
     url: "/api/event/group/config",
+    params: params,
   });
 };
 // 用户抽奖记录
 export const getUserPrize = (params) => {
   return request.post({
     url: "/api/event/group/getRewardRecords",
+    params: params,
+  });
+};
+
+// 用户支付调起校验，校验是否可以支付
+export const rulePayStatus = (params) => {
+  return request.post({
+    url: "/api/event/group/order/check",
     params: params,
   });
 };

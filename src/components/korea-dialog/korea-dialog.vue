@@ -58,13 +58,13 @@ export default {
       closeBtnImg: require("@/assets/image/close-btn.png"),
     };
   },
-  watch: {
-    showDialog: {
-      handler() {
-        this.showDialog ? this.noSliding() : this.sliding();
-      },
-    },
-  },
+  // watch: {
+  //   showDialog: {
+  //     handler() {
+  //       this.showDialog ? this.noSliding() : this.sliding();
+  //     },
+  //   },
+  // },
   methods: {
     bodyScroll(event) {
       event.preventDefault();

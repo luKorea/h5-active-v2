@@ -63,9 +63,7 @@
     </div>
 
     <div class="join-success">
-      <div class="user-join-success">
-        组队成功！现在可以开始选择奖品方案啦！
-      </div>
+      <div class="user-join-success">{{ getUserPayTitle }}</div>
     </div>
 
     <div class="user-info-join" v-show="uid">
@@ -135,7 +133,11 @@
                 <!--兑换区域-->
                 <div class="img-shadow" v-else>
                   <div class="shadow"></div>
-                  <img :src="showDifferentSuccessInfo.url" referrerpolicy="no-referrer" alt="" />
+                  <img
+                    :src="showDifferentSuccessInfo.url"
+                    referrerpolicy="no-referrer"
+                    alt=""
+                  />
                 </div>
                 <div class="middle-img">
                   <img :src="arrowImg" referrerpolicy="no-referrer" alt="" />
@@ -194,7 +196,7 @@ import { copyShareLink, errorInfo, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import BlindBoxLottery from "@/views/home/components/blind-box-lottery";
 import { mapState } from "vuex";
-import { getPrizeToUser } from "@/api";
+import { getPrizeToUser, rulePayStatus } from "@/api";
 
 export default {
   name: "welfare-two",
@@ -234,6 +236,14 @@ export default {
   },
   computed: {
     ...mapState(["uid", "groupConfig", "userInfo", "token", "payConfig"]),
+    getUserPayTitle() {
+      let title = "点击【+】或【立即充值】创建队伍！"; // 默认进入页面看到的文字
+      if (this.uid) title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
+      if (this.$route.query.id) title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
+      if (this.$route.query.id && this.uid === 1)
+        title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
+      return title;
+    },
     groupInfo() {
       return this.groupData;
     },
@@ -304,7 +314,7 @@ export default {
     },
   },
   methods: {
-    getPrizeSuccess(scheme, force = 0) {  
+    getPrizeSuccess(scheme, force = 0) {
       const data = {
         eid: this.payConfig.fuliTwoEid,
         force: force,
@@ -314,13 +324,13 @@ export default {
         scheme: scheme,
       };
       getPrizeToUser(data).then((res) => {
-        if(scheme === 2) {
+        if (scheme === 2) {
           this.$refs["blindBox"].startRoll();
           localStorage.setItem("prizeSuccess", JSON.stringify(res));
         }
         if (res.code === 200) {
           this.showDifferentSuccessInfo = res.data;
-          if(scheme === 1) this.status = 3;
+          if (scheme === 1) this.status = 3;
         } else if (res.code === 12) {
           this.status = 2;
         } else errorInfo(res.msg);
@@ -340,8 +350,32 @@ export default {
           break;
       }
     },
+    checkOutPayStatus(data) {
+      return new Promise((resolve, reject) => {
+        rulePayStatus(data).then((res) => {
+          if (res.code === 200) {
+            resolve(res);
+          } else reject(res.msg);
+        });
+      });
+    },
     showPayDialog() {
-      this.$emit("handleDialog", "fuliTwo");
+      const {
+        payConfig: { fuliTwoEid },
+        uid,
+        token,
+      } = this.$store.state;
+      const data = {
+        eid: fuliTwoEid,
+        uid: uid,
+        loginKey: token,
+        inviteCode: this.$route.query.code ?? null,
+      };
+      this.checkOutPayStatus(data)
+        .then(() => {
+          this.$emit("handleDialog", "fuliTwo");
+        })
+        .catch((err) => errorInfo(err));
     },
     closeDialog(event) {
       console.log(event, "event");
@@ -357,8 +391,13 @@ export default {
       }
     },
     copyLink() {
-      if (this.uid) {
-        copyShareLink(`${window.location.href}?uid=${this.uid}&ref=two`, this);
+      if (this.groupInfo.record !== null && this.uid) {
+        copyShareLink(
+          `${window.location.href}?code=${this.groupInfo.record.inviteCode}&ref=two`,
+          this
+        );
+      } else if (this.uid) {
+        errorInfo("请先购买");
       } else this.$emit("handleLoginDialog", true);
     },
     goApp() {

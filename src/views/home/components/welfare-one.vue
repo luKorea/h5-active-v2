@@ -62,16 +62,15 @@
     </div>
 
     <div class="join-success">
-      <div class="user-join-success">
-        组队成功！现在可以开始选择奖品方案啦！
-      </div>
+      <div class="user-join-success">{{ getUserPayTitle }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import { copyShareLink } from "@/utils";
+import { copyShareLink, errorInfo } from "@/utils";
 import { mapState } from "vuex";
+import { rulePayStatus } from "@/api";
 
 export default {
   name: "welfare-one",
@@ -79,7 +78,7 @@ export default {
     groupData: {
       type: Object,
       default: () => {},
-    }
+    },
   },
   data() {
     return {
@@ -108,14 +107,51 @@ export default {
         this.groupInfo.record.userInfo.length >= 2
       );
     },
+    getUserPayTitle() {
+      let title = "点击【+】或【立即充值】创建队伍！"; // 默认进入页面看到的文字
+      if (this.getInviteCode) title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
+      if (this.$route.query.code) title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
+      if (this.$route.query.code && this.getInviteCode)
+        title = "组队成功！奖品已发放到双方对应Pofi账号！"; // 被邀请人充值后看到的文字
+      return title;
+    },
   },
   methods: {
+    checkOutPayStatus(data) {
+      return new Promise((resolve, reject) => {
+        rulePayStatus(data).then((res) => {
+          if (res.code === 200) {
+            resolve(res);
+          } else reject(res.msg);
+        });
+      });
+    },
     showPayDialog() {
-      this.$emit("handleDialog", "fuliOne");
+      const {
+        payConfig: { fuliOneEid },
+        uid,
+        token,
+      } = this.$store.state;
+      const data = {
+        eid: fuliOneEid,
+        uid: uid,
+        loginKey: token,
+        inviteCode: this.$route.query.code ?? null,
+      };
+      this.checkOutPayStatus(data)
+        .then(() => {
+          this.$emit("handleDialog", "fuliOne");
+        })
+        .catch((err) => errorInfo(err));
     },
     copyLink() {
-      if (this.uid) {
-        copyShareLink(`${window.location.href}?uid=${this.uid}&ref=one`, this);
+      if (this.groupInfo.record !== null && this.uid) {
+        copyShareLink(
+          `${window.location.href}?code=${this.groupInfo.record.inviteCode}&ref=one`,
+          this
+        )
+      } else if (this.uid) {
+        errorInfo("请先购买");
       } else this.$emit("handleLoginDialog", true);
     },
   },

@@ -28,7 +28,7 @@
     <!--分享链接-->
     <send-link />
     <!--文字描述-->
-    <desc-component />
+    <desc-component :list="textList" />
     <!--底部标识-->
     <footer-component></footer-component>
     <!--公用福利弹框-->
@@ -127,6 +127,7 @@ import {
   getGroupConfig,
   getUserPrize,
   getPrizeConfig,
+  getPageConfig,
 } from "@/api";
 
 export default {
@@ -148,6 +149,8 @@ export default {
   },
   data() {
     return {
+      headerImg: null,
+      textList: null,
       showLoginDialog: false, // 登录弹框
       showLogoutDialog: false, // 退出弹框
       showPrizeDialog: false, // 奖品弹框
@@ -171,14 +174,20 @@ export default {
     };
   },
   mounted() {
-    // if (this.$store.state.uid) {
-    //   this.getUserPrizeInfo({
-    //     loginKey: this.$store.state.token,
-    //     uid: this.$store.state.uid,
-    //   });
-    // }
-    this.$store.dispatch("getGroupConfigAction");
-    this.getGroupData();
+    this.getPageData();
+    if (this.$route.query.code) {
+      // this.getAllData();
+      this.$store.dispatch("getGroupConfigAction");
+      this.getGroupData({
+        inviteCode: this.$route.query.code,
+      });
+      console.log(1);
+    } else if (this.uid) {
+      this.getAllData();
+    } else {
+      this.getGroupData();
+      this.$store.dispatch("getGroupConfigAction");
+    }
     this.getWelfareList();
     this.queryInfo = this.$route.query;
     this.$nextTick(() => {
@@ -189,31 +198,47 @@ export default {
         }
       }, 1000);
     });
+    // 友盟数据埋点
+    const script = document.createElement("script");
+    script.src =
+      "https://s4.cnzz.com/z_stat.php?id=1280511914&web_id=1280511914";
+    script.language = "JavaScript";
+    document.body.appendChild(script);
+    // const that = this;
+    // setTimeout(() => {
+    //   if (that._isWechat()) {
+    //     window._czc.push(['_trackEvent', '2021双旦微信端', '页面被打开', 'huodong_wx'])
+    //   }
+    //   window._czc.push(['_trackEvent', '2021双旦Web端', '页面被打开', 'huodong'])
+    // }, 2000)
   },
   computed: {
-    ...mapState(["uid", "userInfo"]),
+    ...mapState(["uid", "userInfo", "payConfig"]),
   },
   methods: {
+    getPageData() {
+      getPageConfig().then((res) => {
+        if (res.code === 200) {
+          this.headerImg = res.data.imgUrl[0];
+          this.textList = res.data.text;
+        }
+      });
+    },
+    getAllData() {
+      this.getUserPrizeInfo({
+        loginKey: this.$store.state.token,
+        uid: this.$store.state.uid,
+      });
+      this.$store.dispatch("getGroupConfigAction");
+      this.getGroupData({
+        uid: this.uid,
+      });
+    },
     /* 获取组队信息 */
-    getGroupData() {
-      getGroupConfig().then((res) => {
+    getGroupData(params) {
+      getGroupConfig(params).then((res) => {
         if (res.code === 200) {
           this.groupData = res.data;
-          this.groupData.forEach((item) => {
-            item.record = {};
-            item.record.userInfo = [
-              {
-                nickName: "korea",
-                iconUrl:
-                  "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-              },
-              {
-                nickName: "korea",
-                iconUrl:
-                  "http://f2.pofiapp.com/9f4ad170dd6811ebbf9223410624d2f3.jpg",
-              },
-            ];
-          });
         } else errorInfo(res.msg);
       });
     },
@@ -232,14 +257,11 @@ export default {
       const _this = this;
       this.$store
         .dispatch("loginAction", data)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           successInfo("登录成功");
-          // _this.getUserPrizeInfo({
-          //   loginKey: res.loginKey,
-          //   uid: res.uid,
-          // });
           _this.showLoginDialog = false;
+          this.getAllData();
+          // window.location.reload();
         })
         .catch((err) => errorInfo(err));
     },
@@ -248,6 +270,8 @@ export default {
       getUserPrize(params).then((res) => {
         if (res.code === 200) {
           this.prizeInfo = res.data;
+        } else if (res.code === 2) {
+          this.logout();
         } else errorInfo(res.msg);
       });
     },
@@ -269,6 +293,10 @@ export default {
     },
     // 我的奖品弹框
     handlePrizeDialog(status) {
+      this.getUserPrizeInfo({
+        loginKey: this.$store.state.token,
+        uid: this.$store.state.uid,
+      });
       this.showPrizeDialog = status;
     },
     closeDialog(status) {
@@ -291,16 +319,16 @@ export default {
     },
     logout() {
       this.$store.dispatch("logoutAction").then(() => {
-        successInfo("退出成功");
+        // successInfo("退出成功");
         window.location.reload();
       });
     },
+
     payWechat() {
       const {
-        payConfig: { fuliOneSnId, fuliTwoSnId },
+        payConfig: { fuliOneSnId, fuliTwoSnId, fuliOneEid, fuliTwoEid },
         uid,
         token,
-        groupConfig,
       } = this.$store.state;
       const type = this.openType === "fuliOne";
       let data = {
@@ -312,7 +340,7 @@ export default {
         from: 2,
         remark: JSON.stringify({
           type: "7",
-          eid: type ? groupConfig[0].id : groupConfig[1].id,
+          eid: type ? fuliOneEid : fuliTwoEid,
           inviteCode: this.queryInfo.code ?? null,
         }),
       };
@@ -338,10 +366,9 @@ export default {
     },
     payAli() {
       const {
-        payConfig: { fuliOneSnId, fuliTwoSnId },
+        payConfig: { fuliOneSnId, fuliTwoSnId, fuliOneEid, fuliTwoEid },
         uid,
         token,
-        groupConfig,
       } = this.$store.state;
       const type = this.openType === "fuliOne";
       let data = {
@@ -352,7 +379,7 @@ export default {
         from: 2,
         remark: JSON.stringify({
           type: "7",
-          eid: type ? groupConfig[0].id : groupConfig[1].id,
+          eid: type ? fuliOneEid : fuliTwoEid,
           inviteCode: this.$route.query.code ?? null,
         }),
         appid: urlLink.alipayAPPID,

@@ -101,10 +101,10 @@ export default {
 
       //  盲盒抽奖
       timer: null,
-      index: 0, // 当前转动到哪个位置，第一次起点位置0,
+      index: 1, // 当前转动到哪个位置，第一次起点位置0,
       count: 6, // 总共有多少个位置
       times: 0, // 转动跑格子次数,
-      cycle: 10, // 转动基本次数：即至少需要转动多少次再进入抽奖环节
+      cycle: 6, // 转动基本次数：即至少需要转动多少次再进入抽奖环节
       speed: 100, // 初始转动速度
       prize: 1,
     };
@@ -175,7 +175,7 @@ export default {
       this.times += 1; // 转动次数
       this.oneRoll(); // 转动过程调用的每一次转动方法，这里是第一次调用初始化
       // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
-      if (this.times > this.cycle + 1 && this.prize === this.index) {
+      if (this.times > this.cycle + 1) {
         clearTimeout(this.timer); // 清除转动定时器
         this.times = 0; // 转动跑格子次数初始化为0，可以开始下次抽奖
         let res = JSON.parse(localStorage.getItem("prizeSuccess"));
@@ -185,15 +185,14 @@ export default {
             type: 4,
             ...res.data,
           });
-        }
-        if (res.code === 12) {
+        } else if (res.code === 12) {
           this.$emit("showDifferentDialog", {
             type: 6,
             ...res.data,
           });
         }
       } else {
-        if (this.times < this.cycle - 20) {
+        if (this.times < this.cycle - 1) {
           this.speed -= 4; // 加快转动速度
         } else {
           this.speed += 10; // 抽奖即将结束，放慢转动速度
@@ -204,7 +203,7 @@ export default {
     // 每一次转动
     oneRoll() {
       let index = this.index; // 当前转动到哪个位置
-      const count = 6; // 总共有多少个位置
+      const count = 7; // 总共有多少个位置
       index += 1;
       if (index > count - 1) {
         index = 0;

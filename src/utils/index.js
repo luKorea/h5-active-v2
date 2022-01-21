@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-20 13:48:30
- * @LastEditors: your name
+ * @LastEditTime: 2022-01-21 14:28:51
+ * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -19,12 +19,7 @@ export const successInfo = (message) =>
     duration: 1000,
   });
 
-export const errorInfo = (message) =>
-  Toast({
-    message,
-    type: "fail",
-    duration: 1000,
-  });
+export const errorInfo = (message) => Toast(message);
 
 export const goAnchor = (el, instance) => {
   instance.$el.querySelector(el).scrollIntoView();
@@ -34,10 +29,10 @@ export const copyShareLink = (url, app) => {
   app
     .$copyText(url)
     .then(() => {
-      successInfo("已复制链接，快分享给好友，组队赢好礼吧！");
+      Toast("已复制链接，快分享给好友，组队赢好礼吧！");
     })
     .catch(() => {
-      errorInfo("复制失败");
+      Toast("复制失败");
     });
 };
 

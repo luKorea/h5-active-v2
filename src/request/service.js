@@ -49,10 +49,12 @@ class KoreaRequest {
     this.instance.interceptors.response.use(
       (response) => {
         // this.loading?.close();
+        Toast.clear();
         return response.data;
       },
       (error) => {
         // this.loading?.close();
+        Toast.clear();
         return error;
       }
     );

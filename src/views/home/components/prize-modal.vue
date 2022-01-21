@@ -35,19 +35,19 @@
             <div class="show-prize animate__animated animate__fadeIn">
               <div class="prize-content">
                 <div class="table-row">
-                  <div style="margin-right: 80px">到账时间</div>
+                  <div style="margin-right: 64px">到账时间</div>
                   <div style="margin-right: 40px">奖品</div>
                   <div>来源</div>
                 </div>
-                <template v-if="tableList && tableList.length > 0">
+                <template v-if="list && list.length > 0">
                   <div
                     class="table-col"
-                    v-for="(item, index) in tableList"
+                    v-for="(item, index) in list"
                     :key="index"
                   >
-                    <div style="margin-right: 20px">{{ item.time }}</div>
-                    <div style="margin-right: 28px">{{ item.name }}</div>
-                    <div>{{ item.form }}</div>
+                    <div style="margin-right: 40px;">{{ item.date }}</div>
+                    <div style="width: 60px; margin-right: 10px">{{ item.name }}</div>
+                    <div>{{ item.state }}</div>
                   </div>
                 </template>
               </div>
@@ -104,32 +104,15 @@ export default {
       showImg: null,
       bgStyle: {},
       descList: prizeDesc,
-      tableList: [
-        {
-          time: "2021/11/05/11:22",
-          name: "30P币",
-          form: "充值128P",
-        },
-        {
-          time: "2021/11/05/11:22",
-          name: "30P币",
-          form: "购买SVIP",
-        },
-        {
-          time: "2021/11/05/11:22",
-          name: "30P币",
-          form: "重复人偶",
-        }
-      ],
     };
   },
-  watch: {
-    showDialog: {
-      handler() {
-        this.showDialog ? this.noSliding() : this.sliding();
-      },
-    },
-  },
+  // watch: {
+  //   showDialog: {
+  //     handler() {
+  //       this.showDialog ? this.noSliding() : this.sliding();
+  //     },
+  //   },
+  // },
   mounted() {
     this.showDifferentImg();
   },

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-20 16:44:32
+ * @LastEditTime: 2022-01-21 14:52:18
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/store/index.js
@@ -73,7 +73,7 @@ export default new Vuex.Store({
       const result = await getGroupConfig();
       let payload = {};
       if (result.code === 200) {
-        if(result.data && result.data.length > 0) {
+        if (result.data && result.data.length > 0) {
           payload = {
             fuliOneEid: result.data[0].id,
             fuliOneSnId: result.data[0].snId,
@@ -81,9 +81,9 @@ export default new Vuex.Store({
             fuliTwoEid: result.data[1].id,
             fuliTwoSnId: result.data[1].snId,
             fuliTwoPrice: result.data[1].price,
-          }
+          };
         } else {
-          payload = {}
+          payload = {};
         }
       }
       commit("SET_PAY_CONFIG", payload);
