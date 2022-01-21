@@ -387,7 +387,7 @@ export default {
           inviteCode: this.$route.query.code ?? null,
         }),
         appid: urlLink.alipayAPPID,
-        returnUrl: window.location.href
+        returnUrl: window.location.href,
       };
       ailPay(data)
         .then((res) => {
