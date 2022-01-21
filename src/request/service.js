@@ -4,7 +4,8 @@ import { Toast } from "vant";
 
 const DEFAULT_LOADING = true;
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 class KoreaRequest {
   instance = "";
   interceptors = {};

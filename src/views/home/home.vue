@@ -360,7 +360,15 @@ export default {
                   console.log(err, "错误");
                 });
             } else {
-              window.location.href = res.data.wxRes.mweburl;
+              console.log(res.data.wxRes.mweburl);
+              const form = document.createElement("form");
+              document.body.appendChild(form);
+              form.action = res.data.wxRes.mweburl;
+              form.method = "post";
+              // form.submit();
+              console.log(form);
+              // document.body.removeChild(form);
+              // window.location.href = res.data.wxRes.mweburl;
             }
           } else errorInfo(res.msg);
         })
