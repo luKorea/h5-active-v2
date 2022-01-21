@@ -45,8 +45,10 @@
                     v-for="(item, index) in list"
                     :key="index"
                   >
-                    <div style="margin-right: 40px;">{{ item.date }}</div>
-                    <div style="width: 60px; margin-right: 10px">{{ item.name }}</div>
+                    <div style="margin-right: 40px">{{ item.date }}</div>
+                    <div style="width: 60px; margin-right: 10px">
+                      {{ item.name }}
+                    </div>
                     <div>{{ item.state }}</div>
                   </div>
                 </template>

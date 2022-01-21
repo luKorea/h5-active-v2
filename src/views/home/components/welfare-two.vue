@@ -238,9 +238,14 @@ export default {
     ...mapState(["uid", "groupConfig", "userInfo", "token", "payConfig"]),
     getUserPayTitle() {
       let title = "点击【+】或【立即充值】创建队伍！"; // 默认进入页面看到的文字
-      if (this.uid) title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
-      if (this.$route.query.id) title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
-      if (this.$route.query.id && this.uid === 1)
+      if (
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.inviteCode
+      )
+        title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
+      if (this.$route.query.code) title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
+      if (this.$route.query.code && this.groupInfo.record.inviteCode)
         title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
       return title;
     },
@@ -360,22 +365,26 @@ export default {
       });
     },
     showPayDialog() {
-      const {
-        payConfig: { fuliTwoEid },
-        uid,
-        token,
-      } = this.$store.state;
-      const data = {
-        eid: fuliTwoEid,
-        uid: uid,
-        loginKey: token,
-        inviteCode: this.$route.query.code ?? null,
-      };
-      this.checkOutPayStatus(data)
-        .then(() => {
-          this.$emit("handleDialog", "fuliTwo");
-        })
-        .catch((err) => errorInfo(err));
+      if (!this.uid) {
+        this.$emit("handleLoginDialog", true);
+      } else {
+        const {
+          payConfig: { fuliTwoEid },
+          uid,
+          token,
+        } = this.$store.state;
+        const data = {
+          eid: fuliTwoEid,
+          uid: uid,
+          loginKey: token,
+          inviteCode: this.$route.query.code ?? null,
+        };
+        this.checkOutPayStatus(data)
+          .then(() => {
+            this.$emit("handleDialog", "fuliTwo");
+          })
+          .catch((err) => errorInfo(err));
+      }
     },
     closeDialog(event) {
       console.log(event, "event");
@@ -397,7 +406,7 @@ export default {
           this
         );
       } else if (this.uid) {
-        errorInfo("请先购买");
+        this.showPayDialog();
       } else this.$emit("handleLoginDialog", true);
     },
     goApp() {
