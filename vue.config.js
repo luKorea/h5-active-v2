@@ -7,8 +7,8 @@
  * @FilePath: /h5-active-v2/vue.config.js
  */
 module.exports = {
-  publicPath: './',
-  assetsDir: './',
+  publicPath: "./",
+  assetsDir: "./",
   devServer: {
     hot: true,
     open: true,

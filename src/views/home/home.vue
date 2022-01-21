@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <home-header v-once />
+    <home-header v-once :header-img="headerImg" />
     <flex-btn
       @handleLoginDialog="handleLoginDialog"
       @handlePrizeDialog="handlePrizeDialog"
@@ -253,6 +253,9 @@ export default {
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
     },
+    _isAli() {
+      return /AlipayClient/.test(window.navigator.userAgent);
+    },
     phoneLogin(data) {
       const _this = this;
       this.$store
@@ -343,6 +346,7 @@ export default {
           eid: type ? fuliOneEid : fuliTwoEid,
           inviteCode: this.queryInfo.code ?? null,
         }),
+        returnUrl: window.location.href,
       };
       wechatPay(data)
         .then((res) => {
@@ -383,6 +387,7 @@ export default {
           inviteCode: this.$route.query.code ?? null,
         }),
         appid: urlLink.alipayAPPID,
+        returnUrl: window.location.href
       };
       ailPay(data)
         .then((res) => {
