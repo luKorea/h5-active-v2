@@ -66,7 +66,7 @@
           </div>
           <div class="fuli-tip">
             <!--根据地址栏是否有邀请人ID判断当前显示文字-->
-            {{ $route.query._id ? fuliOur : fuliOnce }}
+            {{ $route.query.code ? fuliOur : fuliOnce }}
           </div>
           <div class="pay-btn">
             <div class="wechat-pay" @click="payWechat">
@@ -121,6 +121,7 @@ import { errorInfo, successInfo, _isWechatPay } from "@/utils";
 import PrizeModal from "@/views/home/components/prize-modal";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
+import urlencode from "urlencode";
 import {
   wechatPay,
   ailPay,
@@ -129,6 +130,8 @@ import {
   getPrizeConfig,
   getPageConfig,
 } from "@/api";
+// import { getCode } from "@/utils/getCode";
+import { Dialog } from "vant";
 
 export default {
   name: "Home",
@@ -175,6 +178,9 @@ export default {
   },
   mounted() {
     this.getPageData();
+    // if (this._isWechat()) {
+    //   getCode(urlLink.wechatAPPID);
+    // }
     if (this.$route.query.code) {
       // this.getAllData();
       this.$store.dispatch("getGroupConfigAction");
@@ -229,10 +235,13 @@ export default {
         loginKey: this.$store.state.token,
         uid: this.$store.state.uid,
       });
-      this.$store.dispatch("getGroupConfigAction");
-      this.getGroupData({
-        uid: this.uid,
-      });
+      if (!this.$route.query.code) {
+        this.$store.dispatch("getGroupConfigAction");
+        this.getGroupData({
+          uid: this.uid,
+          inviteCode: this.$route.query.code ?? null,
+        });
+      }
     },
     /* 获取组队信息 */
     getGroupData(params) {
@@ -274,7 +283,11 @@ export default {
         if (res.code === 200) {
           this.prizeInfo = res.data;
         } else if (res.code === 2) {
-          this.logout();
+          Dialog.alert({
+            message: "登录超时，请重新登录",
+          }).then(() => {
+            this.logout();
+          });
         } else errorInfo(res.msg);
       });
     },
@@ -340,7 +353,7 @@ export default {
         uid: uid,
         loginKey: token,
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
-        from: 2,
+        from: this._isWechat() ? 3 : 2,
         remark: JSON.stringify({
           type: "7",
           eid: type ? fuliOneEid : fuliTwoEid,
@@ -360,15 +373,10 @@ export default {
                   console.log(err, "错误");
                 });
             } else {
-              console.log(res.data.wxRes.mweburl);
-              const form = document.createElement("form");
-              document.body.appendChild(form);
-              form.action = res.data.wxRes.mweburl;
-              form.method = "post";
-              // form.submit();
-              console.log(form);
-              // document.body.removeChild(form);
-              // window.location.href = res.data.wxRes.mweburl;
+              let backUrl = window.location.href;
+              window.location.href = `${
+                res.data.wxRes.mweburl
+              }&redirect_url=${urlencode(backUrl)}`;
             }
           } else errorInfo(res.msg);
         })
@@ -401,12 +409,6 @@ export default {
         .then((res) => {
           if (res.code === 200) {
             window.location.href = res.data.aliRes;
-            // const div = document.createElement("div");
-            // const form = res.data.aliRes;
-            // div.id = "alipay";
-            // div.innerHTML = form;
-            // document.body.appendChild(div);
-            // document.querySelector("#alipay").children[0].submit(); // 执行后会唤起支付宝
           } else errorInfo(res.msg);
         })
         .catch((err) => {

@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-01-21 14:28:51
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-01-24 16:26:50
+ * @LastEditors: korealu
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -46,8 +46,8 @@ export function onBridgeReady(data) {
       nonceStr: data.noncestr,
       timeStamp: data.timestamp,
       package: "prepay_id=" + data.prepayid,
-      trade_type: "MWEB",
       signType: "MD5",
+      jsApiList: ["chooseWXPay"],
     };
     window.WeixinJSBridge.invoke(
       "getBrandWCPayRequest",

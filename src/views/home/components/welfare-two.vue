@@ -27,7 +27,9 @@
             @click="copyLink"
           >
             <div class="item-add"></div>
-            <div class="item-title">邀请好友</div>
+            <div class="item-title">
+               {{ index === 0 ? "创建队伍" : "邀请好友" }}
+            </div>
           </div>
         </template>
         <!-- 只有一个用户 -->
@@ -35,7 +37,11 @@
         <template v-if="eventTwo">
           <div class="user-join-item">
             <div class="user-icon">
-              <img :src="groupInfo.record.userInfo[0].iconUrl" alt="" />
+              <img
+                :src="groupInfo.record.userInfo[0].iconUrl"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
             </div>
             <div class="item-title">
               {{ groupInfo.record.userInfo[0].nickName }}
@@ -43,7 +49,9 @@
           </div>
           <div class="user-join-item" @click="copyLink">
             <div class="item-add"></div>
-            <div class="item-title">邀请好友</div>
+            <div class="item-title">
+              {{ $route.query.code ? "加入组队" : "邀请好友" }}
+            </div>
           </div>
         </template>
         <!-- 组队数目大于二的情况 -->
@@ -54,7 +62,7 @@
             :key="index"
           >
             <div class="user-icon">
-              <img :src="item.iconUrl" alt="" />
+              <img :src="item.iconUrl" alt="" referrerpolicy="no-referrer" />
             </div>
             <div class="item-title">{{ item.nickName }}</div>
           </div>
@@ -232,22 +240,39 @@ export default {
        */
       status: 1,
       showDifferentSuccessInfo: {},
+      userPayStatus: false,
     };
   },
   computed: {
     ...mapState(["uid", "groupConfig", "userInfo", "token", "payConfig"]),
     getUserPayTitle() {
       let title = "点击【+】或【立即充值】创建队伍！"; // 默认进入页面看到的文字
+      if (this.groupInfo == null) {
+        title = "点击【+】或【立即充值】创建队伍！";
+      }
       if (
         this.groupInfo &&
         this.groupInfo.record !== null &&
         this.groupInfo.record.inviteCode
       )
         title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
-      if (this.$route.query.code) title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
-      if (this.$route.query.code && this.groupInfo.record.inviteCode)
+      if (
+        this.$route.query.code &&
+        this.groupInfo &&
+        this.groupInfo.record !== null
+      )
+        title = "点击【+】或【立即购买】加入组队！"; // 被邀请人进入页面后看得文字
+      if (
+        this.$route.query.code &&
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length >= 2
+      )
         title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
       return title;
+    },
+    groupId() {
+      return this.groupInfo.record?.userInfo[0].uid;
     },
     groupInfo() {
       return this.groupData;
@@ -400,12 +425,17 @@ export default {
       }
     },
     copyLink() {
-      if (this.groupInfo.record !== null && this.uid) {
-        copyShareLink(
-          `${window.location.href}?code=${this.groupInfo.record.inviteCode}&ref=two`,
-          this
-        );
-      } else if (this.uid) {
+      if (
+        this.groupInfo.record !== null &&
+        this.uid &&
+        this.uid === this.groupId
+      ) {
+        if (this.uid === this.groupId) {
+          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=two`;
+          console.log(href, "链接");
+          copyShareLink(href, this);
+        } else this.showPayDialog();
+      } else if (this.uid !== this.groupId) {
         this.showPayDialog();
       } else this.$emit("handleLoginDialog", true);
     },

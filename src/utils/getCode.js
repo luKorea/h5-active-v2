@@ -1,3 +1,11 @@
+/*
+ * @Author: korealu
+ * @Date: 2022-01-18 14:46:55
+ * @LastEditors: korealu
+ * @LastEditTime: 2022-01-24 14:05:12
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/utils/getCode.js
+ */
 export function getCode(appid) {
   let appId = appid; //填写公众号APPID
   let local = window.location.href; //当前地址
