@@ -48,7 +48,7 @@ export function onBridgeReady(data) {
     // jsApiList: ["chooseWXPay"],
   };
   console.log(data, "后台返回的参数");
-  console.log(result,"调起微信支付的参数");
+  console.log(result, "调起微信支付的参数");
   return new Promise((resolve, reject) => {
     window.WeixinJSBridge.invoke(
       "getBrandWCPayRequest",

@@ -10,12 +10,14 @@ import { getUserOpenId } from "@/api";
 import { errorInfo } from "@/utils";
 
 export function getCode(appid, code) {
-  // "http://event.pofi.pro" ?? 
+  // "http://event.pofi.pro" ??
   let local = window.location.origin + window.location.pathname; //当前地址
   console.log(code, "微信授权code", "链接", local);
   //没有授权的code
   if (code == null || code === "") {
-    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`; //跳转授权链接
+    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(
+      local
+    )}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`; //跳转授权链接
     // eslint-disable-next-line no-undef
     scope = snsapi_base; //这句是静默授权的意思
   } else {

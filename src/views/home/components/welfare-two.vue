@@ -392,7 +392,10 @@ export default {
     showPayDialog() {
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
-      } else if (this.$route.query.inviteCode && this.$route.query.ref !== "two") {
+      } else if (
+        this.$route.query.inviteCode &&
+        this.$route.query.ref !== "two"
+      ) {
         this.$emit("handleShowOpenNewGroup");
       } else {
         const {

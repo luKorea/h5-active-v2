@@ -156,7 +156,10 @@ export default {
       console.log(this.uid, this.$route.query.uid);
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
-      } else if (this.$route.query.inviteCode && this.$route.query.ref !== "one") {
+      } else if (
+        this.$route.query.inviteCode &&
+        this.$route.query.ref !== "one"
+      ) {
         this.$emit("handleShowOpenNewGroup");
       } else {
         const {
