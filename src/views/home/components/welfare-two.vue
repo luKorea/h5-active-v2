@@ -50,7 +50,7 @@
           <div class="user-join-item" @click="copyLink">
             <div class="item-add"></div>
             <div class="item-title">
-              {{ $route.query.code ? "加入组队" : "邀请好友" }}
+              {{ $route.query.inviteCode ? "加入组队" : "邀请好友" }}
             </div>
           </div>
         </template>
@@ -257,13 +257,13 @@ export default {
       )
         title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
       if (
-        this.$route.query.code &&
+        this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null
       )
         title = "点击【+】或【立即购买】加入组队！"; // 被邀请人进入页面后看得文字
       if (
-        this.$route.query.code &&
+        this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null &&
         this.groupInfo.record.userInfo.length >= 2
@@ -350,7 +350,7 @@ export default {
         force: force,
         loginKey: this.token,
         uid: this.uid,
-        rewardId: scheme === 1 ? this.showDifferentSuccessInfo.id : null,
+        rewardId: scheme === 1 ? this.showDifferentSuccessInfo.id : 0,
         scheme: scheme,
       };
       getPrizeToUser(data).then((res) => {
@@ -392,10 +392,7 @@ export default {
     showPayDialog() {
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
-      } else if (
-        this.$route.query.code &&
-        this.$route.query.ref !== "two"
-      ) {
+      } else if (this.$route.query.inviteCode && this.$route.query.ref !== "two") {
         this.$emit("handleShowOpenNewGroup");
       } else {
         const {
@@ -407,7 +404,7 @@ export default {
           eid: fuliTwoEid,
           uid: uid,
           loginKey: token,
-          inviteCode: this.$route.query.code ?? null,
+          inviteCode: this.$route.query.inviteCode ?? null,
         };
         this.checkOutPayStatus(data)
           .then(() => {
@@ -436,7 +433,7 @@ export default {
         this.uid === this.groupId
       ) {
         if (this.uid === this.groupId) {
-          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=two&uid=${this.uid}`;
+          const href = `${window.location.origin}${window.location.pathname}?inviteCode=${this.groupInfo.record.inviteCode}&ref=two`;
           console.log(href, "链接");
           copyShareLink(href, this);
         } else this.showPayDialog();

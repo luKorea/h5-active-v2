@@ -68,7 +68,7 @@ export default {
   position: fixed;
   right: 6px;
   top: 280px;
-  z-index: 99;
+  z-index: 20;
   .flex-btn {
     display: flex;
     flex-direction: column;
@@ -81,11 +81,12 @@ export default {
       width: 60px;
       background: linear-gradient(270deg, #81221d 26%, #fef6ea 100%);
       opacity: 0.7;
-      border-radius: 22px;
-      padding: 4px 2px;
+      border-radius: 24px;
+      height: 50px;
       img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
       }
       .user-icon {
         width: 42px;

@@ -49,7 +49,7 @@
           <div class="user-join-item" @click="copyLink">
             <div class="item-add"></div>
             <div class="item-title">
-              {{ $route.query.code ? "加入组队" : "邀请好友" }}
+              {{ $route.query.inviteCode ? "加入组队" : "邀请好友" }}
             </div>
           </div>
         </template>
@@ -127,13 +127,13 @@ export default {
       )
         title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
       if (
-        this.$route.query.code &&
+        this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null
       )
         title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
       if (
-        this.$route.query.code &&
+        this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null &&
         this.groupInfo.record.userInfo.length >= 2
@@ -156,7 +156,7 @@ export default {
       console.log(this.uid, this.$route.query.uid);
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
-      } else if (this.$route.query.code && this.$route.query.ref !== "one") {
+      } else if (this.$route.query.inviteCode && this.$route.query.ref !== "one") {
         this.$emit("handleShowOpenNewGroup");
       } else {
         const {
@@ -168,7 +168,7 @@ export default {
           eid: fuliOneEid,
           uid: uid,
           loginKey: token,
-          inviteCode: this.$route.query.code ?? null,
+          inviteCode: this.$route.query.inviteCode ?? null,
         };
         this.checkOutPayStatus(data)
           .then(() => {
@@ -184,7 +184,7 @@ export default {
         this.uid === this.groupId
       ) {
         if (this.uid === this.groupId) {
-          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=one&uid=${this.uid}`;
+          const href = `${window.location.origin}${window.location.pathname}?inviteCode=${this.groupInfo.record.inviteCode}&ref=one`;
           console.log(href, "链接");
           copyShareLink(href, this);
         } else this.showPayDialog();

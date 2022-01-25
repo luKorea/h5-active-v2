@@ -1,3 +1,11 @@
+/*
+ * @Author: korealu
+ * @Date: 2022-01-18 14:46:55
+ * @LastEditors: korealu
+ * @LastEditTime: 2022-01-25 10:13:28
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/utils/index.js
+ */
 import { Toast } from "vant";
 
 export const openUrl = (url, blank = "_self") => {
@@ -29,18 +37,19 @@ export const copyShareLink = (url, app) => {
 };
 
 export function onBridgeReady(data) {
+  const result = {
+    ...data,
+    paySign: data.sign,
+    appId: data.appid,
+    nonceStr: data.noncestr,
+    timeStamp: data.timestamp,
+    package: "prepay_id=" + data.prepayid,
+    signType: "MD5",
+    // jsApiList: ["chooseWXPay"],
+  };
+  console.log(data, "后台返回的参数");
+  console.log(result,"调起微信支付的参数");
   return new Promise((resolve, reject) => {
-    //挂在window注意
-    const result = {
-      ...data,
-      paySign: data.sign,
-      appId: data.appid,
-      nonceStr: data.noncestr,
-      timeStamp: data.timestamp,
-      package: "prepay_id=" + data.prepayid,
-      signType: "MD5",
-      // jsApiList: ["chooseWXPay"],
-    };
     window.WeixinJSBridge.invoke(
       "getBrandWCPayRequest",
       result,

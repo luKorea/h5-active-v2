@@ -68,7 +68,7 @@
           </div>
           <div class="fuli-tip">
             <!--根据地址栏是否有邀请人ID判断当前显示文字-->
-            {{ $route.query.code ? fuliOur : fuliOnce }}
+            {{ $route.query.inviteCode ? fuliOur : fuliOnce }}
           </div>
           <div class="pay-btn">
             <div class="wechat-pay" @click="payWechat">
@@ -133,7 +133,7 @@ import {
   getPrizeConfig,
   getPageConfig,
 } from "@/api";
-// import { getCode } from "@/utils/getCode";
+import { getCode } from "@/utils/getCode";
 import { Dialog } from "vant";
 
 export default {
@@ -178,21 +178,26 @@ export default {
       prizeInfo: null,
       welfareListData: [],
       logoutTitle: "是否退出登录",
+      logoutStatus: false,
     };
   },
   mounted() {
     this.getPageData();
-    // if (this._isWechat()) {
-    //   getCode(urlLink.wechatAPPID);
-    // }
-    if (this.$route.query.code) {
-      // this.getAllData();
+    console.log(localStorage.getItem("openId"), "openId");
+    if (this._isWechat()) {
+      if (localStorage.getItem("openId") == null) {
+        getCode("wx4e33f34be6700e46", this.$route.query.code);
+        return;
+      }
+    }
+    // 被邀请人
+    if (this.$route.query.inviteCode) {
       this.$store.dispatch("getGroupConfigAction");
       this.getGroupData({
-        inviteCode: this.$route.query.code,
+        inviteCode: this.$route.query.inviteCode,
       });
-      console.log(1);
-    } else if (this.uid) {
+    } else if (this.uid || (this.uid && this.$route.query.inviteCode)) {
+      // 邀请人
       this.getAllData();
     } else {
       this.getGroupData();
@@ -239,11 +244,11 @@ export default {
         loginKey: this.$store.state.token,
         uid: this.$store.state.uid,
       });
-      if (!this.$route.query.code) {
+      if (!this.$route.query.inviteCode) {
         this.$store.dispatch("getGroupConfigAction");
         this.getGroupData({
           uid: this.uid,
-          inviteCode: this.$route.query.code ?? null,
+          inviteCode: this.$route.query.inviteCode ?? null,
         });
       }
     },
@@ -340,13 +345,15 @@ export default {
     openLogoutDialog(status) {
       this.showLogoutDialog = true;
       if (status === "logout") {
+        this.logoutStatus = false;
         this.logoutTitle = "是否退出登录";
       } else {
+        this.logoutStatus = true;
         this.logoutTitle = "是否回到自己的页面开启新的组队";
       }
     },
     logout() {
-      if (this.$route.query.code) {
+      if (this.$route.query.inviteCode && this.logoutStatus) {
         window.location.href =
           window.location.origin + window.location.pathname;
       } else {
@@ -373,9 +380,10 @@ export default {
         remark: JSON.stringify({
           type: "7",
           eid: type ? fuliOneEid : fuliTwoEid,
-          inviteCode: this.queryInfo.code ?? null,
+          inviteCode: this.queryInfo.inviteCode ?? null,
         }),
         returnUrl: window.location.href,
+        openId: this._isWechat() ? localStorage.getItem("openId") : null,
       };
       wechatPay(data)
         .then((res) => {
@@ -416,7 +424,7 @@ export default {
         remark: JSON.stringify({
           type: "7",
           eid: type ? fuliOneEid : fuliTwoEid,
-          inviteCode: this.$route.query.code ?? null,
+          inviteCode: this.$route.query.inviteCode ?? null,
         }),
         appid: urlLink.alipayAPPID,
         returnUrl: window.location.href,
