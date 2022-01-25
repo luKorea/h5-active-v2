@@ -4,7 +4,7 @@
     <flex-btn
       @handleLoginDialog="handleLoginDialog"
       @handlePrizeDialog="handlePrizeDialog"
-      @handleLogout="showLogoutDialog = true"
+      @handleLogout="openLogoutDialog"
     />
     <!--红包区域-->
     <red-envelopes @anchor="goAnchor" />
@@ -13,6 +13,7 @@
       ref="one"
       @handleDialog="openDifferentDialog"
       @handleLoginDialog="showLoginDialog = true"
+      @handleShowOpenNewGroup="openLogoutDialog"
       :group-data="groupData[0]"
     />
     <!-- 福利二-->
@@ -20,6 +21,7 @@
       ref="two"
       @handleLoginDialog="showLoginDialog = true"
       @handleDialog="openDifferentDialog"
+      @handleShowOpenNewGroup="openLogoutDialog"
       :group-data="groupData[1]"
       :list-data="welfareListData"
     />
@@ -92,6 +94,7 @@
       :show-dialog="showLogoutDialog"
       @logout="logout"
       @closeDialog="closeDialog"
+      :title="logoutTitle"
     />
     <!--我的奖品弹框-->
     <prize-modal
@@ -174,6 +177,7 @@ export default {
       groupData: [],
       prizeInfo: null,
       welfareListData: [],
+      logoutTitle: "是否退出登录",
     };
   },
   mounted() {
@@ -333,11 +337,23 @@ export default {
     handleCancel(e) {
       this.showDialog = e;
     },
+    openLogoutDialog(status) {
+      this.showLogoutDialog = true;
+      if (status === "logout") {
+        this.logoutTitle = "是否退出登录";
+      } else {
+        this.logoutTitle = "是否回到自己的页面开启新的组队";
+      }
+    },
     logout() {
-      this.$store.dispatch("logoutAction").then(() => {
-        // successInfo("退出成功");
-        window.location.reload();
-      });
+      if (this.$route.query.code) {
+        window.location.href =
+          window.location.origin + window.location.pathname;
+      } else {
+        this.$store.dispatch("logoutAction").then(() => {
+          window.location.reload();
+        });
+      }
     },
 
     payWechat() {

@@ -153,8 +153,11 @@ export default {
       });
     },
     showPayDialog() {
+      console.log(this.uid, this.$route.query.uid);
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
+      } else if (this.$route.query.code && this.$route.query.ref !== "one") {
+        this.$emit("handleShowOpenNewGroup");
       } else {
         const {
           payConfig: { fuliOneEid },
@@ -181,7 +184,7 @@ export default {
         this.uid === this.groupId
       ) {
         if (this.uid === this.groupId) {
-          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=one`;
+          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=one&uid=${this.uid}`;
           console.log(href, "链接");
           copyShareLink(href, this);
         } else this.showPayDialog();

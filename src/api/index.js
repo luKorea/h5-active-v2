@@ -20,7 +20,7 @@ export const userLogin = (params) => {
   return request.post({
     url: `/api/doll/user/phone/login`,
     // params: params,
-    data: params
+    data: params,
   });
 };
 

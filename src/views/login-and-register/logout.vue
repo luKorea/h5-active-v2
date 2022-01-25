@@ -6,7 +6,7 @@
   >
     <template #content>
       <div class="logout-content">
-        <div class="title">是否退出登录</div>
+        <div class="title">{{ title }}</div>
         <div class="btn-wrap">
           <div class="yes" @click="logout">是</div>
           <div class="no" @click="closeDialog">否</div>
@@ -26,6 +26,10 @@ export default {
     showDialog: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: "是否退出登录",
     },
   },
   data() {
@@ -49,7 +53,7 @@ export default {
 <style lang="less" scoped>
 .logout-content {
   position: absolute;
-  top: 40px;
+  top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,7 +61,7 @@ export default {
   width: 100%;
   color: #f9f9f9;
   .title {
-    font-size: 23px;
+    font-size: 18px;
     font-family: Source Han Sans CN;
     font-weight: 500;
     color: #c9c9c9;

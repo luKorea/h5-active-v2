@@ -28,7 +28,7 @@
           >
             <div class="item-add"></div>
             <div class="item-title">
-               {{ index === 0 ? "创建队伍" : "邀请好友" }}
+              {{ index === 0 ? "创建队伍" : "邀请好友" }}
             </div>
           </div>
         </template>
@@ -392,6 +392,11 @@ export default {
     showPayDialog() {
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
+      } else if (
+        this.$route.query.code &&
+        this.$route.query.ref !== "two"
+      ) {
+        this.$emit("handleShowOpenNewGroup");
       } else {
         const {
           payConfig: { fuliTwoEid },
@@ -431,7 +436,7 @@ export default {
         this.uid === this.groupId
       ) {
         if (this.uid === this.groupId) {
-          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=two`;
+          const href = `${window.location.origin}${window.location.pathname}?code=${this.groupInfo.record.inviteCode}&ref=two&uid=${this.uid}`;
           console.log(href, "链接");
           copyShareLink(href, this);
         } else this.showPayDialog();

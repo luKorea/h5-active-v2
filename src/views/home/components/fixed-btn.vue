@@ -56,7 +56,7 @@ export default {
       } else if (type === "prize" && this.uid) {
         this.$emit("handlePrizeDialog", true);
       } else if (type === "logout") {
-        this.$emit("handleLogout", true);
+        this.$emit("handleLogout", "logout");
       } else this.$emit("handleLoginDialog", true);
     },
   },
