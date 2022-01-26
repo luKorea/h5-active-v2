@@ -133,7 +133,7 @@ import {
   getPrizeConfig,
   getPageConfig,
 } from "@/api";
-import { getCode } from "@/utils/getCode";
+// import { getCode } from "@/utils/getCode";
 import { Dialog } from "vant";
 
 export default {
@@ -184,12 +184,12 @@ export default {
   mounted() {
     this.getPageData();
     console.log(localStorage.getItem("openId"), "openId");
-    if (this._isWechat()) {
-      if (localStorage.getItem("openId") == null) {
-        getCode("wx4e33f34be6700e46", this.$route.query.code);
-        return;
-      }
-    }
+    // if (this._isWechat()) {
+    //   if (localStorage.getItem("openId") == null) {
+    //     getCode("wx4e33f34be6700e46", this.$route.query.code);
+    //     return;
+    //   }
+    // }
     // 被邀请人
     if (this.$route.query.inviteCode) {
       this.$store.dispatch("getGroupConfigAction");
@@ -383,7 +383,7 @@ export default {
           inviteCode: this.queryInfo.inviteCode ?? null,
         }),
         returnUrl: window.location.href,
-        openId: this._isWechat() ? localStorage.getItem("openId") : null,
+        // openId: this._isWechat() ? localStorage.getItem("openId") : null,
       };
       wechatPay(data)
         .then((res) => {
