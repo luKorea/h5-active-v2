@@ -265,9 +265,9 @@ export default {
         title = "点击【+】或【立即购买】加入组队！"; // 被邀请人进入页面后看得文字
       if (
         this.$route.query.inviteCode ||
-        this.groupInfo &&
-        this.groupInfo.record !== null &&
-        this.groupInfo.record.userInfo.length >= 2
+        (this.groupInfo &&
+          this.groupInfo.record !== null &&
+          this.groupInfo.record.userInfo.length >= 2)
       )
         title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
       return title;

@@ -127,7 +127,7 @@ export default {
       )
         title = "点击右侧【+】生成邀请链接！"; // 开团人已经充值
       if (
-       this.$route.query.inviteCode &&
+        this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null &&
         this.groupInfo.record.userInfo.length === 1
@@ -135,9 +135,9 @@ export default {
         title = "点击【+】或【立即充值】加入组队！"; // 被邀请人进入页面后看得文字
       if (
         this.$route.query.inviteCode ||
-        this.groupInfo &&
-        this.groupInfo.record !== null &&
-        this.groupInfo.record.userInfo.length >= 2
+        (this.groupInfo &&
+          this.groupInfo.record !== null &&
+          this.groupInfo.record.userInfo.length >= 2)
       )
         title = "组队成功！奖品已发放到双方对应Pofi账号！"; // 被邀请人充值后看到的文字
       return title;

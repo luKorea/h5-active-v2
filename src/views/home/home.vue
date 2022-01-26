@@ -197,6 +197,7 @@ export default {
         inviteCode: this.$route.query.inviteCode,
       });
     } else if (this.uid || (this.uid && this.$route.query.inviteCode)) {
+      console.log("支付成功后");
       // 邀请人
       this.getAllData();
     } else {
@@ -414,6 +415,11 @@ export default {
         uid,
         token,
       } = this.$store.state;
+      const inviteCode = this.$route.query.inviteCode ?? null;
+      const ref = this.$route.query.inviteCode ?? null;
+      const queryData = inviteCode !== null && ref !== null ? `?inviteCode=${inviteCode}&ref=${ref}` : "";
+      const url = `${window.location.origin}${window.location.pathname}${queryData}`;
+      console.log(url);
       const type = this.openType === "fuliOne";
       let data = {
         snId: type ? fuliOneSnId : fuliTwoSnId,
@@ -427,8 +433,9 @@ export default {
           inviteCode: this.$route.query.inviteCode ?? null,
         }),
         appid: urlLink.alipayAPPID,
-        returnUrl: window.location.href,
+        returnUrl: url,
       };
+      console.log(url, "支付宝链接");
       ailPay(data)
         .then((res) => {
           if (res.code === 200) {

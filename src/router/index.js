@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-01-24 12:55:59
+ * @LastEditTime: 2022-01-26 10:56:52
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
