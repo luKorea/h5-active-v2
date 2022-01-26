@@ -173,7 +173,7 @@ export default {
       });
     },
     showPayDialog(status) {
-       if (this._isWechat() && status === 1) {
+      if (this._isWechat() && status === 1) {
         this.openNewDialog();
         return;
       }

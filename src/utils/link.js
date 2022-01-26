@@ -1,3 +1,11 @@
+/*
+ * @Author: korealu
+ * @Date: 2022-01-18 14:46:55
+ * @LastEditors: korealu
+ * @LastEditTime: 2022-01-26 17:47:36
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/utils/link.js
+ */
 export default {
   wechatAPPID: "wx7df5ddc552c5c3fc",
   alipayAPPID: "2016120703987922",
@@ -8,7 +16,7 @@ export default {
   shareToFriendLink: window.location.href,
   wechatOpenQQLink:
     "https://work.weixin.qq.com/gm/e13e073d78c03479eb357c7510ee2a2a",
-  qqLink: "https://jq.qq.com/?_wv=1027&k=defqJUES",
+  qqLink: "https://jq.qq.com/?_wv=1027&k=zzT2gAmr",
   shoppingLink:
     'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
 };
