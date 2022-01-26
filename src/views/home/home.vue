@@ -134,7 +134,6 @@ import {
   getPageConfig,
 } from "@/api";
 // import { getCode } from "@/utils/getCode";
-import { Dialog } from "vant";
 
 export default {
   name: "Home",
@@ -220,13 +219,6 @@ export default {
       "https://s4.cnzz.com/z_stat.php?id=1280511914&web_id=1280511914";
     script.language = "JavaScript";
     document.body.appendChild(script);
-    // const that = this;
-    // setTimeout(() => {
-    //   if (that._isWechat()) {
-    //     window._czc.push(['_trackEvent', '2021双旦微信端', '页面被打开', 'huodong_wx'])
-    //   }
-    //   window._czc.push(['_trackEvent', '2021双旦Web端', '页面被打开', 'huodong'])
-    // }, 2000)
   },
   computed: {
     ...mapState(["uid", "userInfo", "payConfig"]),
@@ -292,12 +284,6 @@ export default {
       getUserPrize(params).then((res) => {
         if (res.code === 200) {
           this.prizeInfo = res.data;
-        } else if (res.code === 2) {
-          Dialog.alert({
-            message: "登录超时，请重新登录",
-          }).then(() => {
-            this.logout();
-          });
         } else errorInfo(res.msg);
       });
     },

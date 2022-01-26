@@ -1,3 +1,11 @@
+<!--
+ * @Author: korealu
+ * @Date: 2022-01-13 17:43:39
+ * @LastEditors: korealu
+ * @LastEditTime: 2022-01-26 16:55:15
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/views/home/components/shopping-link.vue
+-->
 <template>
   <div class="shopping-link" @click="goDetails">
     <div class="shopping-img">
@@ -18,6 +26,12 @@ export default {
   },
   methods: {
     goDetails() {
+      window._czc.push([
+        "_trackEvent",
+        "2022新春活动",
+        "广告点击",
+        "2022_spring_ad_click",
+      ]);
       window.open(this.shopUrl);
     },
   },

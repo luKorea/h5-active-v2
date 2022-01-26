@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="send-buy">
-      <div class="send-info" @click="showPayDialog">立即购买</div>
+      <div class="send-info" @click="showPayDialog(1)">立即购买</div>
     </div>
 
     <div class="join-us">
@@ -205,6 +205,7 @@ import urlLink from "@/utils/link";
 import BlindBoxLottery from "@/views/home/components/blind-box-lottery";
 import { mapState } from "vuex";
 import { getPrizeToUser, rulePayStatus } from "@/api";
+import { Dialog } from "vant";
 
 export default {
   name: "welfare-two",
@@ -264,10 +265,17 @@ export default {
       )
         title = "点击【+】或【立即购买】加入组队！"; // 被邀请人进入页面后看得文字
       if (
-        this.$route.query.inviteCode ||
-        (this.groupInfo &&
-          this.groupInfo.record !== null &&
-          this.groupInfo.record.userInfo.length >= 2)
+        !this.$route.query.inviteCode &&
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length >= 2
+      )
+        title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
+      if (
+        this.$route.query.inviteCode &&
+        this.groupInfo &&
+        this.groupInfo.record !== null &&
+        this.groupInfo.record.userInfo.length >= 2
       )
         title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
       return title;
@@ -355,12 +363,13 @@ export default {
         scheme: scheme,
       };
       getPrizeToUser(data).then((res) => {
-        if (scheme === 2) {
-          this.$refs["blindBox"].startRoll();
-          localStorage.setItem("prizeSuccess", JSON.stringify(res));
-        }
         if (res.code === 200) {
           this.showDifferentSuccessInfo = res.data;
+          if (scheme === 2) {
+            this.$refs["blindBox"].startRoll();
+            localStorage.setItem("prizeSuccess", JSON.stringify(res));
+            return;
+          }
           if (scheme === 1) this.status = 3;
         } else if (res.code === 12) {
           this.status = 2;
@@ -390,7 +399,22 @@ export default {
         });
       });
     },
-    showPayDialog() {
+    _isWechat() {
+      return navigator.userAgent.match(/micromessenger/i);
+    },
+    openNewDialog() {
+      Dialog.alert({
+        message: "链接已复制，请在浏览器中打开",
+      }).then(() => {
+        console.log(window.location.href, "链接");
+        this.$copyText(window.location.href);
+      });
+    },
+    showPayDialog(status) {
+      if (this._isWechat() && status === 1) {
+        this.openNewDialog();
+        return;
+      }
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
       } else if (
