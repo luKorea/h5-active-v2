@@ -9,7 +9,7 @@
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">POfi ID: {{ uid }}</div>
+          <div class="right-text">POfi ID: {{ userInfo.nickId }}</div>
         </div>
       </div>
     </div>

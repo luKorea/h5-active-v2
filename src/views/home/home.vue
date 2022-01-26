@@ -63,7 +63,7 @@
             <div class="left-text">当前用户</div>
             <div class="right-white">
               <div class="left-circle"></div>
-              <div class="right-text">Pofi ID : {{ uid }}</div>
+              <div class="right-text">Pofi ID : {{ userInfo.nickId }}</div>
             </div>
           </div>
           <div class="fuli-tip">
@@ -417,7 +417,10 @@ export default {
       } = this.$store.state;
       const inviteCode = this.$route.query.inviteCode ?? null;
       const ref = this.$route.query.inviteCode ?? null;
-      const queryData = inviteCode !== null && ref !== null ? `?inviteCode=${inviteCode}&ref=${ref}` : "";
+      const queryData =
+        inviteCode !== null && ref !== null
+          ? `?inviteCode=${inviteCode}&ref=${ref}`
+          : "";
       const url = `${window.location.origin}${window.location.pathname}${queryData}`;
       console.log(url);
       const type = this.openType === "fuliOne";

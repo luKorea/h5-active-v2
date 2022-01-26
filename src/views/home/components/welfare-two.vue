@@ -8,7 +8,7 @@
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">Pofi ID : {{ uid }}</div>
+          <div class="right-text">Pofi ID : {{ userInfo.nickId }}</div>
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
         <div class="left-text">当前用户</div>
         <div class="right-white">
           <div class="left-circle"></div>
-          <div class="right-text">Pofi ID : {{ uid }}</div>
+          <div class="right-text">Pofi ID : {{ userInfo.nickId }}</div>
         </div>
       </div>
     </div>

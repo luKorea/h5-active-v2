@@ -38,7 +38,7 @@
 
 <script>
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
-import { openUrl } from "@/utils";
+import { errorInfo, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import md5 from "md5";
 
@@ -56,8 +56,8 @@ export default {
       status: 1, // 1. 登录 2. 注册
       appImg: require("@/assets/image/go-app.png"),
       formData: {
-        no: "15360461319",
-        pwd: "123456",
+        no: "",
+        pwd: "",
       },
     };
   },
@@ -73,10 +73,14 @@ export default {
       this.status = 2;
     },
     handleLogin() {
-      this.$emit("handleLogin", {
-        no: this.formData.no,
-        pwd: md5(this.formData.pwd).toUpperCase(),
-      });
+      if (this.formData.no === "" || this.formData.pwd === "") {
+        errorInfo("请输入用户名和密码");
+      } else {
+        this.$emit("handleLogin", {
+          no: this.formData.no,
+          pwd: md5(this.formData.pwd).toUpperCase(),
+        });
+      }
     },
     goApp() {
       openUrl(urlLink.appLink);
