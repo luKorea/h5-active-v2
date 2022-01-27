@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="favicon.ico"><title>Pofi贺新春日纪</title><script>/(pad|pod|iPad|iPod|iOS)/i.test(navigator.userAgent)&&(head=document.getElementsByTagName('head'),viewport=document.createElement('meta'),viewport.name='viewport',viewport.content='target-densitydpi=device-dpi, width=480px, user-scalable=no',head.length>0&&head[head.length-1].appendChild(viewport));</script><script>//禁止双指放大
+      document.documentElement.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      }, {passive:false});
+      // 禁止双击放大
+      let lastTouchEnd = 0;
+      document.documentElement.addEventListener('touchend', function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, {passive:false});</script><link href="css/app.9d867123.css" rel="preload" as="style"><link href="css/chunk-vendors.f4289e77.css" rel="preload" as="style"><link href="js/app.d4e35c64.js" rel="preload" as="script"><link href="js/chunk-vendors.e6c3d797.js" rel="preload" as="script"><link href="css/chunk-vendors.f4289e77.css" rel="stylesheet"><link href="css/app.9d867123.css" rel="stylesheet"></head><body style="max-width: 540px"><noscript><strong>We're sorry but h5-active doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script src="js/chunk-vendors.e6c3d797.js"></script><script src="js/app.d4e35c64.js"></script></body></html>
