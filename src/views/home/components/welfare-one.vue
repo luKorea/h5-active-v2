@@ -140,14 +140,14 @@ export default {
         this.groupInfo.record !== null &&
         this.groupInfo.record.userInfo.length >= 2
       )
-        title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
+        title = "组队成功！48P币已发放至双方帐户！"; // 被邀请人充值后看到的文字
       if (
         this.$route.query.inviteCode &&
         this.groupInfo &&
         this.groupInfo.record !== null &&
         this.groupInfo.record.userInfo.length >= 2
       )
-        title = "组队成功！现在可以开始选择奖品方案啦！"; // 被邀请人充值后看到的文字
+        title = "组队成功！48P币已发放至双方帐户！"; // 被邀请人充值后看到的文字
       return title;
     },
   },
