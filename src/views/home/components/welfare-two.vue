@@ -411,10 +411,11 @@ export default {
       });
     },
     showPayDialog(status) {
-      if (this._isWechat() && status === 1) {
-        this.openNewDialog();
-        return;
-      }
+      console.log(status);
+      // if (this._isWechat() && status === 1) {
+      //   this.openNewDialog();
+      //   return;
+      // }
       if (!this.uid) {
         this.$emit("handleLoginDialog", true);
       } else if (

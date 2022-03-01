@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-01-26 11:46:35
+ * @LastEditTime: 2022-03-01 17:38:33
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -18,6 +18,16 @@ const routes = [
     path: "/group",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/login",
+    name: "advertisementLogin",
+    component: () => import("@/views/anniversary/login/login.vue"),
+  },
+  {
+    path: "/poseRecommend",
+    name: "advertisementPoseRecommend",
+    component: () => import("@/views/anniversary/pose-recommend/index.vue"),
   },
 ];
 

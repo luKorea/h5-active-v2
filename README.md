@@ -12,4 +12,11 @@
       9. shopping-link 商品模块
       10. welfare-one 福利一模块
       11. welfare-two 福利二模块
-2. views/;ogin-and-register 注册
+2. views/login-and-register 注册
+3. views/anniversary 周年庆
+   1. login 登录页
+   2. footer 公用底部页
+   3. image-recommend 人偶推荐页
+   4. pose-recommend pose 库推荐页
+   5. ordinary-recommend 普通用户页
+   6. common 多页面公用组件
