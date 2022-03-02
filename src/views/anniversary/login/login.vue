@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 09:40:28
+ * @LastEditTime: 2022-03-02 17:00:57
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -79,6 +79,9 @@ export default {
         return;
       } else {
         console.log(this.formData);
+        this.$router.push({
+          path: "/poseRecommend",
+        });
       }
     },
   },
