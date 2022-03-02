@@ -91,7 +91,8 @@ export default {
         BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-one-three.png",
       selectItem: 0,
       selectInfo: {
-        img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
+        img:
+          BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
         title: "",
       },
       list: [
