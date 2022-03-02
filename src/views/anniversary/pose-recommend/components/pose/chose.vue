@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 16:07:23
+ * @LastEditTime: 2022-03-02 17:33:27
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/chose.vue
 -->
@@ -32,12 +32,14 @@
     <div class="chose-img">
       <img :src="info.img" alt="" referrerpolicy="no-referrer" />
     </div>
-    <!-- 选中的标题 -->
-    <div class="chose-title">{{ info.title }}</div>
-    <!-- 价格区域 -->
-    <div class="chose-price">
-      <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
-    </div>
+    <template v-if="info.title !== ''">
+      <!-- 选中的标题 -->
+      <div class="chose-title">{{ info.title }}</div>
+      <!-- 价格区域 -->
+      <div class="chose-price">
+        <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
+      </div>
+    </template>
     <!-- 购买区域标题 -->
     <div class="chose-pro-title">
       <img :src="proTitle" alt="" referrerpolicy="no-referrer" />
@@ -60,10 +62,7 @@ export default {
   props: {
     info: {
       type: Object,
-      default: () => ({
-        img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-img.png",
-        title: "Pose 库·舞蹈动作·孔雀舞动作 500 款",
-      }),
+      default: () => ({}),
     },
   },
   computed: {
