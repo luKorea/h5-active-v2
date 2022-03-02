@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 18:03:07
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-01 18:04:16
+ * @LastEditTime: 2022-03-02 09:37:11
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/discount/index.vue
 -->
@@ -10,21 +10,22 @@
   <div class="content-wrap">
     <div class="pose-youhui">
       <div class="youhui-title">
-        <img :src="youhuiTitle" alt="" />
+        <img :src="youhuiTitle" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="youhui-img">
-        <img :src="youhuiImg" alt="" />
+        <img :src="youhuiImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   data() {
     return {
-      youhuiTitle: require("@/assets/image/anniversary/pose-recommend/youhui.png"),
-      youhuiImg: require("@/assets/image/anniversary/pose-recommend/youhui-link.png"),
+      youhuiTitle: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/youhui.png",
+      youhuiImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/youhui-link.png",
     };
   },
 };

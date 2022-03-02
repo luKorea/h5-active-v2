@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-01 17:46:02
+ * @LastEditTime: 2022-03-02 09:43:48
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -23,7 +23,7 @@
         <img :src="logoImg" referrerpolicy="no-referrer" alt="logo" />
       </div>
       <div class="driver">
-        <img :src="drivar" alt="" />
+        <img :src="drivar" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="qrcode">
         <img :src="qrcode" referrerpolicy="no-referrer" alt="" />
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   name: "footerComponent",
   props: {
@@ -44,9 +45,9 @@ export default {
   },
   data() {
     return {
-      logoImg: require("@/assets/image/anniversary/logo.png"),
-      qrcode: require("@/assets/image/anniversary/qrcode.png"),
-      drivar: require("@/assets/image/drivar.png"),
+      logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/logo.png",
+      qrcode: BASE_IMAGE_ANNIVERSARY_URL + "/qrcode.png",
+      drivar: BASE_IMAGE_ANNIVERSARY_URL + "/drivar.png",
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
       list: [
         "1、活动时间：2022年3月8日-3月14日，本次活动优惠和奖励仅限活动期间内完成；",

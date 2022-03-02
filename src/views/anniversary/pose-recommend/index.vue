@@ -2,36 +2,53 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-01 18:06:52
- * @Description: file content
+ * @LastEditTime: 2022-03-02 11:41:20
+ * @Description: 该页面作为pose推荐页以及人偶推荐页，
+    根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
 <template>
   <div class="pose-recommend">
     <!-- 头部区域 -->
     <div class="pose-img">
-      <img :src="bgImg" alt="" />
+      <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
+    <info-fixed></info-fixed>
+    <count-down></count-down>
+    <!-- 这是是不同type显示不用组件区域 -->
+    <pose-component></pose-component>
     <!-- 优惠区域 -->
     <pose-discount></pose-discount>
+    <!-- 第三方链接 -->
+    <send-link></send-link>
     <anniversary-footer></anniversary-footer>
   </div>
 </template>
 
 <script>
 import AnniversaryFooter from "../footer";
+import InfoFixed from "../common/info";
+import CountDown from "../common/count-down";
 import PoseDiscount from "../common/discount";
+import SendLink from "../common/part";
+
+import PoseComponent from './components/pose'
+import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   components: {
     AnniversaryFooter,
     PoseDiscount,
+    SendLink,
+    InfoFixed,
+    CountDown,
+    PoseComponent,
   },
   mounted() {
     document.title = "POFI 周年庆典";
   },
   data() {
     return {
-      bgImg: require("@/assets/image/anniversary/pose-recommend/bg.png"),
+      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/bg.png",
     };
   },
 };

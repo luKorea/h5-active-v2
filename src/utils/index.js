@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-01-25 10:13:28
+ * @LastEditTime: 2022-03-02 09:49:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -25,11 +25,15 @@ export const goAnchor = (el, instance) => {
   instance.$el.querySelector(el).scrollIntoView();
 };
 
-export const copyShareLink = (url, app) => {
+export const copyShareLink = (
+  url,
+  app,
+  message = "已复制链接，快分享给好友，组队赢好礼吧！"
+) => {
   app
     .$copyText(url)
     .then(() => {
-      Toast("已复制链接，快分享给好友，组队赢好礼吧！");
+      Toast(message);
     })
     .catch(() => {
       Toast("复制失败");

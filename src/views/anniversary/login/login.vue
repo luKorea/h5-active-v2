@@ -2,21 +2,21 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-01 17:36:05
+ * @LastEditTime: 2022-03-02 09:40:28
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
 <template>
   <div class="anniversary-login">
     <div class="login-img">
-      <img :src="imgUrl" alt="" />
+      <img :src="imgUrl" alt="" referrerpolicy="no-referrer" />
     </div>
     <div class="img-wrap">
       <div class="img" @click="showModal">
-        <img :src="leftImg" alt="" />
+        <img :src="leftImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="img" @click="showModal">
-        <img :src="rightImg" alt="" />
+        <img :src="rightImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
     <div class="login-wrap">
@@ -48,15 +48,16 @@
 import AnniversaryFooter from "../footer";
 import { Dialog } from "vant";
 import { errorInfo } from "@/utils";
+import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   components: {
     AnniversaryFooter,
   },
   data() {
     return {
-      imgUrl: require("@/assets/image/anniversary/login-img.png"),
-      leftImg: require("@/assets/image/anniversary/one.png"),
-      rightImg: require("@/assets/image/anniversary/two.png"),
+      imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/login-img.png",
+      leftImg: BASE_IMAGE_ANNIVERSARY_URL + "/one.png",
+      rightImg: BASE_IMAGE_ANNIVERSARY_URL + "/two.png",
       formData: {
         no: "",
         pwd: "",
