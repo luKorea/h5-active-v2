@@ -32,7 +32,7 @@ import CountDown from "../common/count-down";
 import PoseDiscount from "../common/discount";
 import SendLink from "../common/part";
 
-import PoseComponent from './components/pose'
+import PoseComponent from "./components/pose";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   components: {

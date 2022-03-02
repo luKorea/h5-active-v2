@@ -18,7 +18,7 @@
 <script>
 import { openUrl, copyShareLink } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_ANNIVERSARY_URL } from '@/request/config';
+import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 
 export default {
   name: "send-link",

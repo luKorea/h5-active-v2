@@ -142,7 +142,7 @@ export default {
       font-weight: 400;
       color: #79797e;
       .user-id {
-          margin-bottom: 6px;
+        margin-bottom: 6px;
       }
       //   justify-content: space-evenly;
     }
