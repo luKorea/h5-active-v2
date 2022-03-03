@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 11:08:47
+ * @LastEditTime: 2022-03-03 16:54:56
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/chose.vue
 -->
@@ -46,19 +46,31 @@
     </div>
     <!-- 专业版，SVIP套餐 -->
     <div class="chose-pro-wrap">
-      <div class="pro">
+      <div class="pro" @click="handleChangePayModal('pro')">
         <img :src="proImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="svip">
+      <div class="svip" @click="handleChangePayModal('svip')">
         <img :src="svipImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
+    <!-- 支付弹框 -->
+    <pay-component
+      ref="payRef"
+      @payWechat="payWechat"
+      @payAli="payAli"
+      :payInfo="payInfo"
+      :userInfo="userInfo"
+    ></pay-component>
   </div>
 </template>
 
 <script>
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import PayComponent from "@/components/pay";
 export default {
+  components: {
+    PayComponent,
+  },
   props: {
     info: {
       type: Object,
@@ -77,6 +89,7 @@ export default {
   },
   data() {
     return {
+      payInfo: {},
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-bg.png",
       titleImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-title.png",
       priceImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-money.png",
@@ -84,6 +97,22 @@ export default {
       proImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro.png",
       svipImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/svip.png",
     };
+  },
+  methods: {
+    handleChangePayModal(type) {
+      this.$refs["payRef"].showDialog = true;
+      if (type === "pro") {
+        this.payInfo = {
+          title: "购买专业版",
+        };
+      } else {
+        this.payInfo = {
+          title: "购买SVIP",
+        };
+      }
+    },
+    payWechat() {},
+    payAli() {},
   },
 };
 </script>

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 15:14:40
+ * @LastEditTime: 2022-03-03 16:50:31
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
 -->
@@ -46,19 +46,31 @@
     <!-- <div class="chose-even-title">Pofi 虚拟人偶——{{ info.title }}</div> -->
     <!-- 专业版，SVIP套餐 -->
     <div class="chose-pro-wrap">
-      <div class="pro">
+      <div class="pro" @click="handleChangePayModal('pro')">
         <img :src="proImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="svip">
+      <div class="svip" @click="handleChangePayModal('six')">
         <img :src="sixPBImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
+    <!-- 支付弹框 -->
+    <pay-component
+      ref="payRef"
+      @payWechat="payWechat"
+      @payAli="payAli"
+      :payInfo="payInfo"
+      :userInfo="userInfo"
+    ></pay-component>
   </div>
 </template>
 
 <script>
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import PayComponent from "@/components/pay";
 export default {
+  components: {
+    PayComponent,
+  },
   props: {
     info: {
       type: Object,
@@ -91,7 +103,24 @@ export default {
       sixPBImg:
         BASE_IMAGE_ANNIVERSARY_URL +
         "/pose-recommend/even/chose-even-six-pb.png",
+      payInfo: {},
     };
+  },
+  methods: {
+    handleChangePayModal(type) {
+      this.$refs["payRef"].showDialog = true;
+      if (type === "pro") {
+        this.payInfo = {
+          title: "购买专业版",
+        };
+      } else {
+        this.payInfo = {
+          title: "购买6P币",
+        };
+      }
+    },
+    payWechat() {},
+    payAli() {},
   },
 };
 </script>

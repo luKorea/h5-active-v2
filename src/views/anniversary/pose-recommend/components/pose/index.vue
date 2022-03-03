@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 11:09:04
+ * @LastEditTime: 2022-03-03 16:54:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -91,7 +91,7 @@ export default {
         BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-one-three.png",
       selectItem: 0,
       selectInfo: {
-        img:
+        choseImg:
           BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
         title: "",
       },

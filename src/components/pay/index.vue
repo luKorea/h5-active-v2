@@ -1,0 +1,169 @@
+<!--
+ * @Author: korealu
+ * @Date: 2022-03-03 16:03:30
+ * @LastEditors: korealu
+ * @LastEditTime: 2022-03-03 16:49:27
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/components/pay/index.vue
+-->
+<template>
+  <korea-dialog
+    :show-dialog="showDialog"
+    @closeDialog="closeDialog"
+    @confirm="handleConfirm"
+    @cancel="handleCancel"
+  >
+    <template #content>
+      <div class="pay-wrap">
+        <!-- 这里展示用户选中的商品信息 -->
+        <div class="pay-title">{{ payInfo.title }}</div>
+        <!-- 这里展示用户的基本信息 -->
+        <div class="user-info">
+          <div class="user-avatar">
+            <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
+          </div>
+          <div class="user-tip">
+            <div class="user-id">POFI ID: {{ userInfo.id }}</div>
+            <div class="user-tip">
+              <!-- 专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额: -->
+              账号余额: {{ userInfo.price }}P
+            </div>
+          </div>
+        </div>
+        <div class="pay-btn">
+          <div class="wechat-pay" @click="payWechat">
+            <img :src="wechatPay" alt="" />
+          </div>
+          <div class="ali-pay" @click="payAli">
+            <img :src="aliPay" alt="" />
+          </div>
+        </div>
+      </div>
+    </template>
+  </korea-dialog>
+</template>
+
+<script>
+import KoreaDialog from "@/components/korea-dialog/korea-dialog.vue";
+export default {
+  name: "payModal",
+  components: {
+    KoreaDialog,
+  },
+  props: {
+    payInfo: {
+      type: Object,
+      default: () => {},
+    },
+    userInfo: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      showDialog: false,
+      aliPay: require("@/assets/image/alipay.png"),
+      wechatPay: require("@/assets/image/wechatpay.png"),
+    };
+  },
+  methods: {
+    handleConfirm(e) {
+      this.showDialog = e;
+    },
+    handleCancel(e) {
+      this.showDialog = e;
+    },
+    closeDialog() {
+      this.showDialog = false;
+    },
+    payWechat() {
+      this.$emit("payWechat");
+    },
+    payAli() {
+      this.$emit("payAli");
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.pay-wrap {
+  position: absolute;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  .pay-title {
+    position: absolute;
+    top: 22px;
+    height: 18px;
+    font-size: 23px;
+    font-family: Source Han Sans CN;
+    font-weight: 500;
+    color: #c9c9c9;
+  }
+  .user-info {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .user-avatar {
+      width: 43px;
+      height: 43px;
+      margin-right: 10px;
+      img {
+        width: 43px;
+        height: 43px;
+        border: 2px solid #da842e;
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+    }
+    .user-tip {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #79797e;
+      .user-id {
+        margin-bottom: 6px;
+      }
+      //   justify-content: space-evenly;
+    }
+  }
+  .pay-btn {
+    display: flex;
+    // margin-top: 15px;
+    position: absolute;
+    top: 170px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    .ali-pay {
+      width: 102px;
+      height: 30px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .wechat-pay {
+      width: 102px;
+      height: 30px;
+      margin-right: 10px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+</style>
