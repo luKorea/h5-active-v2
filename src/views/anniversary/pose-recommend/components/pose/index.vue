@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 17:38:20
+ * @LastEditTime: 2022-03-03 11:09:04
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -184,7 +184,10 @@ export default {
       this.$refs["pose-chose"].$el.scrollIntoView({
         behavior: "smooth",
       });
-      this.selectInfo = item;
+      this.selectInfo = {
+        ...item,
+        choseImg: item.img,
+      };
     },
   },
 };

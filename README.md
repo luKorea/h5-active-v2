@@ -16,6 +16,12 @@
 3. views/anniversary 周年庆
    1. login 登录页
    2. footer 公用底部页
-   4. pose-recommend pose 库推荐页
+   4. pose-recommend pose库跟人偶库展示页面
+      1. pose pose库推荐页
+      2. even 人偶推荐页
    5. ordinary-recommend 普通用户页
    6. common 多页面公用组件
+      1. count-down 倒计时组件
+      2. discount 优惠页面
+      3. info 侧边固定
+      4. part 第三方链接

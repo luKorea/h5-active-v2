@@ -2,9 +2,9 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 11:08:47
+ * @LastEditTime: 2022-03-03 11:45:56
  * @Description: file content
- * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/chose.vue
+ * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
 -->
 <template>
   <div class="pose-chose">
@@ -23,8 +23,8 @@
       <div class="user-tip">
         <div class="user-id">POFI ID: {{ userInfo.id }}</div>
         <div class="user-tip">
-          专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额:
-          {{ userInfo.price }}P
+          <!-- 专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额: -->
+          账号余额: {{ userInfo.price }}P
         </div>
       </div>
     </div>
@@ -32,25 +32,23 @@
     <div class="chose-img">
       <img :src="info.choseImg" alt="" referrerpolicy="no-referrer" />
     </div>
-    <template v-if="info.title !== ''">
-      <!-- 选中的标题 -->
-      <div class="chose-title">{{ info.title }}</div>
-      <!-- 价格区域 -->
-      <div class="chose-price">
-        <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-    </template>
+    <!-- 价格区域 -->
+    <div class="chose-price">
+      <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
+    </div>
     <!-- 购买区域标题 -->
     <div class="chose-pro-title">
       <img :src="proTitle" alt="" referrerpolicy="no-referrer" />
     </div>
+    <!-- 展示用户选中的人偶标题 -->
+    <div class="chose-even-title">Pofi 虚拟人偶——{{ info.title }}</div>
     <!-- 专业版，SVIP套餐 -->
     <div class="chose-pro-wrap">
       <div class="pro">
         <img :src="proImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="svip">
-        <img :src="svipImg" alt="" referrerpolicy="no-referrer" />
+        <img :src="sixPBImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
   </div>
@@ -78,11 +76,19 @@ export default {
   data() {
     return {
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-bg.png",
-      titleImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-title.png",
-      priceImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-money.png",
-      proTitle: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro-title.png",
+      titleImg:
+        BASE_IMAGE_ANNIVERSARY_URL +
+        "/pose-recommend/even/chose-even-title.png",
+      priceImg:
+        BASE_IMAGE_ANNIVERSARY_URL +
+        "/pose-recommend/even/chose-even-price.png",
+      proTitle:
+        BASE_IMAGE_ANNIVERSARY_URL +
+        "/pose-recommend/even/chose-even-pro-title.png",
       proImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro.png",
-      svipImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/svip.png",
+      sixPBImg:
+        BASE_IMAGE_ANNIVERSARY_URL +
+        "/pose-recommend/even/chose-even-six-pb.png",
     };
   },
 };
@@ -171,7 +177,7 @@ export default {
   }
   .chose-price {
     position: absolute;
-    top: 284px;
+    top: 270px;
     left: 0;
     padding: 30px;
     box-sizing: border-box;
@@ -191,24 +197,37 @@ export default {
       height: 100%;
     }
   }
+  .chose-even-title {
+    position: absolute;
+    top: 360px;
+    left: 50px;
+    font-size: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #79797e;
+    line-height: 22px;
+  }
   .chose-pro-wrap {
     position: absolute;
     top: 500px;
     left: 0;
-    padding: 16px 14px;
+    padding: 16px 40px;
     box-sizing: border-box;
     display: flex;
     .pro {
-      width: 90%;
+      width: 100%;
       height: 194px;
-      margin-right: 10px;
+      margin-right: 20px;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .svip {
-      width: 100%;
+      width: 218px;
       height: 194px;
       img {
         width: 100%;
