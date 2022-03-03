@@ -8,4 +8,4 @@
  */
 import { request } from "@/request";
 
-console.log(request)
+console.log(request);

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 11:40:12
+ * @LastEditTime: 2022-03-03 15:13:13
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/index.vue
 -->
@@ -55,14 +55,14 @@ export default {
       selectInfo: {
         choseImg:
           BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/even/chose-xiawa.png",
-        title: "BJD 夏娃",
+        title: "Pofi虚拟女性人偶-BJD夏娃",
       },
       selectItemIndex: 0, // 默认选中的人偶
       list: [
         // img 默认图。selectImg 选中图 choseImg 下方展示图
         {
           id: 1,
-          title: "BJD 夏娃",
+          title: "Pofi虚拟女性人偶-BJD夏娃",
           img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/even/xiawa.png",
           selectImg:
             BASE_IMAGE_ANNIVERSARY_URL +
@@ -72,7 +72,7 @@ export default {
         },
         {
           id: 2,
-          title: "BJD 亚当",
+          title: "Pofi虚拟男性人偶-BJD亚当",
           img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/even/yadan.png",
           selectImg:
             BASE_IMAGE_ANNIVERSARY_URL +
@@ -82,7 +82,7 @@ export default {
         },
         {
           id: 3,
-          title: "BJD 队长",
+          title: "Pofi虚拟男性人偶-BJD队长",
           img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/even/duizhang.png",
           selectImg:
             BASE_IMAGE_ANNIVERSARY_URL +

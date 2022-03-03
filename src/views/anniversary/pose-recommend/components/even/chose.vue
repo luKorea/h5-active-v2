@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 11:45:56
+ * @LastEditTime: 2022-03-03 15:14:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
 -->
@@ -32,6 +32,8 @@
     <div class="chose-img">
       <img :src="info.choseImg" alt="" referrerpolicy="no-referrer" />
     </div>
+    <!-- 选中的标题 -->
+    <div class="chose-title">{{ info.title }}</div>
     <!-- 价格区域 -->
     <div class="chose-price">
       <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
@@ -41,7 +43,7 @@
       <img :src="proTitle" alt="" referrerpolicy="no-referrer" />
     </div>
     <!-- 展示用户选中的人偶标题 -->
-    <div class="chose-even-title">Pofi 虚拟人偶——{{ info.title }}</div>
+    <!-- <div class="chose-even-title">Pofi 虚拟人偶——{{ info.title }}</div> -->
     <!-- 专业版，SVIP套餐 -->
     <div class="chose-pro-wrap">
       <div class="pro">
@@ -177,7 +179,7 @@ export default {
   }
   .chose-price {
     position: absolute;
-    top: 270px;
+    top: 288px;
     left: 0;
     padding: 30px;
     box-sizing: border-box;
