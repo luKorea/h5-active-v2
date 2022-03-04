@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 09:43:48
+ * @LastEditTime: 2022-03-04 10:27:11
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -50,7 +50,7 @@ export default {
       drivar: BASE_IMAGE_ANNIVERSARY_URL + "/drivar.png",
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
       list: [
-        "1、活动时间：2022年3月8日-3月14日，本次活动优惠和奖励仅限活动期间内完成；",
+        "1、活动时间：2022年3月14日-3月31日，本次活动优惠和奖励仅限活动期间内完成；",
         "2、本次充值或赠送的物品均为直接发放到对应Pofi ID中，请在支付前仔细确认到账的Pofi ID；",
         "3、活动中，若领取到的限定人偶与原Pofi ID的人偶库重复，则限定人偶自动换算成18P币；",
         "4、本优惠仅限当前活动页中参与获得，APP内充值无法享受此优惠，本活动不参与其他充值优惠活动；",

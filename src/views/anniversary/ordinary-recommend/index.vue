@@ -1,23 +1,19 @@
 <!--
  * @Author: korealu
- * @Date: 2022-03-01 17:36:50
+ * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 10:35:21
- * @Description: 该页面作为pose推荐页以及人偶推荐页，
-    根据登录后判断参数type，来决定显示pose库还是人偶库
- * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
+ * @LastEditTime: 2022-03-04 10:38:33
+ * @Description: file content
+ * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
 <template>
-  <div class="pose-recommend">
+  <div class="ordinary-recommend">
     <!-- 头部区域 -->
-    <div class="pose-img">
+    <div class="ordinary-img">
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <info-fixed></info-fixed>
     <count-down></count-down>
-    <!-- 这是是不同type显示不用组件区域 -->
-    <pose-component v-if="showDifferentComponents === 'A1'"></pose-component>
-    <even-component v-if="showDifferentComponents === 'A2'"></even-component>
     <!-- 优惠区域 -->
     <pose-discount></pose-discount>
     <!-- 第三方链接 -->
@@ -32,20 +28,20 @@ import InfoFixed from "../common/info";
 import CountDown from "../common/count-down";
 import PoseDiscount from "../common/discount";
 import SendLink from "../common/part";
-
-import PoseComponent from "./components/pose";
-import EvenComponent from "./components/even";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
-  name: "poseRecommend",
+  name: "ordinaryRecommend",
   components: {
     AnniversaryFooter,
     PoseDiscount,
     SendLink,
     InfoFixed,
     CountDown,
-    PoseComponent,
-    EvenComponent,
+  },
+  data() {
+    return {
+      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/bg.png",
+    };
   },
   created() {
     // if (this.$store.state.anniversaryModule.token === null) {
@@ -55,34 +51,15 @@ export default {
     // }
     console.log(this.$store);
   },
-  mounted() {
-    document.title = "POFI 周年庆典";
-    // const type = this.$route.query.type;
-    // this.showDifferentComponents = type;
-  },
-  data() {
-    return {
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/bg.png",
-      showDifferentComponents: "A1", // A1. pose 2. even
-    };
-  },
 };
 </script>
 
-<style>
-.content-wrap {
-  display: flex;
-  flex-direction: column;
-  /* width: 100%; */
-  margin: 18px;
-}
-</style>
 <style lang="less" scoped>
-.pose-recommend {
+.ordinary-recommend {
   display: flex;
   flex-direction: column;
   width: 100%;
-  .pose-img {
+  .ordinary-img {
     width: 100%;
     height: 100%;
     img {

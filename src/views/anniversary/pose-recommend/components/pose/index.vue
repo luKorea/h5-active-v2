@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 16:54:10
+ * @LastEditTime: 2022-03-04 09:35:28
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -181,8 +181,10 @@ export default {
       if (item.id === this.selectItem) return;
       this.selectItem = item.id;
       console.log(item, "用户选中的项目");
-      this.$refs["pose-chose"].$el.scrollIntoView({
-        behavior: "smooth",
+      this.$nextTick(() => {
+        this.$refs["pose-chose"].$el.scrollIntoView({
+          behavior: "smooth",
+        });
       });
       this.selectInfo = {
         ...item,

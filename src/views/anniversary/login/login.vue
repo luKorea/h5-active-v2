@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 17:00:57
+ * @LastEditTime: 2022-03-04 10:32:18
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -47,8 +47,9 @@
 <script>
 import AnniversaryFooter from "../footer";
 import { Dialog } from "vant";
-import { errorInfo } from "@/utils";
+import { errorInfo, successInfo } from "@/utils";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import md5 from "md5";
 export default {
   components: {
     AnniversaryFooter,
@@ -78,10 +79,23 @@ export default {
         errorInfo("请输入用户名和密码");
         return;
       } else {
-        console.log(this.formData);
-        this.$router.push({
-          path: "/poseRecommend",
-        });
+        const _this = this;
+        const data = {
+          ..._this.formData,
+          pwd: md5(_this.formData).toUpperCase(),
+        };
+        _this.$store
+          .dispatch("loginAction", data)
+          .then((res) => {
+            successInfo("登录成功");
+            this.$router.push({
+              path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
+              query: {
+                type: res,
+              },
+            });
+          })
+          .catch((err) => errorInfo(err));
       }
     },
   },

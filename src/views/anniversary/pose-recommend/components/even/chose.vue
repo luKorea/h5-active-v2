@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 16:50:31
+ * @LastEditTime: 2022-03-04 09:32:24
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
 -->
@@ -112,15 +112,21 @@ export default {
       if (type === "pro") {
         this.payInfo = {
           title: "购买专业版",
+          id: "AFUNC_PRO_455D",
         };
       } else {
         this.payInfo = {
           title: "购买6P币",
+          id: "ARCG600"
         };
       }
     },
-    payWechat() {},
-    payAli() {},
+    payWechat() {
+      console.log(this.payInfo);
+    },
+    payAli() {
+      console.log(this.payInfo);
+    },
   },
 };
 </script>

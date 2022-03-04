@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-01 17:38:33
+ * @LastEditTime: 2022-03-04 10:32:58
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -19,6 +19,7 @@ const routes = [
     name: "Home",
     component: Home,
   },
+  // 周年庆模块
   {
     path: "/login",
     name: "advertisementLogin",
@@ -28,6 +29,11 @@ const routes = [
     path: "/poseRecommend",
     name: "advertisementPoseRecommend",
     component: () => import("@/views/anniversary/pose-recommend/index.vue"),
+  },
+  {
+    path: "/ordinaryRecommend",
+    name: "advertisementOrdinaryRecommend",
+    component: () => import("@/views/anniversary/ordinary-recommend/index.vue"),
   },
 ];
 
