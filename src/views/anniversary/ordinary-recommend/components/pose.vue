@@ -1,13 +1,13 @@
 <!--
  * @Author: korealu
- * @Date: 2022-03-02 11:39:56
+ * @Date: 2022-03-04 13:48:18
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:00:19
+ * @LastEditTime: 2022-03-04 14:04:45
  * @Description: file content
- * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/chose.vue
+ * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/copmonents/pose.vue
 -->
 <template>
-  <div class="pose-chose">
+  <div class="pose-component">
     <div class="chose-bg-img">
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
@@ -15,83 +15,41 @@
     <div class="pose-title">
       <img :src="titleImg" alt="" referrerpolicy="no-referrer" />
     </div>
-    <!-- 用户信息 -->
-    <div class="user-info">
-      <div class="user-avatar">
-        <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
-      </div>
-      <div class="user-tip">
-        <div class="user-id">POFI ID: {{ userInfo.id }}</div>
-        <div class="user-tip">
-          专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额:
-          {{ userInfo.price }}P
-        </div>
-      </div>
+    <div class="pose-chose" @click="openAppModal">
+      <img :src="choseImg" alt="" referrerpolicy="no-referrer" />
     </div>
-    <!-- 选中的图片 -->
-    <div class="chose-img">
-      <img :src="info.choseImg" alt="" referrerpolicy="no-referrer" />
-    </div>
-    <template v-if="info.title !== ''">
-      <!-- 选中的标题 -->
-      <div class="chose-title">{{ info.title }}</div>
-      <!-- 价格区域 -->
-      <div class="chose-price">
-        <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-    </template>
-    <!-- 购买区域标题 -->
-    <div class="chose-pro-title">
-      <img :src="proTitle" alt="" referrerpolicy="no-referrer" />
-    </div>
-    <!-- 专业版，SVIP套餐 -->
-    <div class="chose-pro-wrap">
-      <div class="pro" @click="handleChangePayModal('pro')">
-        <img :src="proImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-      <div class="svip" @click="handleChangePayModal('svip')">
-        <img :src="svipImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-    </div>
+    <app-modal ref="appRef"></app-modal>
   </div>
 </template>
 
 <script>
+import AppModal from "@/components/go-app";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
-  props: {
-    info: {
-      type: Object,
-      default: () => ({}),
-    },
-    userInfo: {
-      type: Object,
-      default: () => {},
-    },
+  components: {
+    AppModal,
   },
   data() {
     return {
-      payInfo: {},
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-bg.png",
-      titleImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-title.png",
-      priceImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-money.png",
-      proTitle: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro-title.png",
-      proImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro.png",
-      svipImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/svip.png",
+      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/pose-bg.png",
+      titleImg:
+        BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/pose-title.png",
+      choseImg:
+        BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/pose-chose.png",
     };
   },
   methods: {
-    handleChangePayModal(type) {
-      this.$emit("openPayModal", type);
+    openAppModal() {
+      this.$refs["appRef"].showDialog = true;
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.pose-chose {
-  width: 100%;
+.pose-component {
   position: relative;
+  margin-bottom: 30px;
   .chose-bg-img {
     width: 100%;
     height: 100%;
@@ -103,13 +61,27 @@ export default {
   .pose-title {
     width: 100%;
     position: absolute;
-    top: 10px;
+    top: 15px;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     img {
-      width: 251px;
+      width: 320px;
+      height: 100%;
+    }
+  }
+  .pose-chose {
+    // width: 100%;
+    position: absolute;
+    top: 62px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 14px;
+    img {
+      width: 100%;
       height: 100%;
     }
   }

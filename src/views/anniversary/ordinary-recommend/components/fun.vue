@@ -1,13 +1,13 @@
 <!--
  * @Author: korealu
- * @Date: 2022-03-02 11:39:56
+ * @Date: 2022-03-04 14:37:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:06:37
+ * @LastEditTime: 2022-03-04 15:24:29
  * @Description: file content
- * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
+ * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/fun.vue
 -->
 <template>
-  <div class="pose-chose">
+  <div class="even-components">
     <div class="chose-bg-img">
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
@@ -22,35 +22,17 @@
       </div>
       <div class="user-tip">
         <div class="user-id">POFI ID: {{ userInfo.id }}</div>
-        <div class="user-tip">
-          <!-- 专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额: -->
-          账号余额: {{ userInfo.price }}P
-        </div>
       </div>
     </div>
-    <!-- 选中的图片 -->
-    <div class="chose-img">
-      <img :src="info.choseImg" alt="" referrerpolicy="no-referrer" />
+    <div class="pose-chose" @click="openPayModal('svip')">
+      <img :src="svipImg" alt="" referrerpolicy="no-referrer" />
     </div>
-    <!-- 选中的标题 -->
-    <div class="chose-title">{{ info.title }}</div>
-    <!-- 价格区域 -->
-    <div class="chose-price">
-      <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
-    </div>
-    <!-- 购买区域标题 -->
-    <div class="chose-pro-title">
-      <img :src="proTitle" alt="" referrerpolicy="no-referrer" />
-    </div>
-    <!-- 展示用户选中的人偶标题 -->
-    <!-- <div class="chose-even-title">Pofi 虚拟人偶——{{ info.title }}</div> -->
-    <!-- 专业版，SVIP套餐 -->
-    <div class="chose-pro-wrap">
-      <div class="pro" @click="handleChangePayModal('pro')">
+    <div class="btn-wrap">
+      <div class="btn" @click="openPayModal('pro')">
         <img :src="proImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="svip" @click="handleChangePayModal('six')">
-        <img :src="sixPBImg" alt="" referrerpolicy="no-referrer" />
+      <div class="btn" @click="openPayModal('draw')">
+        <img :src="drawImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
   </div>
@@ -60,10 +42,6 @@
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   props: {
-    info: {
-      type: Object,
-      default: () => ({}),
-    },
     userInfo: {
       type: Object,
       default: () => {},
@@ -71,25 +49,16 @@ export default {
   },
   data() {
     return {
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-bg.png",
+      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/fun-bg.png",
       titleImg:
-        BASE_IMAGE_ANNIVERSARY_URL +
-        "/pose-recommend/even/chose-even-title.png",
-      priceImg:
-        BASE_IMAGE_ANNIVERSARY_URL +
-        "/pose-recommend/even/chose-even-price.png",
-      proTitle:
-        BASE_IMAGE_ANNIVERSARY_URL +
-        "/pose-recommend/even/chose-even-pro-title.png",
-      proImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pro.png",
-      sixPBImg:
-        BASE_IMAGE_ANNIVERSARY_URL +
-        "/pose-recommend/even/chose-even-six-pb.png",
-      payInfo: {},
+        BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/fun-title.png",
+      svipImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/svip.png",
+      proImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/pro.png",
+      drawImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/drawer.png",
     };
   },
   methods: {
-    handleChangePayModal(type) {
+    openPayModal(type) {
       this.$emit("openPayModal", type);
     },
   },
@@ -97,9 +66,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.pose-chose {
-  width: 100%;
+.even-components {
   position: relative;
+  margin-bottom: 30px;
   .chose-bg-img {
     width: 100%;
     height: 100%;
@@ -111,19 +80,65 @@ export default {
   .pose-title {
     width: 100%;
     position: absolute;
-    top: 10px;
+    top: 15px;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     img {
-      width: 251px;
+      width: 287px;
+      height: 100%;
+    }
+  }
+  .pose-chose {
+    width: 100%;
+    position: absolute;
+    top: 125px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 306px;
+      height: 100%;
+    }
+  }
+  .btn-wrap {
+    width: 100%;
+    position: absolute;
+    top: 240px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    box-sizing: border-box;
+    .btn {
+      width: 100%;
+      height: 100%;
+      img {
+        width: 146px;
+        height: 100%;
+      }
+    }
+  }
+  .pose-mini {
+    position: absolute;
+    top: 320px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 0 14px;
+    width: 100%;
+    img {
+      width: 293px;
       height: 100%;
     }
   }
   .user-info {
     position: absolute;
-    top: 66px;
+    top: 70px;
     left: 0;
     width: 100%;
     display: flex;
@@ -149,7 +164,7 @@ export default {
       font-weight: 400;
       color: #79797e;
       .user-id {
-        margin-bottom: 6px;
+        // margin-bottom: 6px;
       }
       //   justify-content: space-evenly;
     }
@@ -179,7 +194,7 @@ export default {
   }
   .chose-price {
     position: absolute;
-    top: 288px;
+    top: 284px;
     left: 0;
     padding: 30px;
     box-sizing: border-box;
@@ -199,37 +214,24 @@ export default {
       height: 100%;
     }
   }
-  .chose-even-title {
-    position: absolute;
-    top: 360px;
-    left: 50px;
-    font-size: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: Source Han Sans CN;
-    font-weight: 400;
-    color: #79797e;
-    line-height: 22px;
-  }
   .chose-pro-wrap {
     position: absolute;
     top: 500px;
     left: 0;
-    padding: 16px 40px;
+    padding: 16px 14px;
     box-sizing: border-box;
     display: flex;
     .pro {
-      width: 100%;
+      width: 90%;
       height: 194px;
-      margin-right: 20px;
+      margin-right: 10px;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .svip {
-      width: 218px;
+      width: 100%;
       height: 194px;
       img {
         width: 100%;

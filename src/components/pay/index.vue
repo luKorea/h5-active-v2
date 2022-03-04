@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 16:49:27
+ * @LastEditTime: 2022-03-04 15:12:17
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->
@@ -24,11 +24,11 @@
           </div>
           <div class="user-tip">
             <div class="user-id">POFI ID: {{ userInfo.id }}</div>
-            <div class="user-tip">
-              <!-- 专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额: -->
-              账号余额: {{ userInfo.price }}P
-            </div>
           </div>
+        </div>
+        <!-- 充值说明 -->
+        <div class="pay-info">
+          充值说明：请仔细核对充值 Pofi ID，充值完成后不支持退款。
         </div>
         <div class="pay-btn">
           <div class="wechat-pay" @click="payWechat">
@@ -101,14 +101,24 @@ export default {
     position: absolute;
     top: 22px;
     height: 18px;
-    font-size: 23px;
+    font-size: 20px;
     font-family: Source Han Sans CN;
     font-weight: 500;
     color: #c9c9c9;
   }
+  .pay-info {
+    position: absolute;
+    top: 120px;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: Source Han Sans CN;
+    font-weight: 500;
+    color: #c9c9c9;
+    width: 60%;
+  }
   .user-info {
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: 0;
     width: 100%;
     display: flex;
@@ -134,7 +144,7 @@ export default {
       font-weight: 400;
       color: #79797e;
       .user-id {
-        margin-bottom: 6px;
+        // margin-bottom: 6px;
       }
       //   justify-content: space-evenly;
     }

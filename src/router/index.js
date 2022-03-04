@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 10:32:58
+ * @LastEditTime: 2022-03-04 15:50:36
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -41,6 +41,7 @@ const router = new VueRouter({
   mode: "history",
   base: "/",
   routes,
+  scrollBehavior: () => ({ y: 0 }),
 });
 
 export default router;

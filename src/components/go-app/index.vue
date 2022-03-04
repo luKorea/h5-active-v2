@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-03 16:37:43
+ * @LastEditTime: 2022-03-04 14:06:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/go-app/index.vue
 -->
@@ -57,6 +57,7 @@ export default {
     },
     goApp() {
       openUrl(urlLink.appLink);
+      // this.closeDialog();
     },
   },
 };

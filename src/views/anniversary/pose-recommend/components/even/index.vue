@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 09:35:44
+ * @LastEditTime: 2022-03-04 15:05:35
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/index.vue
 -->
@@ -36,7 +36,12 @@
         </template>
       </div>
     </div>
-    <pose-chose ref="pose-chose" :info="selectInfo" />
+    <pose-chose
+      ref="pose-chose"
+      @openPayModal="openPayModal"
+      :userInfo="userInfo"
+      :info="selectInfo"
+    />
   </div>
 </template>
 
@@ -46,6 +51,12 @@ import PoseChose from "./chose.vue";
 export default {
   components: {
     PoseChose,
+  },
+  props: {
+    userInfo: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -104,6 +115,9 @@ export default {
         });
       });
       this.selectInfo = item;
+    },
+     openPayModal(type) {
+      this.$emit("openPayModal", type);
     },
   },
 };

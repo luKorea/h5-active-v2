@@ -2,23 +2,63 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 10:38:33
+ * @LastEditTime: 2022-03-04 15:47:50
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
 <template>
   <div class="ordinary-recommend">
+    <!-- 固定按钮 -->
+    <div class="fixed-wrap">
+      <template v-for="item in list">
+        <div class="item" :key="item.id" @click="changeBtnClick(item)">
+          <img
+            :src="selectBtnIndex === item.id ? item.img : item.selectImg"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
+        </div>
+      </template>
+    </div>
     <!-- 头部区域 -->
     <div class="ordinary-img">
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <info-fixed></info-fixed>
     <count-down></count-down>
-    <!-- 优惠区域 -->
-    <pose-discount></pose-discount>
+    <div class="content-wrap">
+      <!-- 周年庆优惠 -->
+      <anniver-component ref="one" @goAnchor="goAnchor"></anniver-component>
+      <!-- pose特价库 -->
+      <pose-component ref="two"></pose-component>
+      <!-- 充值送限定人偶 -->
+      <even-component
+        ref="three"
+        :userInfo="userInfo"
+        @openPayModal="handleChangePayModal"
+      ></even-component>
+      <!-- 功能订阅 -->
+      <fun-component
+        ref="four"
+        :userInfo="userInfo"
+        @openPayModal="handleChangePayModal"
+      ></fun-component>
+      <!-- 人偶礼包 -->
+      <shop-component ref="five"></shop-component>
+    </div>
     <!-- 第三方链接 -->
     <send-link></send-link>
     <anniversary-footer></anniversary-footer>
+
+    <!-- 普通用户充值逻辑放这里 -->
+    <!-- 支付弹框 -->
+    <pay-component
+      ref="payRef"
+      @payWechat="payWechat"
+      @payAli="payAli"
+      :payInfo="payInfo"
+      :userInfo="userInfo"
+    ></pay-component>
   </div>
 </template>
 
@@ -26,21 +66,82 @@
 import AnniversaryFooter from "../footer";
 import InfoFixed from "../common/info";
 import CountDown from "../common/count-down";
-import PoseDiscount from "../common/discount";
 import SendLink from "../common/part";
+import PayComponent from "@/components/pay";
+
+import AnniverComponent from "./components/anniver.vue";
+import PoseComponent from "./components/pose.vue";
+import EvenComponent from "./components/even.vue";
+import FunComponent from "./components/fun.vue";
+import ShopComponent from "./components/shop.vue";
+
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 export default {
   name: "ordinaryRecommend",
   components: {
     AnniversaryFooter,
-    PoseDiscount,
     SendLink,
     InfoFixed,
     CountDown,
+    PayComponent,
+    AnniverComponent,
+    PoseComponent,
+    EvenComponent,
+    FunComponent,
+    ShopComponent,
+  },
+  computed: {
+    userInfo() {
+      return {
+        avatar: BASE_IMAGE_ANNIVERSARY_URL + "/avatar.png",
+        id: "1234567899",
+        price: 0,
+        type: 1, // 已过期
+      };
+    },
   },
   data() {
     return {
+      payInfo: {},
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/bg.png",
+      selectBtnIndex: "one",
+      list: [
+        {
+          id: "one",
+          selectImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/ordinary-recommend/btn/select-one.png",
+          img: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/btn/one.png",
+        },
+        {
+          id: "two",
+          selectImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/ordinary-recommend/btn/select-two.png",
+          img: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/btn/two.png",
+        },
+        {
+          id: "three",
+          selectImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/ordinary-recommend/btn/select-three.png",
+          img: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/btn/three.png",
+        },
+        {
+          id: "four",
+          selectImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/ordinary-recommend/btn/select-four.png",
+          img: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/btn/four.png",
+        },
+        {
+          id: "five",
+          selectImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/ordinary-recommend/btn/select-five.png",
+          img: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/btn/five.png",
+        },
+      ],
     };
   },
   created() {
@@ -51,9 +152,67 @@ export default {
     // }
     console.log(this.$store);
   },
+  methods: {
+    changeBtnClick(item) {
+      if (item.id === this.selectBtnIndex) return;
+      this.selectBtnIndex = item.id;
+      this.$refs[item.id].$el.scrollIntoView({
+        behavior: "smooth",
+      });
+    },
+    goAnchor(el) {
+      this.selectBtnIndex = el;
+      this.$refs[el].$el.scrollIntoView({
+        behavior: "smooth",
+      });
+    },
+    handleChangePayModal(type) {
+      this.$refs["payRef"].showDialog = true;
+      switch (type) {
+        case "mina":
+          this.payInfo = {
+            title: "充值128送米诺",
+            id: "AFUNC_PRO_455D",
+          };
+          break;
+        case "pro":
+          this.payInfo = {
+            title: "充值专业版",
+            id: "AFUNC_PRO_455D",
+          };
+          break;
+        case "svip":
+          this.payInfo = {
+            title: "充值SVIP",
+            id: "AFUNC_SVIP_455D",
+          };
+          break;
+        case "draw":
+          this.payInfo = {
+            title: "充值绘画版一年",
+            id: "AFUNC_PRO_455D",
+          };
+          break;
+      }
+    },
+    payWechat() {
+      console.log(this.payInfo);
+    },
+    payAli() {
+      console.log(this.payInfo);
+    },
+  },
 };
 </script>
 
+<style>
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  margin: 18px;
+}
+</style>
 <style lang="less" scoped>
 .ordinary-recommend {
   display: flex;
@@ -65,6 +224,23 @@ export default {
     img {
       width: 100%;
       height: 100%;
+    }
+  }
+  .fixed-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    display: flex;
+    width: 100%;
+    background-color: #0f0f0f;
+    .item {
+      width: 100%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }
