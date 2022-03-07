@@ -79,7 +79,7 @@ import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { successInfo } from "@/utils";
-import { getUserAccount } from "@/api/anniversary"
+import { getUserAccount } from "@/api/anniversary";
 export default {
   name: "ordinaryRecommend",
   components: {

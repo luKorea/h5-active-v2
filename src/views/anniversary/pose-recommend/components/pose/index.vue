@@ -146,7 +146,7 @@ export default {
         choseImg:
           BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
         title: "",
-      }
+      };
       if (status === this.status) return;
       switch (status) {
         case 1:
