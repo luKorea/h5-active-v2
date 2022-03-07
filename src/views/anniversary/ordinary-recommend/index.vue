@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:28:23
+ * @LastEditTime: 2022-03-07 16:50:08
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -78,7 +78,7 @@ import ShopComponent from "./components/shop.vue";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
-import { successInfo } from "@/utils";
+import { errorInfo, successInfo } from "@/utils";
 import { getUserAccount } from "@/api/anniversary";
 export default {
   name: "ordinaryRecommend",
@@ -170,7 +170,7 @@ export default {
             ...this.$store.state.anniversaryModule.userInfo,
             ...res.data,
           };
-        }
+        } else errorInfo(res.msg);
       });
     },
     changeBtnClick(item) {

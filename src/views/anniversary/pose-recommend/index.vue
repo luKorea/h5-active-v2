@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:38:21
+ * @LastEditTime: 2022-03-07 16:49:49
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -151,7 +151,7 @@ export default {
             ...this.$store.state.anniversaryModule.userInfo,
             ...res.data,
           };
-        }
+        } else errorInfo(res.msg);
       });
     },
     getPoseAndEvenData(data) {
