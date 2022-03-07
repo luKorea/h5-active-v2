@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { Toast, Dialog } from "vant";
+import { Toast } from "vant";
 // import store from "@/store";
 
 const DEFAULT_LOADING = true;
@@ -56,15 +56,15 @@ class KoreaRequest {
         Toast.clear();
         const { data } = response;
         if (data.code === 2) {
-          Dialog.alert({
-            message: "登录超时，请重新登录",
-          }).then(() => {
-            localStorage.clear();
-            window.location.reload();
-            // store.dispatch("logoutAction").then(() => {
-            //   window.location.reload();
-            // });
-          });
+          // Dialog.alert({
+          //   message: "登录超时，请重新登录",
+          // }).then(() => {
+          //   localStorage.clear();
+          //   window.location.reload();
+          //   // store.dispatch("logoutAction").then(() => {
+          //   //   window.location.reload();
+          //   // });
+          // });
         }
         return response.data;
       },

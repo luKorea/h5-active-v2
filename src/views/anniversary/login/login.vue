@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:29:48
+ * @LastEditTime: 2022-03-07 17:15:09
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -63,7 +63,7 @@ export default {
         //    17665142384----A1
         //  18075125940----A2
         //  15360461319---B1
-        no: "17665142384",
+        no: "18075125940",
         pwd: "123456",
       },
     };

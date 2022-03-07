@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 15:30:26
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:19:00
+ * @LastEditTime: 2022-03-07 17:16:34
  * @Description: file content
  * @FilePath: /h5-active-v2/src/store/module/anniversary.js
  */

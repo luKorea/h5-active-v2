@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:50:08
+ * @LastEditTime: 2022-03-07 17:13:28
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -80,6 +80,7 @@ import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { errorInfo, successInfo } from "@/utils";
 import { getUserAccount } from "@/api/anniversary";
+import localCache from "@/utils/cache";
 export default {
   name: "ordinaryRecommend",
   components: {
@@ -157,10 +158,17 @@ export default {
       successInfo("充值成功");
     }
     const store = this.$store.state.anniversaryModule;
-    this.getAccount({
-      uid: store.uid,
-      loginKey: store.token,
-    });
+    if (!localCache.getCache("userAccount")) {
+      this.getAccount({
+        uid: store.uid,
+        loginKey: store.token,
+      });
+    } else {
+      this.userInfo = {
+        ...this.$store.state.anniversaryModule.userInfo,
+        ...localCache.getCache("userAccount"),
+      };
+    }
   },
   methods: {
     getAccount(data) {
@@ -170,6 +178,7 @@ export default {
             ...this.$store.state.anniversaryModule.userInfo,
             ...res.data,
           };
+          localCache.setCache("userAccount", res.data);
         } else errorInfo(res.msg);
       });
     },
