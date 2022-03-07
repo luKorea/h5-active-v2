@@ -116,7 +116,7 @@ export default {
       });
       this.selectInfo = item;
     },
-     openPayModal(type) {
+    openPayModal(type) {
       this.$emit("openPayModal", type);
     },
   },
