@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 09:25:35
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 09:31:38
+ * @LastEditTime: 2022-03-07 14:34:12
  * @Description: 封装支付宝微信支付
  * @FilePath: /h5-active-v2/src/utils/pay-config.js
  */
@@ -25,7 +25,7 @@ export function wechatPayAction(data) {
               console.log(err, "错误");
             });
         } else {
-          let backUrl = window.location.href;
+          let backUrl = `${window.location.href}?state=success`;
           window.location.href = `${
             res.data.wxRes.mweburl
           }&redirect_url=${urlencode(backUrl)}`;

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:12:17
+ * @LastEditTime: 2022-03-07 11:12:44
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->
@@ -20,10 +20,10 @@
         <!-- 这里展示用户的基本信息 -->
         <div class="user-info">
           <div class="user-avatar">
-            <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
+            <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
           </div>
           <div class="user-tip">
-            <div class="user-id">POFI ID: {{ userInfo.id }}</div>
+            <div class="user-id">POFI ID: {{ userInfo.nickId }}</div>
           </div>
         </div>
         <!-- 充值说明 -->

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 10:32:18
+ * @LastEditTime: 2022-03-07 16:29:48
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -60,8 +60,11 @@ export default {
       leftImg: BASE_IMAGE_ANNIVERSARY_URL + "/one.png",
       rightImg: BASE_IMAGE_ANNIVERSARY_URL + "/two.png",
       formData: {
-        no: "",
-        pwd: "",
+        //    17665142384----A1
+        //  18075125940----A2
+        //  15360461319---B1
+        no: "17665142384",
+        pwd: "123456",
       },
     };
   },
@@ -82,17 +85,17 @@ export default {
         const _this = this;
         const data = {
           ..._this.formData,
-          pwd: md5(_this.formData).toUpperCase(),
+          pwd: md5(_this.formData.pwd).toUpperCase(),
         };
         _this.$store
-          .dispatch("loginAction", data)
+          .dispatch("anniversaryModule/loginAction", data)
           .then((res) => {
             successInfo("登录成功");
             this.$router.push({
               path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
-              query: {
-                type: res,
-              },
+              // query: {
+              //   type: res,
+              // },
             });
           })
           .catch((err) => errorInfo(err));

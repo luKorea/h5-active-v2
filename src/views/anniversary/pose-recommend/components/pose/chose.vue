@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:00:19
+ * @LastEditTime: 2022-03-07 16:39:22
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/chose.vue
 -->
@@ -18,13 +18,18 @@
     <!-- 用户信息 -->
     <div class="user-info">
       <div class="user-avatar">
-        <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
+        <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="user-tip">
-        <div class="user-id">POFI ID: {{ userInfo.id }}</div>
+        <div class="user-id">POFI ID: {{ userInfo.nickId }}</div>
         <div class="user-tip">
-          专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额:
-          {{ userInfo.price }}P
+          专业版:
+          {{ new Date().getTime() > resetTime ? "已过期" : "未过期" }} 余额:
+          {{
+            userInfo.pocket && userInfo.pocket.gold
+              ? userInfo.pocket.gold / 100
+              : 0
+          }}P
         </div>
       </div>
     </div>
@@ -68,6 +73,20 @@ export default {
       type: Object,
       default: () => {},
     },
+    resetTime: {
+      type: String,
+      default: "",
+    },
+  },
+  computed: {
+    proState() {
+      const state = this.userInfo?.vips.forEach((item) => {
+        if (item.func === "pro") {
+          console.log(item);
+        }
+      });
+      return state;
+    },
   },
   data() {
     return {
@@ -82,7 +101,7 @@ export default {
   },
   methods: {
     handleChangePayModal(type) {
-      this.$emit("openPayModal", type);
+      this.$emit("openPayModal", type, this.info);
     },
   },
 };

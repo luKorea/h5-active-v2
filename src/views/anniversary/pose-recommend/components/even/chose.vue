@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:06:37
+ * @LastEditTime: 2022-03-07 16:26:20
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/chose.vue
 -->
@@ -18,13 +18,18 @@
     <!-- 用户信息 -->
     <div class="user-info">
       <div class="user-avatar">
-        <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
+        <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="user-tip">
-        <div class="user-id">POFI ID: {{ userInfo.id }}</div>
+        <div class="user-id">POFI ID: {{ userInfo.nickId }}</div>
         <div class="user-tip">
           <!-- 专业版: {{ userInfo.type ? "已过期" : "不知道" }} 余额: -->
-          账号余额: {{ userInfo.price }}P
+          账号余额:
+          {{
+            userInfo.pocket && userInfo.pocket.gold
+              ? userInfo.pocket.gold / 100
+              : 0
+          }}P
         </div>
       </div>
     </div>
@@ -90,7 +95,7 @@ export default {
   },
   methods: {
     handleChangePayModal(type) {
-      this.$emit("openPayModal", type);
+      this.$emit("openPayModal", type, this.info);
     },
   },
 };

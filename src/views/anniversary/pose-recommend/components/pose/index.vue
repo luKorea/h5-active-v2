@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:01:32
+ * @LastEditTime: 2022-03-07 12:09:39
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -24,9 +24,16 @@
         </div>
         <!-- 头部文字 -->
         <div class="btn-wrap">
-          <div class="btn" @click="changeImg(1)">BJD 夏娃</div>
+          <template v-if="poseData && poseData.length > 0">
+            <div v-for="(item, index) in poseData" :key="item.snId">
+              <div class="btn" @click="changeImg(index + 1, item)">
+                {{ item.mold.name }}
+              </div>
+            </div>
+          </template>
+          <!-- <div class="btn" @click="changeImg(1)">BJD 夏娃</div>
           <div class="btn" @click="changeImg(2)">BJD 亚当</div>
-          <div class="btn" @click="changeImg(3)">BJD 队长</div>
+          <div class="btn" @click="changeImg(3)">BJD 队长</div> -->
         </div>
       </div>
       <!-- tab内容区域 -->
@@ -40,13 +47,13 @@
               @click="handleSelectItem(item)"
             >
               <div class="img">
-                <img :src="item.img" alt="" referrerpolicy="no-referrer" />
+                <img :src="item.cover" alt="" referrerpolicy="no-referrer" />
               </div>
-              <div class="title">{{ item.title }}</div>
-              <div class="originalPrice">{{ item.originalPrice }}P币</div>
+              <div class="title">{{ item.name }}</div>
+              <div class="originalPrice">{{ item.original }}P币</div>
               <div class="presentPrice">
                 <div class="price">
-                  <span class="big">{{ item.presentPrice }}</span>
+                  <span class="big">{{ item.sale }}</span>
                   <span class="small">P币</span>
                 </div>
                 <div class="radio">
@@ -55,7 +62,7 @@
                     type="radio"
                     name="item"
                     :value="item.title"
-                    :checked="selectItem === item.id"
+                    :checked="selectItem === item.snId"
                   />
                   <label for="item"></label>
                 </div>
@@ -82,6 +89,14 @@ export default {
     PoseChose,
   },
   props: {
+    poseData: {
+      type: Array,
+      default: () => [],
+    },
+    loading: {
+      type: Boolean,
+      default: true,
+    },
     userInfo: {
       type: Object,
       default: () => {},
@@ -106,91 +121,54 @@ export default {
           BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
         title: "",
       },
-      list: [
-        {
-          id: 1,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 500 款",
-          img:
-            BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-img.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 2,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 666 款",
-          img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/img-one.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 3,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 777 款",
-          img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/img-two.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 4,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 400 款",
-          img:
-            BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-img.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 5,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 300 款",
-          img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/img-one.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 6,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 200 款",
-          img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/img-two.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 7,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 100 款",
-          img:
-            BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-img.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-        {
-          id: 8,
-          title: "Pose 库·舞蹈动作·孔雀舞动作 600 款",
-          img: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/img-one.png",
-          originalPrice: 18,
-          presentPrice: 1,
-        },
-      ],
+      list: [],
     };
   },
+
+  // watch: {
+  //   list: {
+  //     handler() {
+  //       return this.poseData.length > 0 && this.poseData[0].preps;
+  //     },
+  //     deep: true,
+  //     immediate: true,
+  //   },
+  // },
+  mounted() {
+    setTimeout(() => {
+      this.list = this.poseData.length > 0 ? this.poseData[0].preps : [];
+    }, 1000);
+  },
   methods: {
-    changeImg(status) {
+    changeImg(status, item) {
       this.selectItem = 0;
+      this.selectInfo = {
+        choseImg:
+          BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
+        title: "",
+      }
       if (status === this.status) return;
       switch (status) {
         case 1:
           this.defaultSelectImg = this.selectOneImg;
+          this.list = item.preps;
           this.status = status;
           break;
         case 2:
           this.defaultSelectImg = this.selectTwoImg;
+          this.list = item.preps;
           this.status = status;
           break;
         case 3:
           this.defaultSelectImg = this.selectThreeImg;
+          this.list = item.preps;
           this.status = status;
           break;
       }
     },
     handleSelectItem(item) {
-      if (item.id === this.selectItem) return;
-      this.selectItem = item.id;
+      if (item.snId === this.selectItem) return;
+      this.selectItem = item.snId;
       console.log(item, "用户选中的项目");
       this.$nextTick(() => {
         this.$refs["pose-chose"].$el.scrollIntoView({
@@ -199,11 +177,12 @@ export default {
       });
       this.selectInfo = {
         ...item,
-        choseImg: item.img,
+        title: item.name,
+        choseImg: item.cover,
       };
     },
-    openPayModal(type) {
-      this.$emit("openPayModal", type);
+    openPayModal(type, info) {
+      this.$emit("openPayModal", type, info);
     },
   },
 };

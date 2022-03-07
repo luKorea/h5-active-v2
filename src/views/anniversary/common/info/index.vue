@@ -2,18 +2,20 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 11:29:55
+ * @LastEditTime: 2022-03-07 11:32:21
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
 <template>
   <div class="info-fixed">
-    <div class="info-avatar">
-      <img :src="avatarImg" alt="" referrerpolicy="no-referrer" />
+    <div class="info-avatar" @click="showLogoutDialog">
+      <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
     </div>
     <div class="app-logo" @click="goApp">
       <img :src="logoImg" alt="" referrerpolicy="no-referrer" />
     </div>
+
+    <logout ref="logoutRef" @logout="logout"></logout>
   </div>
 </template>
 
@@ -21,7 +23,15 @@
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
+import logout from "@/components/logout/logout.vue";
 export default {
+  components: { logout },
+  props: {
+    userInfo: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/app-logo.png",
@@ -31,6 +41,14 @@ export default {
   methods: {
     goApp() {
       openUrl(urlLink.appLink);
+    },
+    showLogoutDialog() {
+      this.$refs["logoutRef"].showDialog = true;
+    },
+    logout() {
+      this.$store.dispatch("anniversaryModule/logoutAction").then(() => {
+        window.location.reload();
+      });
     },
   },
 };

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 13:48:18
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 14:35:05
+ * @LastEditTime: 2022-03-07 15:51:51
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/shop.vue
 -->
@@ -20,7 +20,7 @@
     </div>
     <!-- 小红书 -->
     <div class="btn-wrap">
-      <div class="btn" @click="openLink('redBookLink')">
+      <div class="btn" @click="openDialog">
         <img :src="drawerImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="btn" @click="openLink('redBookLink')">
@@ -36,6 +36,11 @@
         <span class="title-tip" @click="showRules">礼品卡大礼包</span>
       </div>
     </div>
+    <van-dialog v-model="showDialog" :show-cancel-button="false">
+      <div class="dialog-img">
+        <img :src="qrCode" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -47,6 +52,7 @@ import { openUrl } from "@/utils";
 export default {
   data() {
     return {
+      qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/waft-bg.png",
       titleImg:
         BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/waft-title.png",
@@ -56,9 +62,13 @@ export default {
         BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/waft-shop.png",
       redBookImg:
         BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/waft-redbook.png",
+      showDialog: false,
     };
   },
   methods: {
+    openDialog() {
+      this.showDialog = true;
+    },
     openLink(type) {
       openUrl(urlLink[type]);
     },
@@ -73,6 +83,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.dialog-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 .pose-component {
   position: relative;
   .chose-bg-img {

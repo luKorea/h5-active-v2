@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:05:35
+ * @LastEditTime: 2022-03-07 12:17:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/index.vue
 -->
@@ -18,16 +18,20 @@
         <img :src="titleImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="even-wrap">
-        <template v-if="list && list.length > 0">
+        <template v-if="evenData && evenData.length > 0">
           <div
             class="item"
-            v-for="(item, index) in list"
-            :key="item.id"
-            @click="changeSelectImg(item, index)"
+            v-for="(item, index) in evenData"
+            :key="item.mold.snId"
+            @click="changeSelectImg(item.mold, index)"
           >
             <div class="img-wrap">
               <img
-                :src="selectItemIndex === index ? item.selectImg : item.img"
+                :src="
+                  selectItemIndex === index
+                    ? item.mold.selectImg
+                    : item.mold.verticalImg
+                "
                 alt=""
                 referrerpolicy="no-referrer"
               />
@@ -53,6 +57,10 @@ export default {
     PoseChose,
   },
   props: {
+    evenData: {
+      type: Array,
+      default: () => [],
+    },
     userInfo: {
       type: Object,
       default: () => {},
@@ -114,10 +122,14 @@ export default {
           behavior: "smooth",
         });
       });
-      this.selectInfo = item;
+      this.selectInfo = {
+        ...item,
+        choseImg: item.cover,
+        title: item.name,
+      };
     },
-    openPayModal(type) {
-      this.$emit("openPayModal", type);
+    openPayModal(type, info) {
+      this.$emit("openPayModal", type, info);
     },
   },
 };

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 14:37:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-04 15:24:29
+ * @LastEditTime: 2022-03-07 11:12:25
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/fun.vue
 -->
@@ -18,10 +18,10 @@
     <!-- 用户信息 -->
     <div class="user-info">
       <div class="user-avatar">
-        <img :src="userInfo.avatar" alt="" referrerpolicy="no-referrer" />
+        <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="user-tip">
-        <div class="user-id">POFI ID: {{ userInfo.id }}</div>
+        <div class="user-id">POFI ID: {{ userInfo.nickId }}</div>
       </div>
     </div>
     <div class="pose-chose" @click="openPayModal('svip')">
