@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 17:11:19
+ * @LastEditTime: 2022-03-08 17:14:55
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -42,13 +42,12 @@ export const copyShareLink = (
 
 export function onBridgeReady(data) {
   const result = {
-    ...data,
     paySign: data.sign,
     appId: data.appid,
     nonceStr: data.noncestr,
     timeStamp: data.timestamp,
     package: "prepay_id=" + data.prepayid,
-    signType: "RSA",
+    signType: "MD5",
     // jsApiList: ["chooseWXPay"],
   };
   console.log(data, "后台返回的参数");
