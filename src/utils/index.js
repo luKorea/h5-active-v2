@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 09:49:10
+ * @LastEditTime: 2022-03-08 17:11:19
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -48,7 +48,7 @@ export function onBridgeReady(data) {
     nonceStr: data.noncestr,
     timeStamp: data.timestamp,
     package: "prepay_id=" + data.prepayid,
-    signType: "MD5",
+    signType: "RSA",
     // jsApiList: ["chooseWXPay"],
   };
   console.log(data, "后台返回的参数");
