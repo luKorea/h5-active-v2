@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 15:33:46
+ * @LastEditTime: 2022-03-08 15:47:46
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -73,7 +73,7 @@ export default {
   mounted() {
     if (this._isWechat()) {
       if (localCache.getCache("openId") == null) {
-        getCode("wx7df5ddc552c5c3fc", this.$route.query.code);
+        getCode("wx96b7fe260df0d200", this.$route.query.code);
         return;
       }
     }
