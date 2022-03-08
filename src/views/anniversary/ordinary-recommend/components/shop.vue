@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 13:48:18
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 15:51:51
+ * @LastEditTime: 2022-03-08 10:32:50
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/shop.vue
 -->
@@ -84,9 +84,6 @@ export default {
 
 <style lang="less" scoped>
 .dialog-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100%;
   img {

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 12:17:10
+ * @LastEditTime: 2022-03-08 10:37:33
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/even/index.vue
 -->
@@ -112,6 +112,16 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    setTimeout(() => {
+      const item = this.evenData ? this.evenData[0].mold : {};
+      this.selectInfo = {
+        ...item,
+        choseImg: item.cover,
+        title: item.name,
+      };
+    }, 1000);
   },
   methods: {
     changeSelectImg(item, index) {
