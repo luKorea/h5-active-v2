@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 17:14:55
+ * @LastEditTime: 2022-03-08 17:24:29
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -54,6 +54,7 @@ export function onBridgeReady(data) {
   console.log(result, "调起微信支付的参数");
   return new Promise((resolve, reject) => {
     window.WeixinJSBridge.invoke(
+      // getBrandWCPayRequest
       "getBrandWCPayRequest",
       result,
       function (res) {

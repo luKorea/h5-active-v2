@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 15:21:15
+ * @LastEditTime: 2022-03-08 17:37:56
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -248,9 +248,10 @@ export default {
         loginKey: this.$store.state.anniversaryModule.token,
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: this._isWechat() ? 3 : 2,
-        remark: JSON.stringify({
-          type: 8,
-        }),
+        // remark: JSON.stringify({
+        //   type: 8,
+        // }),
+        remark: "",
         returnUrl: `${window.location.href}?state=success`,
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
@@ -264,9 +265,10 @@ export default {
         uid: this.$store.state.anniversaryModule.uid,
         loginKey: this.$store.state.anniversaryModule.token,
         from: 2,
-        remark: JSON.stringify({
-          type: 8,
-        }),
+        // remark: JSON.stringify({
+        //   type: 8,
+        // }),
+        remark: "",
         appid: urlLink.alipayAPPID,
         returnUrl: `${window.location.href}?state=success`,
       };
