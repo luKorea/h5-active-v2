@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:15:05
+ * @LastEditTime: 2022-03-08 14:43:18
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -231,9 +231,7 @@ export default {
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: this._isWechat() ? 3 : 2,
         remark: JSON.stringify({
-          type: "7",
-          eid: this.payInfo.id,
-          inviteCode: null,
+          type: 8,
         }),
         returnUrl: `${window.location.href}?state=success`,
         // openId: this._isWechat() ? localStorage.getItem("openId") : null,

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:13:44
+ * @LastEditTime: 2022-03-08 14:43:31
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -242,9 +242,7 @@ export default {
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: this._isWechat() ? 3 : 2,
         remark: JSON.stringify({
-          type: "7",
-          eid: this.payInfo.id,
-          inviteCode: null,
+          type: 8,
         }),
         returnUrl: `${window.location.href}?state=success`,
         // openId: this._isWechat() ? localStorage.getItem("openId") : null,
