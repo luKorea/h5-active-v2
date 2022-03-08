@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 11:06:42
+ * @LastEditTime: 2022-03-08 14:13:44
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -149,7 +149,7 @@ export default {
   created() {
     if (this.$store.state.anniversaryModule.token === null) {
       this.$router.push({
-        path: "/login",
+        path: "/Ann2022",
       });
     }
   },

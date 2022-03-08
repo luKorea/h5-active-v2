@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 17:27:15
+ * @LastEditTime: 2022-03-08 14:13:27
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
@@ -47,7 +47,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("anniversaryModule/logoutAction").then(() => {
-        this.$router.replace("/login");
+        this.$router.replace("/Ann2022");
       });
     },
   },

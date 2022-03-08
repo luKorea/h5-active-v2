@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 17:33:53
+ * @LastEditTime: 2022-03-08 14:15:05
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -88,7 +88,7 @@ export default {
   created() {
     if (this.$store.state.anniversaryModule.token === null) {
       this.$router.push({
-        path: "/login",
+        path: "/Ann2022",
       });
     }
     console.log(this.$store);

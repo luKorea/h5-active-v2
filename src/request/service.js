@@ -61,7 +61,7 @@ class KoreaRequest {
             message: "登录超时，请重新登录",
           }).then(() => {
             localStorage.clear();
-            window.location.replace("/login");
+            window.location.replace("/Ann2022");
             // window.location.reload();
             // store.dispatch("logoutAction").then(() => {
             //   window.location.reload();
