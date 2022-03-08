@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 10:44:00
+ * @LastEditTime: 2022-03-08 15:15:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -50,6 +50,8 @@ import { Dialog } from "vant";
 import { errorInfo, successInfo } from "@/utils";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import md5 from "md5";
+import { getCode } from "@/utils/getCode";
+import localCache from "@/utils/cache";
 export default {
   components: {
     AnniversaryFooter,
@@ -69,9 +71,18 @@ export default {
     };
   },
   mounted() {
+    if (this._isWechat()) {
+      if (localCache.getCache("openId") == null) {
+        getCode("wx4e33f34be6700e46", this.$route.query.code);
+        return;
+      }
+    }
     document.title = "POFI 周年庆典";
   },
   methods: {
+    _isWechat() {
+      return navigator.userAgent.match(/micromessenger/i);
+    },
     showModal() {
       Dialog.alert({
         message: "登录立即参与",

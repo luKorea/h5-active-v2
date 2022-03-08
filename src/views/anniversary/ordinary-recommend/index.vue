@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:43:31
+ * @LastEditTime: 2022-03-08 15:21:15
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -81,6 +81,7 @@ import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { successInfo } from "@/utils";
 import { getUserAccount } from "@/api/anniversary";
 import localCache from "@/utils/cache";
+// import { getCode } from "@/utils/getCode";
 export default {
   name: "ordinaryRecommend",
   components: {
@@ -154,6 +155,12 @@ export default {
     }
   },
   mounted() {
+    // if (this._isWechat()) {
+    //   if (localCache.getCache("openId") == null) {
+    //     getCode("wx4e33f34be6700e46", this.$route.query.code);
+    //     return;
+    //   }
+    // }
     document.title = "POFI 周年庆典";
     if (this.$route.state === "success") {
       successInfo("充值成功");
@@ -245,7 +252,7 @@ export default {
           type: 8,
         }),
         returnUrl: `${window.location.href}?state=success`,
-        // openId: this._isWechat() ? localStorage.getItem("openId") : null,
+        openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
       console.log(data, "data");
       wechatPayAction(data);

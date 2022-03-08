@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:43:18
+ * @LastEditTime: 2022-03-08 15:15:13
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -68,6 +68,7 @@ import localCache from "@/utils/cache";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { Dialog } from "vant";
+
 export default {
   name: "poseRecommend",
   components: {
@@ -234,7 +235,7 @@ export default {
           type: 8,
         }),
         returnUrl: `${window.location.href}?state=success`,
-        // openId: this._isWechat() ? localStorage.getItem("openId") : null,
+        openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
       console.log(data, "data");
       wechatPayAction(data);

@@ -2,12 +2,13 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-01-25 15:44:44
+ * @LastEditTime: 2022-03-08 15:16:13
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/getCode.js
  */
 import { getUserOpenId } from "@/api";
 import { errorInfo } from "@/utils";
+import localCache from "@/utils/cache";
 
 export function getCode(appid, code) {
   // "http://event.pofi.pro" ??
@@ -28,7 +29,7 @@ export function getCode(appid, code) {
     }).then((res) => {
       if (res.code === 200) {
         console.log(res.data.openId, "用户openID");
-        localStorage.setItem("openId", res.data.openId);
+        localCache.setCache("openId", res.data.openId);
       } else errorInfo(res.data.msg);
     });
   }
