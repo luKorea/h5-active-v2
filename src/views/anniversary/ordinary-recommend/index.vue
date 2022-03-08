@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 17:24:42
+ * @LastEditTime: 2022-03-08 11:06:42
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -154,6 +154,7 @@ export default {
     }
   },
   mounted() {
+    document.title = "POFI 周年庆典";
     if (this.$route.state === "success") {
       successInfo("充值成功");
     }
