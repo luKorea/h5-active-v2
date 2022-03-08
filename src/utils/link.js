@@ -2,12 +2,12 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 15:48:45
+ * @LastEditTime: 2022-03-08 17:00:49
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */
 export default {
-  wechatAPPID: "wx96b7fe260df0d200",
+  wechatAPPID: "wx4e33f34be6700e46",
   alipayAPPID: "2016120703987922",
   appLink: "https://a.app.qq.com/o/simple.jsp?pkgname=com.rn.pofi",
   weiboLink: "https://weibo.com/pofiapp",
