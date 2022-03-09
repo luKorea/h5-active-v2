@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-09 09:18:25
+ * @LastEditTime: 2022-03-09 09:19:45
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -42,7 +42,7 @@ export const copyShareLink = (
 
 export function onBridgeReady(data) {
   const result = {
-    sing: data.sign,
+    sign: data.sign,
     prepayid: data.prepayid,
     partnerid: data.partnerid,
     paySign: data.sign,
