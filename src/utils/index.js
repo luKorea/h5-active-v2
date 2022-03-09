@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-09 09:19:45
+ * @LastEditTime: 2022-03-09 09:23:17
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -41,19 +41,21 @@ export const copyShareLink = (
 };
 
 export function onBridgeReady(data) {
+  const nonceStr = RandomId(16);
   const result = {
     sign: data.sign,
     prepayid: data.prepayid,
     partnerid: data.partnerid,
     paySign: data.sign,
     appId: data.appid,
-    nonceStr: data.noncestr,
+    nonceStr: nonceStr,
     timeStamp: data.timestamp,
     package: "prepay_id=" + data.prepayid,
     signType: "MD5",
     // jsApiList: ["chooseWXPay"],
   };
   console.log(data, "后台返回的参数");
+  console.log(nonceStr, "随机数");
   console.log(result, "调起微信支付的参数");
   return new Promise((resolve, reject) => {
     window.WeixinJSBridge.invoke(
@@ -104,4 +106,51 @@ export const _isWechatPay = (data) => {
         .catch((err) => reject(err));
     }
   });
+};
+
+export const RandomId = (n) => {
+  var str = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+  var res = "";
+  for (var i = 0; i < n; i++) {
+    var id = Math.ceil(Math.random() * 35);
+    res += str[id];
+  }
+  return res;
 };
