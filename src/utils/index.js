@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-09 09:23:17
+ * @LastEditTime: 2022-03-09 09:26:23
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -48,7 +48,7 @@ export function onBridgeReady(data) {
     partnerid: data.partnerid,
     paySign: data.sign,
     appId: data.appid,
-    nonceStr: nonceStr,
+    nonceStr: data.noncestr,
     timeStamp: data.timestamp,
     package: "prepay_id=" + data.prepayid,
     signType: "MD5",
