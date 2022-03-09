@@ -43,7 +43,7 @@ export default {
         },
         {
           imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/pose-share.png",
-          url: urlLink.shareToFriendLink,
+          url: window.location.origin + window.location.pathname,
           type: "share",
         },
       ],
