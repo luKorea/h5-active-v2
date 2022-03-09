@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-09 09:15:45
+ * @LastEditTime: 2022-03-09 09:18:25
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -42,8 +42,11 @@ export const copyShareLink = (
 
 export function onBridgeReady(data) {
   const result = {
+    sing: data.sign,
+    prepayid: data.prepayid,
+    partnerid: data.partnerid,
     paySign: data.sign,
-    appId: "wx96b7fe260df0d200",
+    appId: data.appid,
     nonceStr: data.noncestr,
     timeStamp: data.timestamp,
     package: "prepay_id=" + data.prepayid,
