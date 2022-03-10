@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 14:24:39
+ * @LastEditTime: 2022-03-10 14:47:48
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -46,11 +46,13 @@ export default {
   methods: {
     countTime() {
       // 获取当前时间
-      let date = new Date();
-      let now = date.replace(/-/g, "/").getTime() / 1000;
+      let now = new Date(
+        new Date().toLocaleString().replace(/-/g, "/")
+      ).getTime();
       // 设置截止时间
-      let endDate = new Date(this.curStartTime); // this.curStartTime需要倒计时的日期
-      let end = endDate.replace(/-/g, "/").getTime() / 1000;
+      // let endDate = new Date(this.curStartTime); // this.curStartTime需要倒计时的日期
+      let end = new Date(this.curStartTime.replace(/-/g, "/")).getTime();
+      console.log(end, now);
       // 时间差
       let leftTime = end - now;
       // 定义变量 d,h,m,s保存倒计时的时间
