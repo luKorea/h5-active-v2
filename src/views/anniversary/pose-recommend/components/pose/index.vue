@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 16:33:52
+ * @LastEditTime: 2022-03-10 17:10:03
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -91,6 +91,7 @@
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import PoseChose from "./chose.vue";
 import { errorInfo } from "@/utils";
+import smoothscroll from "smoothscroll-polyfill";
 export default {
   components: {
     PoseChose,
@@ -201,6 +202,7 @@ export default {
         this.selectItem = item.snId;
         console.log(item, "用户选中的项目");
         this.$nextTick(() => {
+          smoothscroll.polyfill();
           this.$refs["pose-chose"].$el.scrollIntoView({
             behavior: "smooth",
           });

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 17:37:56
+ * @LastEditTime: 2022-03-10 17:10:30
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -81,6 +81,7 @@ import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { successInfo } from "@/utils";
 import { getUserAccount } from "@/api/anniversary";
 import localCache from "@/utils/cache";
+import smoothscroll from "smoothscroll-polyfill";
 // import { getCode } from "@/utils/getCode";
 export default {
   name: "ordinaryRecommend",
@@ -197,12 +198,14 @@ export default {
     changeBtnClick(item) {
       if (item.id === this.selectBtnIndex) return;
       this.selectBtnIndex = item.id;
+      smoothscroll.polyfill();
       this.$refs[item.id].$el.scrollIntoView({
         behavior: "smooth",
       });
     },
     goAnchor(el) {
       this.selectBtnIndex = el;
+      smoothscroll.polyfill();
       this.$refs[el].$el.scrollIntoView({
         behavior: "smooth",
       });
