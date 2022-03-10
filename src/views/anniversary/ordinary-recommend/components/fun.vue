@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 14:37:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 11:12:25
+ * @LastEditTime: 2022-03-10 16:44:12
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/fun.vue
 -->
@@ -53,7 +53,7 @@ export default {
       titleImg:
         BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/fun-title.png",
       svipImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/svip.png",
-      proImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/pro.png",
+      proImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/Pro.png",
       drawImg: BASE_IMAGE_ANNIVERSARY_URL + "/ordinary-recommend/drawer.png",
     };
   },
