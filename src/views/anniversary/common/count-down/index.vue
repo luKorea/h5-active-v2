@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 15:03:40
+ * @LastEditTime: 2022-03-10 16:04:08
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->

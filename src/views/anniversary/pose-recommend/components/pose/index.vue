@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 12:09:39
+ * @LastEditTime: 2022-03-10 15:53:42
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -26,7 +26,7 @@
         <div class="btn-wrap">
           <template v-if="poseData && poseData.length > 0">
             <div v-for="(item, index) in poseData" :key="item.snId">
-              <div class="btn" @click="changeImg(index + 1, item)">
+              <div class="btn" @click="changeImg(index, item)">
                 {{ item.mold.name }}
               </div>
             </div>
@@ -56,16 +56,21 @@
                   <span class="big">{{ item.sale }}</span>
                   <span class="small">P币</span>
                 </div>
-                <div class="radio">
-                  <input
-                    id="item"
-                    type="radio"
-                    name="item"
-                    :value="item.title"
-                    :checked="selectItem === item.snId"
-                  />
-                  <label for="item"></label>
-                </div>
+                <template v-if="!item.isHave">
+                  <div class="radio">
+                    <input
+                      id="item"
+                      type="radio"
+                      name="item"
+                      :value="item.title"
+                      :checked="selectItem === item.snId"
+                    />
+                    <label for="item"></label>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="has">已拥有</div>
+                </template>
               </div>
             </div>
           </template>
@@ -84,6 +89,7 @@
 <script>
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import PoseChose from "./chose.vue";
+import { errorInfo } from "@/utils";
 export default {
   components: {
     PoseChose,
@@ -104,7 +110,7 @@ export default {
   },
   data() {
     return {
-      status: 1, // 1. BJD 夏娃 2. BJD 亚当 3. BJD 队长 点击不同项雀环不同背景
+      status: 0, // 1. BJD 夏娃 2. BJD 亚当 3. BJD 队长 点击不同项雀环不同背景
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-one-bg.png",
       titleImg: BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/one-title.png",
       defaultSelectImg:
@@ -136,50 +142,74 @@ export default {
   // },
   mounted() {
     setTimeout(() => {
-      this.list = this.poseData.length > 0 ? this.poseData[0].preps : [];
+      this.poseData.forEach((item, index) => {
+        if (item.mold.isHave) {
+          this.list = item.preps;
+          this.status = index;
+          switch (index) {
+            case 0:
+              this.defaultSelectImg = this.selectOneImg;
+              break;
+            case 1:
+              this.defaultSelectImg = this.selectTwoImg;
+              break;
+            case 2:
+              this.defaultSelectImg = this.selectThreeImg;
+              break;
+          }
+        }
+      });
     }, 1000);
   },
   methods: {
     changeImg(status, item) {
-      this.selectItem = 0;
-      this.selectInfo = {
-        choseImg:
-          BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
-        title: "",
-      };
+      console.log(status, item.mold);
       if (status === this.status) return;
-      switch (status) {
-        case 1:
-          this.defaultSelectImg = this.selectOneImg;
-          this.list = item.preps;
-          this.status = status;
-          break;
-        case 2:
-          this.defaultSelectImg = this.selectTwoImg;
-          this.list = item.preps;
-          this.status = status;
-          break;
-        case 3:
-          this.defaultSelectImg = this.selectThreeImg;
-          this.list = item.preps;
-          this.status = status;
-          break;
+      if (item.mold.isHave) {
+        this.selectItem = 0;
+        this.selectInfo = {
+          choseImg:
+            BASE_IMAGE_ANNIVERSARY_URL +
+            "/pose-recommend/default-pose-chose.png",
+          title: "",
+        };
+        switch (status) {
+          case 0:
+            this.defaultSelectImg = this.selectOneImg;
+            this.list = item.preps;
+            this.status = status;
+            break;
+          case 1:
+            this.defaultSelectImg = this.selectTwoImg;
+            this.list = item.preps;
+            this.status = status;
+            break;
+          case 2:
+            this.defaultSelectImg = this.selectThreeImg;
+            this.list = item.preps;
+            this.status = status;
+            break;
+        }
+      } else {
+        errorInfo("您还没有该人偶");
       }
     },
     handleSelectItem(item) {
-      if (item.snId === this.selectItem) return;
-      this.selectItem = item.snId;
-      console.log(item, "用户选中的项目");
-      this.$nextTick(() => {
-        this.$refs["pose-chose"].$el.scrollIntoView({
-          behavior: "smooth",
+      if (!item.isHave) {
+        if (item.snId === this.selectItem) return;
+        this.selectItem = item.snId;
+        console.log(item, "用户选中的项目");
+        this.$nextTick(() => {
+          this.$refs["pose-chose"].$el.scrollIntoView({
+            behavior: "smooth",
+          });
         });
-      });
-      this.selectInfo = {
-        ...item,
-        title: item.name,
-        choseImg: item.cover,
-      };
+        this.selectInfo = {
+          ...item,
+          title: item.name,
+          choseImg: item.cover,
+        };
+      }
     },
     openPayModal(type, info) {
       this.$emit("openPayModal", type, info);
@@ -324,6 +354,10 @@ input[type="radio"]:checked {
             .samll {
               font-size: 11px;
             }
+          }
+          .has {
+            font-size: 12px;
+            color: #666666;
           }
           .radio {
             position: relative;
