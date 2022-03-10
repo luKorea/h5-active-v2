@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 16:04:08
+ * @LastEditTime: 2022-03-10 16:22:24
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -29,6 +29,7 @@
 
 <script>
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import dayjs from "dayjs";
 export default {
   data() {
     return {
@@ -48,14 +49,12 @@ export default {
   methods: {
     countTime() {
       // 获取当前时间
-      let now = new Date(
-        new Date().toLocaleString().replace(/-/g, "/")
-      ).getTime();
+      let now = dayjs(new Date()).valueOf();
       // 设置截止时间
       // let endDate = new Date(this.curStartTime); // this.curStartTime需要倒计时的日期
       let end = this.curStartTime * 1000;
       if (now !== undefined && end !== undefined) {
-        console.log(end, "结束时间", now, "开始时间");
+        console.log(end, "结束时间", now, "当前时间");
         // 时间差
         let leftTime = end - now;
         // 定义变量 d,h,m,s保存倒计时的时间
