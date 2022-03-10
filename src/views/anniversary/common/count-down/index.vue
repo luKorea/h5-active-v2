@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 14:55:28
+ * @LastEditTime: 2022-03-10 15:03:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -41,7 +41,9 @@ export default {
     };
   },
   mounted() {
-    this.countTime();
+    this.$nextTick(() => {
+      this.countTime();
+    });
   },
   methods: {
     countTime() {
@@ -52,39 +54,41 @@ export default {
       // 设置截止时间
       // let endDate = new Date(this.curStartTime); // this.curStartTime需要倒计时的日期
       let end = this.curStartTime * 1000;
-      console.log(end, "结束时间", now, "开始时间");
-      // 时间差
-      let leftTime = end - now;
-      // 定义变量 d,h,m,s保存倒计时的时间
-      if (leftTime >= 0) {
-        // 天
-        this.day = Math.floor(leftTime / 1000 / 60 / 60 / 24);
-        // 时
-        let h = Math.floor((leftTime / 1000 / 60 / 60) % 24);
-        this.hour = h < 10 ? "0" + h : h;
-        // 分
-        let m = Math.floor((leftTime / 1000 / 60) % 60);
-        this.min = m < 10 ? "0" + m : m;
-        // 秒
-        let s = Math.floor((leftTime / 1000) % 60);
-        this.second = s < 10 ? "0" + s : s;
-      } else {
-        this.day = 0;
-        this.hour = "00";
-        this.min = "00";
-        this.second = "00";
-      }
-      // 等于0的时候不调用
-      if (
-        Number(this.hour) === 0 &&
-        Number(this.day) === 0 &&
-        Number(this.min) === 0 &&
-        Number(this.second) === 0
-      ) {
-        return;
-      } else {
-        // 递归每秒调用countTime方法，显示动态时间效果,
-        setTimeout(this.countTime, 1000);
+      if (now !== undefined && end !== undefined) {
+        console.log(end, "结束时间", now, "开始时间");
+        // 时间差
+        let leftTime = end - now;
+        // 定义变量 d,h,m,s保存倒计时的时间
+        if (leftTime >= 0) {
+          // 天
+          this.day = Math.floor(leftTime / 1000 / 60 / 60 / 24);
+          // 时
+          let h = Math.floor((leftTime / 1000 / 60 / 60) % 24);
+          this.hour = h < 10 ? "0" + h : h;
+          // 分
+          let m = Math.floor((leftTime / 1000 / 60) % 60);
+          this.min = m < 10 ? "0" + m : m;
+          // 秒
+          let s = Math.floor((leftTime / 1000) % 60);
+          this.second = s < 10 ? "0" + s : s;
+        } else {
+          this.day = 0;
+          this.hour = "00";
+          this.min = "00";
+          this.second = "00";
+        }
+        // 等于0的时候不调用
+        if (
+          Number(this.hour) === 0 &&
+          Number(this.day) === 0 &&
+          Number(this.min) === 0 &&
+          Number(this.second) === 0
+        ) {
+          return;
+        } else {
+          // 递归每秒调用countTime方法，显示动态时间效果,
+          setTimeout(this.countTime, 1000);
+        }
       }
     },
   },
