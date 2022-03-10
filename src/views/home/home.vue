@@ -135,7 +135,7 @@ import {
 } from "@/api";
 // import { getCode } from "@/utils/getCode";
 
-import smoothscroll from 'smoothscroll-polyfill'
+import smoothscroll from "smoothscroll-polyfill";
 export default {
   name: "Home",
   components: {
