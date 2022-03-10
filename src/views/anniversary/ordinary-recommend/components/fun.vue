@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 14:37:39
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 16:44:12
+ * @LastEditTime: 2022-03-10 17:16:07
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/fun.vue
 -->
@@ -163,9 +163,9 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #79797e;
-      .user-id {
-        // margin-bottom: 6px;
-      }
+      // .user-id {
+      //   // margin-bottom: 6px;
+      // }
       //   justify-content: space-evenly;
     }
   }
