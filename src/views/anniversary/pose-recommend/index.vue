@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 16:55:45
+ * @LastEditTime: 2022-03-10 18:04:55
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -60,6 +60,7 @@ import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 
 import {
   bugOnePrice,
+  checkUserBug,
   getPoseAndEvenList,
   getUserAccount,
 } from "@/api/anniversary";
@@ -200,7 +201,6 @@ export default {
     handleChangePayModal(type, info) {
       this.selectShopInfo = info;
       localCache.setCache("selectInfo", info);
-      this.$refs["payRef"].showDialog = true;
       switch (type) {
         case "pro":
           this.payInfo = {
@@ -221,9 +221,29 @@ export default {
           };
           break;
       }
+      const store = this.$store.state.anniversaryModule;
+      const data = {
+        uid: store.uid,
+        loginKey: store.token,
+        snId: this.payInfo.id,
+      };
+      this.checkUserBugInfo(data)
+        .then(() => {
+          this.$refs["payRef"].showDialog = true;
+        })
+        .catch((err) => errorInfo(err));
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
+    },
+    checkUserBugInfo(data) {
+      return new Promise((resolve, reject) => {
+        checkUserBug(data).then((res) => {
+          if (res.state) {
+            resolve();
+          } else reject("您已经拥有该套餐");
+        });
+      });
     },
     payWechat() {
       let data = {

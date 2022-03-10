@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 10:09:10
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 16:19:36
+ * @LastEditTime: 2022-03-10 17:54:56
  * @Description: file content
  * @FilePath: /h5-active-v2/src/api/anniversary.js
  */
@@ -37,6 +37,13 @@ export function getPoseAndEvenList(data) {
 export function bugOnePrice(data) {
   return request.post({
     url: "/api/trade/purchase",
+    data: data,
+  });
+}
+// 校验用户购买资格
+export function checkUserBug(data) {
+  return request.post({
+    url: "/api/event/ann2022/checkTrade",
     data: data,
   });
 }

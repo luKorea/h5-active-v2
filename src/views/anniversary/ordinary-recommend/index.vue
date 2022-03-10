@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 17:10:30
+ * @LastEditTime: 2022-03-10 18:04:00
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -78,8 +78,8 @@ import ShopComponent from "./components/shop.vue";
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
-import { successInfo } from "@/utils";
-import { getUserAccount } from "@/api/anniversary";
+import { successInfo, errorInfo } from "@/utils";
+import { getUserAccount, checkUserBug } from "@/api/anniversary";
 import localCache from "@/utils/cache";
 import smoothscroll from "smoothscroll-polyfill";
 // import { getCode } from "@/utils/getCode";
@@ -212,7 +212,6 @@ export default {
     },
     handleChangePayModal(type, info) {
       this.selectShopInfo = info;
-      this.$refs["payRef"].showDialog = true;
       switch (type) {
         case "mina":
           this.payInfo = {
@@ -239,9 +238,29 @@ export default {
           };
           break;
       }
+      const store = this.$store.state.anniversaryModule;
+      const data = {
+        uid: store.uid,
+        loginKey: store.token,
+        snId: this.payInfo.id,
+      };
+      this.checkUserBugInfo(data)
+        .then(() => {
+          this.$refs["payRef"].showDialog = true;
+        })
+        .catch((err) => errorInfo(err));
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
+    },
+    checkUserBugInfo(data) {
+      return new Promise((resolve, reject) => {
+        checkUserBug(data).then((res) => {
+          if (res.state) {
+            resolve();
+          } else reject("您已经拥有该套餐");
+        });
+      });
     },
     payWechat() {
       let data = {
