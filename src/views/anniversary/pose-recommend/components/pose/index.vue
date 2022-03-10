@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 15:53:42
+ * @LastEditTime: 2022-03-10 16:34:59
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -44,6 +44,7 @@
               v-for="item in list"
               :key="item.id"
               class="item"
+              :class="selectItem === item.snId && 'selectItem'"
               @click="handleSelectItem(item)"
             >
               <div class="img">
@@ -402,6 +403,9 @@ input[type="radio"]:checked {
             }
           }
         }
+      }
+      .selectItem {
+        border: 2px solid rgb(218, 132, 46);
       }
     }
   }
