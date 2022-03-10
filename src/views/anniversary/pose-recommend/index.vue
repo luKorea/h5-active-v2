@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 17:38:05
+ * @LastEditTime: 2022-03-10 16:55:45
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -186,6 +186,8 @@ export default {
           Dialog.alert({
             title: "兑换成功",
             message: "充值的P币已到账，人偶兑换成功",
+          }).then(() => {
+            this.$router.replace("/ordinaryRecommend");
           });
         } else {
           Dialog.alert({
