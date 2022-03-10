@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 11:08:28
+ * @LastEditTime: 2022-03-10 14:17:47
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/countDown.png",
-      curStartTime: "2022-03-31 24:00:00", // 结束时间
+      curStartTime: "2022/03/31 24:00:00", // 结束时间
       day: "0",
       hour: "00",
       min: "00",
