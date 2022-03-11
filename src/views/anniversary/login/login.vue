@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-11 11:49:44
+ * @LastEditTime: 2022-03-11 14:42:21
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -109,12 +109,10 @@ export default {
         _this.$store
           .dispatch("anniversaryModule/loginAction", data)
           .then((res) => {
+            console.log(res);
             successInfo("登录成功");
             this.$router.push({
               path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
-              // query: {
-              //   type: res,
-              // },
             });
           })
           .catch((err) => errorInfo(err));
