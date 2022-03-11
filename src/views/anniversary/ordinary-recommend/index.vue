@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-11 11:04:02
+ * @LastEditTime: 2022-03-11 12:02:17
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -310,7 +310,12 @@ export default {
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
       console.log(data, "data");
-      wechatPayAction(data);
+      wechatPayAction(data)
+        .then(() => {
+          successInfo("充值成功");
+          this.$refs["payRef"].showDialog = false;
+        })
+        .catch((err) => errorInfo(err));
     },
     payAli() {
       let data = {

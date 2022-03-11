@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-11 10:59:26
+ * @LastEditTime: 2022-03-11 12:02:02
  * @Description: 该页面作为pose推荐页以及人偶推荐页，
     根据登录后判断参数type，来决定显示pose库还是人偶库
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
@@ -64,7 +64,7 @@ import {
   getPoseAndEvenList,
   getUserAccount,
 } from "@/api/anniversary";
-import { errorInfo } from "@/utils";
+import { errorInfo, successInfo } from "@/utils";
 import localCache from "@/utils/cache";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
@@ -264,7 +264,12 @@ export default {
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
       console.log(data, "data");
-      wechatPayAction(data);
+      wechatPayAction(data)
+        .then(() => {
+          successInfo("充值成功");
+          this.$refs["payRef"].showDialog = false;
+        })
+        .catch((err) => errorInfo(err));
     },
     payAli() {
       let data = {

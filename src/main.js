@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-03-11 11:56:16
+ * @LastEditTime: 2022-03-11 11:58:59
  * @LastEditors: korealu
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/main.js
@@ -12,13 +12,13 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import globalRegister from "@/global";
-// import Vconsole from "vconsole";
+import Vconsole from "vconsole";
 import VueClipboard from "vue-clipboard2";
 import { Dialog } from "vant";
 import smoothscroll from "smoothscroll-polyfill";
 Vue.use(VueClipboard);
 smoothscroll.polyfill();
-// new Vconsole();
+new Vconsole();
 
 Vue.use(Dialog);
 Vue.config.productionTip = false;
