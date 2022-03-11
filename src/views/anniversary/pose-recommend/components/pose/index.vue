@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 11:39:56
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 17:10:03
+ * @LastEditTime: 2022-03-11 10:58:03
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/components/pose/index.vue
 -->
@@ -124,11 +124,7 @@ export default {
       selectThreeImg:
         BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/pose-chose-one-three.png",
       selectItem: 0,
-      selectInfo: {
-        choseImg:
-          BASE_IMAGE_ANNIVERSARY_URL + "/pose-recommend/default-pose-chose.png",
-        title: "",
-      },
+      selectInfo: {},
       list: [],
     };
   },
@@ -144,23 +140,26 @@ export default {
   // },
   mounted() {
     setTimeout(() => {
-      this.poseData.forEach((item, index) => {
+      for (let i = 0; i < this.poseData.length; i++) {
+        const item = this.poseData[i];
         if (item.mold.isHave) {
-          this.list = item.preps;
-          this.status = index;
-          switch (index) {
-            case 0:
-              this.defaultSelectImg = this.selectOneImg;
-              break;
-            case 1:
-              this.defaultSelectImg = this.selectTwoImg;
-              break;
-            case 2:
-              this.defaultSelectImg = this.selectThreeImg;
-              break;
+          if (item.mold.isHave && item.mold.name === "BJD夏娃") {
+            this.list = item.preps;
+            this.status = i;
+            this.defaultSelectImg = this.selectOneImg;
+            return;
+          } else if (item.mold.isHave && item.mold.name === "BJD亚当") {
+            this.list = item.preps;
+            this.status = i;
+            this.defaultSelectImg = this.selectTwoImg;
+            return;
+          } else if (item.mold.isHave && item.mold.name === "BJD队长") {
+            this.list = item.preps;
+            this.status = i;
+            this.defaultSelectImg = this.selectThreeImg;
           }
         }
-      });
+      }
     }, 1000);
   },
   methods: {

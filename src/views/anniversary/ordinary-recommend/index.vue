@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 10:31:25
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-10 18:04:00
+ * @LastEditTime: 2022-03-11 10:52:01
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/index.vue
 -->
@@ -156,12 +156,15 @@ export default {
     }
   },
   mounted() {
-    // if (this._isWechat()) {
-    //   if (localCache.getCache("openId") == null) {
-    //     getCode("wx4e33f34be6700e46", this.$route.query.code);
-    //     return;
-    //   }
-    // }
+    this.$nextTick(() => {
+      window.addEventListener(
+        "scroll",
+        () => {
+          this.handleScroll();
+        },
+        true
+      );
+    });
     document.title = "POFI 周年庆典";
     if (this.$route.state === "success") {
       successInfo("充值成功");
@@ -171,19 +174,46 @@ export default {
       uid: store.uid,
       loginKey: store.token,
     });
-    // if (!localCache.getCache("userAccount") && store.token) {
-    //   this.getAccount({
-    //     uid: store.uid,
-    //     loginKey: store.token,
-    //   });
-    // } else {
-    //   this.userInfo = {
-    //     ...this.$store.state.anniversaryModule.userInfo,
-    //     ...localCache.getCache("userAccount"),
-    //   };
-    // }
   },
   methods: {
+    handleScroll() {
+      const bodyScrollTop =
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        window.pageYOffset;
+      const list = [
+        {
+          offsetTop: this.$refs["one"].$el.offsetTop,
+          id: "one",
+        },
+        {
+          offsetTop: this.$refs["two"].$el.offsetTop,
+          id: "two",
+        },
+        {
+          offsetTop: this.$refs["three"].$el.offsetTop,
+          id: "three",
+        },
+        {
+          offsetTop: this.$refs["four"].$el.offsetTop,
+          id: "four",
+        },
+        {
+          offsetTop: this.$refs["five"].$el.offsetTop,
+          id: "five",
+        },
+      ];
+      const _this = this;
+      for (let i = 0; i < list.length; i++) {
+        if (bodyScrollTop > list[i].offsetTop - 100) {
+          if (_this.selectBtnIndex !== list[i].id) {
+            _this.selectBtnIndex = list[i].id;
+          }
+        } else {
+          break;
+        }
+      }
+    },
     getAccount(data) {
       getUserAccount(data).then((res) => {
         if (res.code === 200) {
@@ -196,6 +226,7 @@ export default {
       });
     },
     changeBtnClick(item) {
+      // document.removeEventListener("scroll", this.handleScroll, false);
       if (item.id === this.selectBtnIndex) return;
       this.selectBtnIndex = item.id;
       smoothscroll.polyfill();
@@ -204,6 +235,7 @@ export default {
       });
     },
     goAnchor(el) {
+      // document.removeEventListener("scroll", this.handleScroll, false);
       this.selectBtnIndex = el;
       smoothscroll.polyfill();
       this.$refs[el].$el.scrollIntoView({
@@ -258,7 +290,7 @@ export default {
         checkUserBug(data).then((res) => {
           if (res.state) {
             resolve();
-          } else reject("您已经拥有该套餐");
+          } else reject(res.msg);
         });
       });
     },
