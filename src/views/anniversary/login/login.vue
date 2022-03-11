@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 15:55:53
+ * @LastEditTime: 2022-03-11 11:49:44
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -71,6 +71,14 @@ export default {
     };
   },
   mounted() {
+    if (localCache.getCache("userInfo")) {
+      this.$router.push({
+        path:
+          localCache.getCache("checkPage") === "B1"
+            ? "/ordinaryRecommend"
+            : "/poseRecommend",
+      });
+    }
     if (this._isWechat()) {
       if (localCache.getCache("openId") == null) {
         getCode("wx4e33f34be6700e46", this.$route.query.code);
