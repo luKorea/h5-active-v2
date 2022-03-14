@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-04 13:48:18
  * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 10:32:50
+ * @LastEditTime: 2022-03-14 11:15:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/ordinary-recommend/components/shop.vue
 -->
@@ -30,7 +30,7 @@
     <!-- 规则 -->
     <div class="pose-rules">
       <div>活动规则：</div>
-      <div>3月14日00:00起，在APP官方商城或小红书pofi官方店铺</div>
+      <div>3月15日00:00起，在APP官方商城或小红书pofi官方店铺</div>
       <div>
         下单的前10名用户，将额外获得
         <span class="title-tip" @click="showRules">礼品卡大礼包</span>
