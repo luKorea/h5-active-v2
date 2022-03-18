@@ -16,8 +16,8 @@ export default {
   shareToFriendLink: window.location.href,
   wechatOpenQQLink: "https://jq.qq.com/?_wv=1027&k=zzT2gAmr",
   qqLink: "https://jq.qq.com/?_wv=1027&k=zzT2gAmr",
-  anniversaryWechatQQLink: "https://jq.qq.com/?_wv=1027&k=Tu6ett4I",
-  anniversaryQQLink: "https://jq.qq.com/?_wv=1027&k=Tu6ett4I",
+  anniversaryWechatQQLink: "https://jq.qq.com/?_wv=1027&k=JOBzchfs",
+  anniversaryQQLink: "https://jq.qq.com/?_wv=1027&k=JOBzchfs",
   shoppingLink:
     'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
 };
