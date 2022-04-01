@@ -35,6 +35,11 @@ const routes = [
     name: "advertisementOrdinaryRecommend",
     component: () => import("@/views/anniversary/ordinary-recommend/index.vue"),
   },
+  {
+    path: "/end",
+    name: "endPage",
+    component: () => import("@/views/endPage/index.vue"),
+  },
 ];
 
 const router = new VueRouter({

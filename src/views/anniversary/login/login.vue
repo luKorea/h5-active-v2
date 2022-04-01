@@ -111,8 +111,11 @@ export default {
           .then((res) => {
             console.log(res);
             successInfo("登录成功");
+            // this.$router.push({
+            //   path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
+            // });
             this.$router.push({
-              path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
+              path: "/end",
             });
           })
           .catch((err) => errorInfo(err));
