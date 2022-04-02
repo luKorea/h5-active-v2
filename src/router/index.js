@@ -23,7 +23,8 @@ const routes = [
   {
     path: "/Ann2022",
     name: "advertisementLogin",
-    component: () => import("@/views/anniversary/login/login.vue"),
+    component: () => import("@/views/endPage/index.vue"),
+    // component: () => import("@/views/anniversary/login/login.vue"),
   },
   {
     path: "/poseRecommend",
