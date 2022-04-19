@@ -13,7 +13,8 @@ import Home from "../views/home/home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/group",
     name: "Home",
     component: Home,
