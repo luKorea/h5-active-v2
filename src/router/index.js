@@ -1,8 +1,8 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:13:19
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-19 16:38:59
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -13,8 +13,7 @@ import Home from "../views/home/home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/group",
     name: "Home",
     component: Home,
@@ -41,13 +40,20 @@ const routes = [
     name: "endPage",
     component: () => import("@/views/endPage/index.vue"),
   },
+  {
+    path: "/vote",
+    name: "votePage",
+    component: () => import("@/views/vote/index/index.vue"),
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: "/",
   routes,
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0,
+  }),
 });
 
 export default router;
