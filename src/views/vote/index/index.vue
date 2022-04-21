@@ -2,15 +2,37 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-19 16:58:13
- * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个选五投票，一个商品页面
+ * @LastEditTime: 2022-04-21 13:47:31
+ * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
 <template>
   <div class="pose-recommend">
-    <info-fixed :userInfo="userInfo"></info-fixed>
-    <div style="width: 100%; height: 300px"><count-down></count-down></div>
-    <anniversary-footer></anniversary-footer>
+    <!-- 头部区域 -->
+    <div class="pose-img">
+      <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
+    </div>
+    <count-down></count-down>
+    <info-fixed
+      :userInfo="userInfo"
+      @handleLoginDialog="showLoginDialog = true"
+      @handleLogout="showLogoutDialog = true"
+    ></info-fixed>
+    <!-- 购买区域 -->
+    <pay-event-component
+      @handleLoginDialog="showLoginDialog = true"
+      @handlePayDialog="handleChangePayModal"
+    ></pay-event-component>
+    <!-- 投票区域 -->
+    <vote-component @handleLoginDialog="showLoginDialog = true" />
+    <!-- 活动区域 -->
+    <shop-component />
+    <!-- 调查问卷 -->
+    <question-component />
+    <!-- 企业微信 -->
+    <wechat-component />
+    <vote-footer></vote-footer>
+    <!-- 以下页面为公用页面 -->
     <!-- 支付弹框 -->
     <pay-component
       ref="payRef"
@@ -19,149 +41,109 @@
       :payInfo="payInfo"
       :userInfo="userInfo"
     ></pay-component>
+
+    <!--登录注册页面-->
+    <login-and-register
+      :show-dialog="showLoginDialog"
+      @closeDialog="closeDialog"
+      @handleLogin="phoneLogin"
+    >
+    </login-and-register>
+    <!--退出弹框-->
+    <logout
+      :show-dialog="showLogoutDialog"
+      @logout="logout"
+      @closeDialog="closeDialog"
+      title="退出登录"
+    />
   </div>
 </template>
 
 <script>
-import AnniversaryFooter from "../footer";
+import voteFooter from "../footer";
 import InfoFixed from "../common/info";
 import CountDown from "../common/count-down";
 import PayComponent from "@/components/pay";
 
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import loginAndRegister from "../../login-and-register/login-and-register.vue";
+import logout from "../../login-and-register/logout.vue";
+import PayEventComponent from "./components/pay-event-component.vue";
+import VoteComponent from "./components/vote-component.vue";
+import shopComponent from "./components/shop-component.vue";
+import questionComponent from "./components/question-component.vue";
+import wechatComponent from "./components/wechat-component.vue";
 
-import {
-  bugOnePrice,
-  checkUserBug,
-  getPoseAndEvenList,
-  getUserAccount,
-} from "@/api/anniversary";
+import { BASE_IMAGE_VOTE_URL } from "@/request/config";
+
 import { errorInfo, successInfo } from "@/utils";
 import localCache from "@/utils/cache";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
-import { Dialog } from "vant";
 
 export default {
-  name: "poseRecommend",
+  name: "votePage",
   components: {
-    AnniversaryFooter,
+    voteFooter,
     PayComponent,
     InfoFixed,
     CountDown,
+    PayEventComponent,
+    VoteComponent,
+    shopComponent,
+    questionComponent,
+    wechatComponent,
+    loginAndRegister,
+    logout,
   },
-  mounted() {},
+  mounted() {
+    // const userInfo = this.$store.state.voteModule;
+    console.log(this.$store.state.voteModule);
+  },
   data() {
     return {
       payInfo: {},
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/bg.png",
-      showDifferentComponents: "A1", // A1. pose 2. even
-      poseData: [],
-      evenData: [],
+      bgImg: BASE_IMAGE_VOTE_URL + "/banner.png",
       selectShopInfo: {},
       userInfo: {},
       resetTime: null,
+      showLoginDialog: false,
+      showLogoutDialog: false,
     };
   },
   methods: {
-    getAccount(data) {
-      getUserAccount(data).then((res) => {
-        if (res.code === 200) {
-          res?.data?.vips.forEach((item) => {
-            if (item.func === "pro") {
-              this.resetTime = item.endAt;
-            }
-          });
-          this.userInfo = {
-            ...this.$store.state.anniversaryModule.userInfo,
-            ...res.data,
-          };
-          localCache.setCache("userAccount", res.data);
-        }
+    phoneLogin(data) {
+      const _this = this;
+      this.$store
+        .dispatch("voteModule/loginAction", data)
+        .then(() => {
+          successInfo("登录成功");
+          _this.showLoginDialog = false;
+          // this.getAllData();
+          // window.location.reload();
+        })
+        .catch((err) => errorInfo(err));
+    },
+    logout() {
+      this.$store.dispatch("voteModule/logoutAction").then(() => {
+        window.location.reload();
       });
     },
-    getPoseAndEvenData(data) {
-      getPoseAndEvenList(data).then((res) => {
-        if (res.code === 200) {
-          this.poseData = res.data;
-          this.evenData = res.data;
-        } else errorInfo(res.msg);
-      });
+    closeDialog() {
+      this.showLoginDialog = false;
+      this.showLogoutDialog = false;
     },
-    bugShopping(data) {
-      bugOnePrice(data).then((res) => {
-        localCache.cleanCache("selectInfo");
-        if (res.code === 200) {
-          Dialog.alert({
-            title: "兑换成功",
-            message: "充值的P币已到账，人偶兑换成功",
-          }).then(() => {
-            this.$router.replace("/ordinaryRecommend");
-          });
-        } else {
-          Dialog.alert({
-            title: "兑换失败",
-            message: res.msg,
-          });
-        }
-      });
-    },
-    handleChangePayModal(type, info) {
-      if (!info.snId) errorInfo("请先选择pose库");
-      else {
-        this.selectShopInfo = info;
-        localCache.setCache("selectInfo", info);
-        switch (type) {
-          case "pro":
-            this.payInfo = {
-              title: "充值专业版",
-              id: "AFUNC_PRO_455D_A",
-            };
-            break;
-          case "six":
-            this.payInfo = {
-              title: "充值6P币",
-              id: "ARCG600",
-            };
-            break;
-          case "svip":
-            this.payInfo = {
-              title: "充值SVIP",
-              id: "AFUNC_SVIP_455D",
-            };
-            break;
-        }
-        const store = this.$store.state.anniversaryModule;
-        const data = {
-          uid: store.uid,
-          loginKey: store.token,
-          snId: this.payInfo.id,
-        };
-        this.checkUserBugInfo(data)
-          .then(() => {
-            this.$refs["payRef"].showDialog = true;
-          })
-          .catch((err) => errorInfo(err));
-      }
+    handleChangePayModal() {
+      this.$refs["payRef"].showDialog = true;
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
-    },
-    checkUserBugInfo(data) {
-      return new Promise((resolve, reject) => {
-        checkUserBug(data).then((res) => {
-          if (res.state) {
-            resolve();
-          } else reject(res.msg);
-        });
-      });
     },
     payWechat() {
       let data = {
         snId: this.payInfo.id,
         chargeType: 0,
-        uid: this.$store.state.anniversaryModule.uid,
-        loginKey: this.$store.state.anniversaryModule.token,
+        uid: this.$store.state.voteModule.uid,
+        loginKey: this.$store.state.voteModule.token,
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: this._isWechat() ? 3 : 2,
         // remark: JSON.stringify({
@@ -171,26 +153,10 @@ export default {
         returnUrl: `${window.location.href}?state=success`,
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
-      console.log(data, "data");
       wechatPayAction(data)
         .then(() => {
           successInfo("充值成功");
           this.$refs["payRef"].showDialog = false;
-          const data = localCache.getCache("selectInfo");
-          const store = this.$store.state.anniversaryModule;
-          const list = [];
-          list.push({
-            tid: data.moid,
-            snId: data.snId,
-            amount: 1,
-            paymentType: 1,
-          });
-          console.log(list, "data");
-          this.bugShopping({
-            uid: store.uid,
-            loginKey: store.token,
-            cart: JSON.stringify(list),
-          });
         })
         .catch((err) => errorInfo(err));
     },
@@ -198,8 +164,8 @@ export default {
       let data = {
         snId: this.payInfo.id,
         chargeType: 1,
-        uid: this.$store.state.anniversaryModule.uid,
-        loginKey: this.$store.state.anniversaryModule.token,
+        uid: this.$store.state.voteModule.uid,
+        loginKey: this.$store.state.voteModule.token,
         from: 2,
         // remark: JSON.stringify({
         //   type: 8,
@@ -208,7 +174,6 @@ export default {
         appid: urlLink.alipayAPPID,
         returnUrl: `${window.location.href}?state=success`,
       };
-      console.log(data, "data");
       aliPayAction(data);
     },
   },
@@ -220,7 +185,7 @@ export default {
   display: flex;
   flex-direction: column;
   /* width: 100%; */
-  margin: 18px;
+  margin: 15px;
 }
 </style>
 <style lang="less" scoped>
@@ -232,6 +197,7 @@ export default {
   .pose-img {
     width: 100%;
     height: 100%;
+    // margin-bottom: 10px;
     img {
       width: 100%;
       height: 100%;

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-19 16:52:30
+ * @LastEditTime: 2022-04-21 14:13:46
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import dayjs from "dayjs";
 export default {
   data() {
     return {
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/countDown.png",
+      bgImg: BASE_IMAGE_VOTE_URL + "/count-down-bg.png",
       curStartTime: 1651766399, // 结束时间
       day: "0",
       hour: "00",
@@ -97,8 +97,8 @@ export default {
 .count-wrap {
   display: flex;
   padding: 20px;
-  // margin-top: -100px;
-  margin-top: 200px;
+  margin-top: -80px;
+  // margin-top: 200px;
   .count-down {
     position: relative;
     .img {

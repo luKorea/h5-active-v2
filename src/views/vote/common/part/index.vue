@@ -18,7 +18,7 @@
 <script>
 import { openUrl, copyShareLink } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 
 export default {
   name: "send-link",
@@ -26,24 +26,24 @@ export default {
     return {
       list: [
         {
-          imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/pose-weibo.png",
+          imgUrl: BASE_IMAGE_VOTE_URL + "/weibo.png",
           url: urlLink.weiboLink,
           type: "weibo",
         },
         {
-          imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/pose-redbook.png",
+          imgUrl: BASE_IMAGE_VOTE_URL + "/redbook.png",
           url: urlLink.redBookLink,
           type: "redBook",
         },
         {
-          imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/pose-qq.png",
+          imgUrl: BASE_IMAGE_VOTE_URL + "/qq.png",
           url: urlLink.anniversaryQQLink,
           type: "qq",
           urlForWechat: urlLink.anniversaryWechatQQLink,
         },
         {
-          imgUrl: BASE_IMAGE_ANNIVERSARY_URL + "/pose-share.png",
-          url: window.location.origin + "/Ann2022",
+          imgUrl: BASE_IMAGE_VOTE_URL + "/share.png",
+          url: window.location.origin + "/vote",
           type: "share",
         },
       ],
@@ -94,11 +94,11 @@ export default {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    width: 60%;
+    width: 80%;
     .img-item {
-      width: 97px;
-      height: 27px;
-      margin-top: 18px;
+      width: 150px;
+      height: 38px;
+      margin-top: 10px;
       img {
         width: 100%;
         height: 100%;

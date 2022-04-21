@@ -1,54 +1,61 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 14:13:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-21 14:32:53
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
 <template>
   <div class="info-fixed">
-    <div class="info-avatar" @click="showLogoutDialog">
-      <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
+    <div class="app-user" v-if="token" @click="goPage('logout')">
+      <img
+        src="https://f3.pofiapp.com/event/anniversary/avatar.png"
+        alt=""
+        referrerpolicy="no-referrer"
+      />
     </div>
-    <div class="app-logo" @click="goApp">
+    <div class="app-login" v-else @click="goPage('login')">
+      <img :src="loginUrl" alt="" referrerpolicy="no-referrer" />
+    </div>
+    <div class="app-logo" @click="goPage('app')">
       <img :src="logoImg" alt="" referrerpolicy="no-referrer" />
     </div>
-
-    <logout ref="logoutRef" @logout="logout"></logout>
+    <div class="app-service" @click="goPage('app')">
+      <img :src="serviceImg" alt="" referrerpolicy="no-referrer" />
+    </div>
   </div>
 </template>
 
 <script>
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import {
+  BASE_IMAGE_VOTE_URL,
+  BASE_IMAGE_ANNIVERSARY_URL,
+} from "@/request/config";
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
-import logout from "@/components/logout/logout.vue";
+import { mapState } from "vuex";
 export default {
-  components: { logout },
-  props: {
-    userInfo: {
-      type: Object,
-      default: () => {},
-    },
+  computed: {
+    ...mapState({
+      token: (state) => state.voteModule.token,
+      userInfo: (state) => state.voteModule.userInfo,
+    }),
   },
   data() {
     return {
       logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/app-logo.png",
-      avatarImg: BASE_IMAGE_ANNIVERSARY_URL + "/avatar.png",
+      loginUrl: BASE_IMAGE_VOTE_URL + "/login.png",
+      serviceImg: BASE_IMAGE_VOTE_URL + "/service.png",
     };
   },
   methods: {
-    goApp() {
-      openUrl(urlLink.appLink);
-    },
-    showLogoutDialog() {
-      this.$refs["logoutRef"].showDialog = true;
-    },
-    logout() {
-      this.$store.dispatch("anniversaryModule/logoutAction").then(() => {
-        this.$router.replace("/Ann2022");
-      });
+    goPage(type) {
+      if (type === "app") {
+        openUrl(urlLink.appLink);
+      } else if (type === "logout") {
+        this.$emit("handleLogout", "logout");
+      } else this.$emit("handleLoginDialog", true);
     },
   },
 };
@@ -62,10 +69,9 @@ export default {
   z-index: 20;
   display: flex;
   flex-direction: column;
-  .info-avatar {
+  .app-user {
     width: 43px;
     height: 43px;
-    margin-bottom: 8px;
     img {
       width: 43px;
       height: 43px;
@@ -74,9 +80,27 @@ export default {
       box-sizing: border-box;
     }
   }
+  .app-login {
+    width: 43px;
+    height: 43px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .app-logo {
     width: 43px;
     height: 43px;
+    margin-top: 14px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .app-service {
+    width: 43px;
+    height: 43px;
+    margin-top: 14px;
     img {
       width: 100%;
       height: 100%;

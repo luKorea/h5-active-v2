@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-19 16:47:19
+ * @LastEditTime: 2022-04-21 14:25:19
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -126,7 +126,7 @@ export default {
   .copyright {
     text-align: center;
     font-size: 12px;
-    color: #4d6556;
+    color: #919191;
     margin-top: 30px;
     margin-bottom: 30px;
   }
