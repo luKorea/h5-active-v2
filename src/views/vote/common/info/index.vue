@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 14:32:53
+ * @LastEditTime: 2022-04-21 17:43:55
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
@@ -21,7 +21,7 @@
     <div class="app-logo" @click="goPage('app')">
       <img :src="logoImg" alt="" referrerpolicy="no-referrer" />
     </div>
-    <div class="app-service" @click="goPage('app')">
+    <div class="app-service" @click="goPage('service')">
       <img :src="serviceImg" alt="" referrerpolicy="no-referrer" />
     </div>
   </div>
@@ -53,6 +53,8 @@ export default {
     goPage(type) {
       if (type === "app") {
         openUrl(urlLink.appLink);
+      } else if (type === "service") {
+        openUrl(urlLink.voteQQLink);
       } else if (type === "logout") {
         this.$emit("handleLogout", "logout");
       } else this.$emit("handleLoginDialog", true);

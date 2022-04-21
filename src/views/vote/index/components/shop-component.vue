@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:44:24
- * @LastEditTime: 2022-04-21 15:10:21
+ * @LastEditTime: 2022-04-21 18:00:54
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/shop-component.vue
@@ -26,10 +26,10 @@
         <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="shop-btn">
-        <div class="btn">
+        <div class="btn" @click="openPage(1)">
           <img :src="imgInfo.superImg" alt="" referrerpolicy="no-referrer" />
         </div>
-        <div class="btn">
+        <div class="btn" @click="openPage(0)">
           <img :src="imgInfo.redbookImg" alt="" referrerpolicy="no-referrer" />
         </div>
       </div>
@@ -39,15 +39,24 @@
         </div>
       </div>
     </div>
+    <van-dialog v-model="showDialog" :show-cancel-button="false">
+      <div class="dialog-img">
+        <img :src="qrCode" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
 <script>
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
+import { openUrl } from "@/utils";
+import urlLink from "@/utils/link";
 export default {
   name: "shopComponent",
   data() {
     return {
+      qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
+      showDialog: false,
       imgInfo: {
         bgImg: BASE_IMAGE_VOTE_URL + "/shop-bg.png",
         titleImg: BASE_IMAGE_VOTE_URL + "/shop-title.png",
@@ -57,10 +66,25 @@ export default {
       },
     };
   },
+  methods: {
+    openPage(type) {
+      if (type) {
+        this.showDialog = true;
+      } else openUrl(urlLink.redBookLink);
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
+.dialog-img {
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 .shop-wrap {
   width: 100%;
   position: relative;

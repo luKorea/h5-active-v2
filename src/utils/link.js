@@ -18,6 +18,7 @@ export default {
   qqLink: "https://jq.qq.com/?_wv=1027&k=zzT2gAmr",
   anniversaryWechatQQLink: "https://jq.qq.com/?_wv=1027&k=JOBzchfs",
   anniversaryQQLink: "https://jq.qq.com/?_wv=1027&k=JOBzchfs",
+  voteQQLink: "https://wpa1.qq.com/MRkCjpSu?_type=wpa&qidian=true",
   shoppingLink:
     'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
 };

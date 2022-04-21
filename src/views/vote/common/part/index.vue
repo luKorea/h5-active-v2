@@ -37,9 +37,9 @@ export default {
         },
         {
           imgUrl: BASE_IMAGE_VOTE_URL + "/qq.png",
-          url: urlLink.anniversaryQQLink,
+          url: urlLink.voteQQLink,
           type: "qq",
-          urlForWechat: urlLink.anniversaryWechatQQLink,
+          urlForWechat: urlLink.voteQQLink,
         },
         {
           imgUrl: BASE_IMAGE_VOTE_URL + "/share.png",

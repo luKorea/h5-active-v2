@@ -18,7 +18,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     anniversaryModule,
-    voteModule
+    voteModule,
   },
   state: {
     token: "",
