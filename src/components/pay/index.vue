@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-07 11:12:44
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-21 18:12:08
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->

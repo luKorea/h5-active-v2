@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 13:47:31
+ * @LastEditTime: 2022-04-21 18:15:28
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -13,11 +13,11 @@
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <count-down></count-down>
-    <info-fixed
+    <!-- <info-fixed
       :userInfo="userInfo"
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
-    ></info-fixed>
+    ></info-fixed> -->
     <!-- 购买区域 -->
     <pay-event-component
       @handleLoginDialog="showLoginDialog = true"
@@ -61,7 +61,7 @@
 
 <script>
 import voteFooter from "../footer";
-import InfoFixed from "../common/info";
+// import InfoFixed from "../common/info";
 import CountDown from "../common/count-down";
 import PayComponent from "@/components/pay";
 
@@ -85,7 +85,7 @@ export default {
   components: {
     voteFooter,
     PayComponent,
-    InfoFixed,
+    // InfoFixed,
     CountDown,
     PayEventComponent,
     VoteComponent,
@@ -101,7 +101,9 @@ export default {
   },
   data() {
     return {
-      payInfo: {},
+      payInfo: {
+        title: "充值128P币送米诺",
+      },
       bgImg: BASE_IMAGE_VOTE_URL + "/banner.png",
       selectShopInfo: {},
       userInfo: {},
