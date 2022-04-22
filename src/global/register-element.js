@@ -1,8 +1,8 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-02 10:25:00
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-22 10:22:42
  * @Description: file content
  * @FilePath: /h5-active-v2/src/global/register-element.js
  */
@@ -16,6 +16,7 @@ import {
   RadioGroup,
   Overlay,
   CountDown,
+  Icon,
 } from "vant";
 import "vant/lib/index.css"; // 全局引入样式
 
@@ -27,6 +28,7 @@ const components = [
   RadioGroup,
   Overlay,
   CountDown,
+  Icon,
 ];
 
 Vue.use(Dialog);

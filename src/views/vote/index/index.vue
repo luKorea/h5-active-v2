@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 18:15:28
+ * @LastEditTime: 2022-04-22 10:29:41
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -13,11 +13,11 @@
       <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <count-down></count-down>
-    <!-- <info-fixed
+    <info-fixed
       :userInfo="userInfo"
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
-    ></info-fixed> -->
+    ></info-fixed>
     <!-- 购买区域 -->
     <pay-event-component
       @handleLoginDialog="showLoginDialog = true"
@@ -41,7 +41,11 @@
       :payInfo="payInfo"
       :userInfo="userInfo"
     ></pay-component>
-
+    <!-- 支付成功弹框 -->
+    <pay-success-component
+      ref="successRef"
+      title="请直接打开 Pofi 无限人偶 APP，刷新人偶库即可拥有米诺。"
+    ></pay-success-component>
     <!--登录注册页面-->
     <login-and-register
       :show-dialog="showLoginDialog"
@@ -60,11 +64,12 @@
 </template>
 
 <script>
-import voteFooter from "../footer";
-// import InfoFixed from "../common/info";
-import CountDown from "../common/count-down";
 import PayComponent from "@/components/pay";
+import PaySuccessComponent from "@/components/pay-success";
 
+import voteFooter from "../footer";
+import InfoFixed from "../common/info";
+import CountDown from "../common/count-down";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import PayEventComponent from "./components/pay-event-component.vue";
@@ -85,8 +90,9 @@ export default {
   components: {
     voteFooter,
     PayComponent,
-    // InfoFixed,
+    InfoFixed,
     CountDown,
+    PaySuccessComponent,
     PayEventComponent,
     VoteComponent,
     shopComponent,
@@ -98,6 +104,13 @@ export default {
   mounted() {
     // const userInfo = this.$store.state.voteModule;
     console.log(this.$store.state.voteModule);
+    // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
+    const state = this.$route.query.state;
+    if (state && state === "success") {
+      this.$nextTick(() => {
+        this.openSuccessDialog();
+      });
+    }
   },
   data() {
     return {
@@ -113,6 +126,9 @@ export default {
     };
   },
   methods: {
+    openSuccessDialog() {
+      this.$refs["successRef"].showDialog = true;
+    },
     phoneLogin(data) {
       const _this = this;
       this.$store
@@ -157,8 +173,8 @@ export default {
       };
       wechatPayAction(data)
         .then(() => {
-          successInfo("充值成功");
           this.$refs["payRef"].showDialog = false;
+          this.openSuccessDialog();
         })
         .catch((err) => errorInfo(err));
     },

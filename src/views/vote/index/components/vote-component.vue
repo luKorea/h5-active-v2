@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-21 15:09:50
+ * @LastEditTime: 2022-04-22 11:58:01
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -25,7 +25,42 @@
         >
       </div>
       <!-- 人偶区域 -->
-
+      <template v-if="bannerList && bannerList.length > 0">
+        <div class="vote-even-wrap">
+          <div
+            class="even-item"
+            v-for="(item, index) in bannerList"
+            :key="item.title"
+            @click="changeSelectEven(item, index)"
+          >
+            <div class="item-img">
+              <img
+                :src="selectIndex === index ? item.selectImg : item.img"
+                :class="index === 0 ? 'img1' : index === 1 ? 'img2' : 'img3'"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+            </div>
+            <div class="item-info" :class="getClassText(index)">
+              <div class="item-tip" @click="showInfoDialog(item)">
+                <span class="title">{{ item.title }}</span>
+                <van-icon name="info-o" size="12" color="rgb(76 71 71)" />
+              </div>
+              <div class="item-number">{{ item.number }}票</div>
+              <!-- 区分状态 -->
+              <div class="item-btn">
+                <span
+                  :class="selectIndex === index && 'select'"
+                  class="btn-select"
+                  >选TA!</span
+                >
+                <!-- <span class="btn-end">投票结束</span> -->
+                <!-- <span class="btn-check">我已投票</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
       <!-- 投票区域, 区分状态 -->
       <div class="vote-state">
         <img
@@ -78,22 +113,95 @@ export default {
         subscribeImg: BASE_IMAGE_VOTE_URL + "/vote-subscribe.png",
         subscribeSuccessImg:
           BASE_IMAGE_VOTE_URL + "/vote-subscribe-success.png",
+        voteEvenImg: BASE_IMAGE_VOTE_URL + "/vote-even-bg.png",
       },
       bannerList: [
         {
-          title: "",
-          img: "",
-          selectImg: "",
+          title: "人鱼大Q",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-one.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-one.png",
+          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
+          number: 58546,
+          info: {
+            title: "人鱼大Q",
+            desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
+            imgList: [
+              BASE_IMAGE_VOTE_URL + "vote-img1.png",
+              BASE_IMAGE_VOTE_URL + "vote-img2.png",
+              BASE_IMAGE_VOTE_URL + "vote-img3.png",
+              BASE_IMAGE_VOTE_URL + "vote-img4.png",
+            ],
+          },
+        },
+        {
+          title: "BJD大Q",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-two.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-two.png",
+          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
+          number: 58546,
+          info: {
+            title: "BJD大Q",
+            desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
+            imgList: [
+              BASE_IMAGE_VOTE_URL + "vote-img1.png",
+              BASE_IMAGE_VOTE_URL + "vote-img2.png",
+              BASE_IMAGE_VOTE_URL + "vote-img3.png",
+              BASE_IMAGE_VOTE_URL + "vote-img4.png",
+            ],
+          },
+        },
+        {
+          title: "BJD小Q",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-three.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-three.png",
+          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
+          number: 58546,
+          info: {
+            title: "BJD小Q",
+            desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
+            imgList: [
+              BASE_IMAGE_VOTE_URL + "vote-img1.png",
+              BASE_IMAGE_VOTE_URL + "vote-img2.png",
+              BASE_IMAGE_VOTE_URL + "vote-img3.png",
+              BASE_IMAGE_VOTE_URL + "vote-img4.png",
+            ],
+          },
         },
       ],
+      selectIndex: -1,
+      selectInfo: {},
     };
   },
   methods: {
+    getClassText(index) {
+      let className = "";
+      if (+index === 0) {
+        className = "text1";
+      }
+      if (+index === 1) {
+        className = "text2";
+      }
+      if (+index === 2) {
+        className = "text3";
+      }
+      if (this.selectIndex === +index) {
+        className += " selectText";
+      }
+      return className;
+    },
     handleOperation(type) {
       if (this.token) {
         // 根据不同 type 处理投票还是预约
         console.log(type);
       } else this.$emit("handleLoginDialog");
+    },
+    changeSelectEven(item, index) {
+      if (this.selectIndex === index) return;
+      this.selectInfo = item;
+      this.selectIndex = index;
+    },
+    showInfoDialog(item) {
+      console.log(item);
     },
   },
 };
@@ -212,6 +320,117 @@ export default {
       color: #79797e;
       .blue {
         color: #37aade;
+      }
+    }
+  }
+  .vote-even-wrap {
+    position: absolute;
+    top: 160px;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    .even-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      // top: 160px;
+      .item-img {
+        width: 100%;
+        height: 350px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        .img1 {
+          width: 132px;
+          height: 100%;
+          margin-left: -10px;
+        }
+        .img2 {
+          width: 130px;
+          height: 100%;
+        }
+        .img3 {
+          width: 97px;
+          height: 100%;
+        }
+      }
+      .item-info {
+        // width: 100%;
+        position: absolute;
+        top: 290px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .item-tip {
+          display: flex;
+          align-items: center;
+          margin-bottom: 4px;
+          .title {
+            font-size: 13px;
+            font-family: Source Han Sans CN;
+            font-weight: bold;
+            color: #000000;
+            margin-right: 3px;
+          }
+        }
+        .item-number {
+          font-size: 10px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #787878;
+          margin-bottom: 4px;
+        }
+        .item-btn {
+          .btn-select {
+            background-color: #ffff;
+            border-radius: 10px;
+            padding: 2px;
+            text-align: center;
+            width: 67px;
+            display: block;
+          }
+          .btn-end {
+            color: #787878;
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 10px;
+            padding: 2px;
+            text-align: center;
+            width: 67px;
+            display: block;
+          }
+          .btn-check {
+            background-color: #dbd4d4;
+            border-radius: 10px;
+            padding: 2px;
+            text-align: center;
+            width: 67px;
+            display: block;
+            color: #a39c9c;
+          }
+        }
+      }
+      .text1 {
+        margin-left: 30px;
+      }
+      .text2 {
+        margin-left: 16px;
+      }
+      .text3 {
+        margin-left: 9px;
+      }
+      .selectText {
+        .item-tip {
+          .title {
+            color: #fff;
+          }
+        }
+        .item-number {
+          color: #c3d7aa;
+        }
       }
     }
   }
