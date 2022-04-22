@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-22 14:28:49
+ * @LastEditTime: 2022-04-22 17:26:07
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -131,10 +131,17 @@
 <script>
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
+import { errorInfo } from "@/utils";
+import { mapState } from "vuex";
 export default {
   name: "VoteComponent",
   components: {
     koreaDialog,
+  },
+  computed: {
+    ...mapState({
+      token: (state) => state.voteModule.token,
+    }),
   },
   data() {
     return {
@@ -153,6 +160,7 @@ export default {
       bannerList: [
         {
           title: "人鱼大Q",
+          id: "M200821309",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-one.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-one.png",
           state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
@@ -165,6 +173,7 @@ export default {
         },
         {
           title: "BJD大Q",
+          id: "M191001241",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-two.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-two.png",
           state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
@@ -182,6 +191,7 @@ export default {
         },
         {
           title: "BJD小Q",
+          id: "M210201478",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-three.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-three.png",
           state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
@@ -195,6 +205,7 @@ export default {
       ],
       selectIndex: -1,
       selectInfo: {},
+      selectEvent: "",
       showDialog: false,
     };
   },
@@ -217,12 +228,18 @@ export default {
     },
     handleOperation(type) {
       if (this.token) {
-        // 根据不同 type 处理投票还是预约
-        console.log(type);
+        if (type === "start") {
+          if (!this.selectEvent) {
+            errorInfo("请先选择人偶");
+          } else {
+            console.log(this.selectEvent);
+          }
+        }
       } else this.$emit("handleLoginDialog");
     },
     changeSelectEven(item, index) {
       if (this.selectIndex === index) return;
+      this.selectEvent = item.id;
       this.selectIndex = index;
     },
     openEvenDialog(item) {
