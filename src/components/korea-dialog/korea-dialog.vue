@@ -9,7 +9,12 @@
           </a>
         </div>
         <div class="bg-img" :style="bgStyle">
-          <img :src="bgImg" style="width: 100%; height: 100%" alt="" />
+          <img
+            :src="bgImg"
+            style="width: 100%; height: 100%"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
         </div>
         <slot name="content"></slot>
       </div>

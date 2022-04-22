@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-22 11:58:01
+ * @LastEditTime: 2022-04-22 14:28:49
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -42,7 +42,7 @@
               />
             </div>
             <div class="item-info" :class="getClassText(index)">
-              <div class="item-tip" @click="showInfoDialog(item)">
+              <div class="item-tip" @click="openEvenDialog(item)">
                 <span class="title">{{ item.title }}</span>
                 <van-icon name="info-o" size="12" color="rgb(76 71 71)" />
               </div>
@@ -93,14 +93,49 @@
         </div>
       </div>
     </div>
+
+    <!-- 人偶详情信息展示弹框 -->
+    <korea-dialog
+      :show-dialog="showDialog"
+      :bg-img="imgInfo.voteEvenImg"
+      @closeDialog="showDialog = false"
+    >
+      <template #content>
+        <div class="info-wrap">
+          <div class="title">{{ selectInfo.title }}</div>
+          <div class="desc">{{ selectInfo.desc }}</div>
+          <div class="img-title">
+            {{
+              selectInfo.imgList && selectInfo.imgList.length > 0
+                ? "相关Pose库推荐："
+                : "暂无该人偶Pose库，敬请期待。"
+            }}
+          </div>
+          <template v-if="selectInfo.imgList && selectInfo.imgList.length > 0">
+            <div class="img-wrap">
+              <div
+                class="item"
+                v-for="(item, index) in selectInfo.imgList"
+                :key="index"
+              >
+                <img :src="item" alt="" referrerpolicy="no-referrer" />
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </korea-dialog>
   </div>
 </template>
 
 <script>
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
-
+import koreaDialog from "@/components/korea-dialog/korea-dialog";
 export default {
   name: "VoteComponent",
+  components: {
+    koreaDialog,
+  },
   data() {
     return {
       imgInfo: {
@@ -124,13 +159,8 @@ export default {
           number: 58546,
           info: {
             title: "人鱼大Q",
-            desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
-            imgList: [
-              BASE_IMAGE_VOTE_URL + "vote-img1.png",
-              BASE_IMAGE_VOTE_URL + "vote-img2.png",
-              BASE_IMAGE_VOTE_URL + "vote-img3.png",
-              BASE_IMAGE_VOTE_URL + "vote-img4.png",
-            ],
+            desc: "「此可动人偶含97个人鱼系统初始动作」按BJD大Q的五官与身体制作的人鱼系列人偶，有着BJD大Q同样精致的面容与上半身结构，从腰延伸出优雅纤长却又流畅逼真的鱼尾，腰间还点缀有特殊的有如裙摆的海藻装饰。该人偶能为绘制优雅的海中人鱼与童话人鱼公主等题材作品提供形象特征与动作参考。",
+            imgList: [BASE_IMAGE_VOTE_URL + "/vote-img1-fish.png"],
           },
         },
         {
@@ -143,10 +173,10 @@ export default {
             title: "BJD大Q",
             desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
             imgList: [
-              BASE_IMAGE_VOTE_URL + "vote-img1.png",
-              BASE_IMAGE_VOTE_URL + "vote-img2.png",
-              BASE_IMAGE_VOTE_URL + "vote-img3.png",
-              BASE_IMAGE_VOTE_URL + "vote-img4.png",
+              BASE_IMAGE_VOTE_URL + "/vote-img1.png",
+              BASE_IMAGE_VOTE_URL + "/vote-img2.png",
+              BASE_IMAGE_VOTE_URL + "/vote-img3.png",
+              BASE_IMAGE_VOTE_URL + "/vote-img4.png",
             ],
           },
         },
@@ -158,18 +188,14 @@ export default {
           number: 58546,
           info: {
             title: "BJD小Q",
-            desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
-            imgList: [
-              BASE_IMAGE_VOTE_URL + "vote-img1.png",
-              BASE_IMAGE_VOTE_URL + "vote-img2.png",
-              BASE_IMAGE_VOTE_URL + "vote-img3.png",
-              BASE_IMAGE_VOTE_URL + "vote-img4.png",
-            ],
+            desc: "「此可动人偶含3种表情、22个系统初始动作」3头身比例的BJD小Q，拥有日系素模脸与BJD脸双面孔，丰富细节的关节与手脚，精致可爱的身材满足大部分Q版绘画的参考需求。",
+            imgList: [],
           },
         },
       ],
       selectIndex: -1,
       selectInfo: {},
+      showDialog: false,
     };
   },
   methods: {
@@ -197,11 +223,11 @@ export default {
     },
     changeSelectEven(item, index) {
       if (this.selectIndex === index) return;
-      this.selectInfo = item;
       this.selectIndex = index;
     },
-    showInfoDialog(item) {
-      console.log(item);
+    openEvenDialog(item) {
+      this.selectInfo = item.info;
+      this.showDialog = true;
     },
   },
 };
@@ -431,6 +457,56 @@ export default {
         .item-number {
           color: #c3d7aa;
         }
+      }
+    }
+  }
+}
+.info-wrap {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  .title {
+    font-size: 23px;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #f9f9f9;
+    margin-bottom: 20px;
+  }
+  .desc {
+    font-size: 12px;
+    line-height: 20px;
+    font-family: Source Han Sans CN;
+    font-weight: 300;
+    color: #f9f9f9;
+    width: 316px;
+    margin-top: 20px;
+  }
+  .img-title {
+    font-size: 12px;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #f9f9f9;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  .img-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    width: 89%;
+    // justify-content: center;
+    // margin-left: px;
+    .item {
+      width: 158px;
+      height: 89px;
+      margin: 4px;
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
   }
