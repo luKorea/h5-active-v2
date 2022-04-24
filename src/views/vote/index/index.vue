@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 09:57:50
+ * @LastEditTime: 2022-04-24 16:11:37
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -103,8 +103,6 @@ export default {
     logout,
   },
   mounted() {
-    // const userInfo = this.$store.state.voteModule;
-    console.log(this.$store.state.voteModule);
     // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
     const state = this.$route.query.state;
     if (state && state === "success") {
@@ -129,6 +127,8 @@ export default {
   computed: {
     ...mapState({
       userInfo: (state) => state.voteModule.userInfo,
+      token: (state) => state.voteModule.token,
+      uid: (state) => state.voteModule.uid,
     }),
   },
   methods: {
@@ -166,8 +166,8 @@ export default {
       let data = {
         snId: this.payInfo.id,
         chargeType: 0,
-        uid: this.$store.state.voteModule.uid,
-        loginKey: this.$store.state.voteModule.token,
+        uid: this.uid,
+        loginKey: this.token,
         appid: this._isWechat() ? urlLink.wechatAPPID : null,
         from: this._isWechat() ? 3 : 2,
         // remark: JSON.stringify({
@@ -177,6 +177,7 @@ export default {
         returnUrl: `${window.location.href}?state=success`,
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
+      console.log(data, "wechat");
       wechatPayAction(data)
         .then(() => {
           this.$refs["payRef"].showDialog = false;
@@ -188,8 +189,8 @@ export default {
       let data = {
         snId: this.payInfo.id,
         chargeType: 1,
-        uid: this.$store.state.voteModule.uid,
-        loginKey: this.$store.state.voteModule.token,
+        uid: this.uid,
+        loginKey: this.token,
         from: 2,
         // remark: JSON.stringify({
         //   type: 8,
@@ -198,6 +199,7 @@ export default {
         appid: urlLink.alipayAPPID,
         returnUrl: `${window.location.href}?state=success`,
       };
+      console.log(data, "ali");
       aliPayAction(data);
     },
   },

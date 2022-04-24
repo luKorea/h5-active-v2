@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 10:02:18
+ * @LastEditTime: 2022-04-24 10:17:25
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
