@@ -2,18 +2,14 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:44:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 17:43:55
+ * @LastEditTime: 2022-04-24 10:02:18
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/info/index.vue
 -->
 <template>
   <div class="info-fixed">
     <div class="app-user" v-if="token" @click="goPage('logout')">
-      <img
-        src="https://f3.pofiapp.com/event/anniversary/avatar.png"
-        alt=""
-        referrerpolicy="no-referrer"
-      />
+      <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
     </div>
     <div class="app-login" v-else @click="goPage('login')">
       <img :src="loginUrl" alt="" referrerpolicy="no-referrer" />
@@ -80,6 +76,7 @@ export default {
       border: 2px solid #da842e;
       border-radius: 9px;
       box-sizing: border-box;
+      // background-color: #ccc;
     }
   }
   .app-login {

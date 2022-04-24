@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 13:49:40
- * @LastEditTime: 2022-04-21 14:11:52
+ * @LastEditTime: 2022-04-24 10:00:26
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/components/user-info/user-info.vue
@@ -16,13 +16,9 @@
       <div class="login-title">当前账号</div>
       <div class="user-info">
         <div class="avatar">
-          <img
-            src="https://f3.pofiapp.com/event/anniversary/avatar.png"
-            alt=""
-            referrerpolicy="no-referrer"
-          />
+          <img :src="userInfo.iconUrl" alt="" referrerpolicy="no-referrer" />
         </div>
-        <div class="user-id">Pofi ID : 2568926</div>
+        <div class="user-id">Pofi ID : {{ userInfo.nickId }}</div>
       </div>
     </template>
   </div>
@@ -85,10 +81,12 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 50%;
       img {
         width: 19px;
         height: 19px;
         border-radius: 50%;
+        background-color: #ccc;
       }
     }
     .user-title {

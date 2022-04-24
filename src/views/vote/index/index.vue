@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-22 17:19:04
+ * @LastEditTime: 2022-04-24 09:57:50
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -84,6 +84,7 @@ import { errorInfo, successInfo } from "@/utils";
 import localCache from "@/utils/cache";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
+import { mapState } from "vuex";
 
 export default {
   name: "votePage",
@@ -120,11 +121,15 @@ export default {
       },
       bgImg: BASE_IMAGE_VOTE_URL + "/banner.png",
       selectShopInfo: {},
-      userInfo: {},
       resetTime: null,
       showLoginDialog: false,
       showLogoutDialog: false,
     };
+  },
+  computed: {
+    ...mapState({
+      userInfo: (state) => state.voteModule.userInfo,
+    }),
   },
   methods: {
     openSuccessDialog() {
