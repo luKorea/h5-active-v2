@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-22 17:26:07
+ * @LastEditTime: 2022-04-24 18:24:09
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -77,19 +77,29 @@
       </div>
       <!-- 预约区域, 区分状态 -->
       <div class="vote-subscribe">
+        <!-- 没有预约 -->
         <img
           :src="imgInfo.subscribeImg"
-          @click="handleOperation('subscribe')"
+          @click="handleOperation('subscribe', 1)"
+          alt=""
+          referrerpolicy="no-referrer"
+          v-if="otherInfo.isBooking === 0"
+        />
+        <!-- 预约成功 -->
+        <img
+          :src="imgInfo.subscribeSuccessImg"
+          v-if="otherInfo.isBooking === 1"
           alt=""
           referrerpolicy="no-referrer"
         />
-        <!-- <img :src="imgInfo.subscribeSuccessImg" alt="" referrerpolicy="no-referrer" /> -->
       </div>
       <!-- 文字 -->
       <div class="vote-info">
         <div class="tip">
           预约成功后，Pofi将于「限定人偶开放购买活动」开启时向您的手机号发送活动通知短信。如需取消，请点击
-          <span class="blue">取消预约</span>
+          <span class="blue" @click="handleOperation('subscribe', 0)"
+            >取消预约</span
+          >
         </div>
       </div>
     </div>
@@ -131,16 +141,24 @@
 <script>
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
-import { errorInfo } from "@/utils";
+import { errorInfo, successInfo } from "@/utils";
 import { mapState } from "vuex";
+import { voteState } from "@/api/vote";
 export default {
   name: "VoteComponent",
   components: {
     koreaDialog,
   },
+  props: {
+    otherInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   computed: {
     ...mapState({
       token: (state) => state.voteModule.token,
+      uid: (state) => state.voteModule.uid,
     }),
   },
   data() {
@@ -226,14 +244,32 @@ export default {
       }
       return className;
     },
-    handleOperation(type) {
+    voteStateAction(state) {
+      voteState(
+        {
+          uid: this.uid,
+          loginKey: this.token,
+        },
+        state
+      ).then((res) => {
+        if (res.code === 200) {
+          successInfo(res.msg);
+          this.$emit("getData");
+        } else errorInfo(res.msg);
+      });
+    },
+    handleOperation(type, state) {
       if (this.token) {
+        // 投票
         if (type === "start") {
           if (!this.selectEvent) {
             errorInfo("请先选择人偶");
           } else {
             console.log(this.selectEvent);
           }
+        } else {
+          // 预约
+          this.voteStateAction(state);
         }
       } else this.$emit("handleLoginDialog");
     },

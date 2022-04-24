@@ -56,8 +56,8 @@ export default {
       status: 1, // 1. 登录 2. 注册
       appImg: require("@/assets/image/go-app.png"),
       formData: {
-        no: "",
-        pwd: "",
+        no: "18075125940",
+        pwd: "123456",
       },
     };
   },

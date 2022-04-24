@@ -2,7 +2,7 @@ import { BASE_IMAGE_VOTE_URL } from '@/request/config';
 <!--
  * @Author: your name
  * @Date: 2022-04-21 10:09:46
- * @LastEditTime: 2022-04-21 18:07:13
+ * @LastEditTime: 2022-04-24 18:12:52
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/pay-component.vue
@@ -35,11 +35,22 @@ import { BASE_IMAGE_VOTE_URL } from '@/request/config';
           alt=""
           referrerpolicy="no-referrer"
           @click="handleOperation"
+          v-if="otherInfo.haveMiNuo === 0 && otherInfo.canBuyMiNuo === 1"
         />
         <!-- 购买成功 -->
-        <!-- <img :src="imgInfo.buySuccessImg" alt="" referrerpolicy="no-referrer" /> -->
+        <img
+          :src="imgInfo.buySuccessImg"
+          v-if="otherInfo.haveMiNuo === 1 && otherInfo.canBuyMiNuo === 0"
+          alt=""
+          referrerpolicy="no-referrer"
+        />
         <!-- 已经拥有 -->
-        <!-- <img :src="imgInfo.hasImg" alt="" referrerpolicy="no-referrer" /> -->
+        <img
+          :src="imgInfo.hasImg"
+          v-if="otherInfo.haveMiNuo === 1"
+          alt=""
+          referrerpolicy="no-referrer"
+        />
       </div>
       <!-- 客服信息 -->
       <div class="pay-info">
@@ -69,6 +80,12 @@ export default {
   name: "PayEventComponent",
   components: {
     userInfoComponent,
+  },
+  props: {
+    otherInfo: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   computed: {
     ...mapState({

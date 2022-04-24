@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 16:11:37
+ * @LastEditTime: 2022-04-24 18:23:21
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -22,9 +22,14 @@
     <pay-event-component
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
+      :otherInfo="otherInfo"
     ></pay-event-component>
     <!-- 投票区域 -->
-    <vote-component @handleLoginDialog="showLoginDialog = true" />
+    <vote-component
+      @handleLoginDialog="showLoginDialog = true"
+      :otherInfo="otherInfo"
+      @getData="getUserOtherInfo"
+    />
     <!-- 活动区域 -->
     <shop-component />
     <!-- 调查问卷 -->
@@ -85,6 +90,7 @@ import localCache from "@/utils/cache";
 import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { mapState } from "vuex";
+import { checkUserState } from "@/api/vote";
 
 export default {
   name: "votePage",
@@ -110,6 +116,9 @@ export default {
         this.openSuccessDialog();
       });
     }
+    if (this.uid && this.token) {
+      this.getUserOtherInfo();
+    }
   },
   data() {
     return {
@@ -122,6 +131,7 @@ export default {
       resetTime: null,
       showLoginDialog: false,
       showLogoutDialog: false,
+      otherInfo: {},
     };
   },
   computed: {
@@ -135,6 +145,16 @@ export default {
     openSuccessDialog() {
       this.$refs["successRef"].showDialog = true;
     },
+    getUserOtherInfo() {
+      checkUserState({
+        uid: this.uid,
+        loginKey: this.token,
+      }).then((result) => {
+        if (result.code === 200) {
+          this.otherInfo = result.data;
+        } else errorInfo(result.msg);
+      });
+    },
     phoneLogin(data) {
       const _this = this;
       this.$store
@@ -142,7 +162,7 @@ export default {
         .then(() => {
           successInfo("登录成功");
           _this.showLoginDialog = false;
-          // this.getAllData();
+          this.getUserOtherInfo();
           // window.location.reload();
         })
         .catch((err) => errorInfo(err));
