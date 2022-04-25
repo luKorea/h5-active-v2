@@ -1,8 +1,8 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-08 16:58:04
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-25 17:21:10
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/getCode.js
  */

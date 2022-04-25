@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-25 10:26:44
+ * @LastEditTime: 2022-04-25 17:19:19
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -35,7 +35,9 @@
           >
             <div class="item-img">
               <img
-                :src="selectIndex === index ? item.selectImg : item.img"
+                :src="
+                  selectIndex === index && !isVote ? item.selectImg : item.img
+                "
                 :class="index === 0 ? 'img1' : index === 1 ? 'img2' : 'img3'"
                 alt=""
                 referrerpolicy="no-referrer"
@@ -50,7 +52,7 @@
               <!-- 区分状态 -->
               <div class="item-btn">
                 <span
-                  :class="selectIndex === index && 'select'"
+                  :class="selectIndex === index && !isVote ? 'select' : ''"
                   class="btn-select"
                   v-if="item.state === 0"
                   >选TA!</span
@@ -262,7 +264,7 @@ export default {
       if (+index === 2) {
         className = "text3";
       }
-      if (this.selectIndex === +index) {
+      if (this.selectIndex === +index && !this.isVote) {
         className += " selectText";
       }
       return className;
