@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 10:09:10
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 18:27:54
+ * @LastEditTime: 2022-04-25 09:53:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/api/anniversary.js
  */
@@ -13,7 +13,14 @@ export function checkUserState(data) {
   return request.post({
     url: "/api/event/mayday22/config",
     data: data,
-    showLoading: false,
+  });
+}
+
+// 投票
+export function voteToUser(data) {
+  return request.post({
+    url: "/api/event/mayday22/vote",
+    data: data,
   });
 }
 

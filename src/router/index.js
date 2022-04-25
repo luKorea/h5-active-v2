@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-19 16:38:59
+ * @LastEditTime: 2022-04-25 10:10:26
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -42,7 +42,7 @@ const routes = [
     component: () => import("@/views/endPage/index.vue"),
   },
   {
-    path: "/vote",
+    path: "/mayday22",
     name: "votePage",
     component: () => import("@/views/vote/index/index.vue"),
   },

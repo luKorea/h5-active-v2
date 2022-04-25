@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-24 18:24:09
+ * @LastEditTime: 2022-04-25 10:26:44
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -30,7 +30,7 @@
           <div
             class="even-item"
             v-for="(item, index) in bannerList"
-            :key="item.title"
+            :key="item.moldid"
             @click="changeSelectEven(item, index)"
           >
             <div class="item-img">
@@ -46,16 +46,17 @@
                 <span class="title">{{ item.title }}</span>
                 <van-icon name="info-o" size="12" color="rgb(76 71 71)" />
               </div>
-              <div class="item-number">{{ item.number }}票</div>
+              <div class="item-number">{{ item.votes }}票</div>
               <!-- 区分状态 -->
               <div class="item-btn">
                 <span
                   :class="selectIndex === index && 'select'"
                   class="btn-select"
+                  v-if="item.state === 0"
                   >选TA!</span
                 >
-                <!-- <span class="btn-end">投票结束</span> -->
-                <!-- <span class="btn-check">我已投票</span> -->
+                <span class="btn-end" v-if="item.state === -1">投票关闭</span>
+                <span class="btn-check" v-if="item.state === 1">我已投票</span>
               </div>
             </div>
           </div>
@@ -68,8 +69,15 @@
           alt=""
           referrerpolicy="no-referrer"
           @click="handleOperation('start')"
+          v-if="!isVote"
         />
-        <!-- <img :src="imgInfo.refreshImg" alt="" referrerpolicy="no-referrer" /> -->
+        <img
+          :src="imgInfo.refreshImg"
+          v-else
+          alt=""
+          @click="handleOperation('refresh')"
+          referrerpolicy="no-referrer"
+        />
       </div>
       <!-- 购买字体提示 -->
       <div class="vote-buy">
@@ -83,7 +91,7 @@
           @click="handleOperation('subscribe', 1)"
           alt=""
           referrerpolicy="no-referrer"
-          v-if="otherInfo.isBooking === 0"
+          v-if="!token || otherInfo.isBooking === 0"
         />
         <!-- 预约成功 -->
         <img
@@ -94,9 +102,19 @@
         />
       </div>
       <!-- 文字 -->
-      <div class="vote-info">
+      <div class="vote-info" v-if="!token || otherInfo.isBooking === 0">
         <div class="tip">
           预约成功后，Pofi将于「限定人偶开放购买活动」开启时向您的手机号发送活动通知短信。如需取消，请点击
+          <span class="blue" @click="handleOperation('subscribe', 0)"
+            >取消预约</span
+          >
+        </div>
+      </div>
+      <div class="vote-info" v-if="otherInfo.isBooking === 1">
+        <div class="tip">
+          预约成功后，Pofi将于「限定人偶开放购买活动」开启时向您的手机号{{
+            this.phone
+          }}发送活动通知短信。如需取消，请点击
           <span class="blue" @click="handleOperation('subscribe', 0)"
             >取消预约</span
           >
@@ -143,7 +161,8 @@ import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
 import { errorInfo, successInfo } from "@/utils";
 import { mapState } from "vuex";
-import { voteState } from "@/api/vote";
+import { voteState, voteToUser } from "@/api/vote";
+import localCache from "@/utils/cache";
 export default {
   name: "VoteComponent",
   components: {
@@ -154,12 +173,19 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    isVote: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapState({
       token: (state) => state.voteModule.token,
       uid: (state) => state.voteModule.uid,
     }),
+    phone() {
+      return localCache.getCache("phoneStr");
+    },
   },
   data() {
     return {
@@ -178,11 +204,10 @@ export default {
       bannerList: [
         {
           title: "人鱼大Q",
-          id: "M200821309",
+          moldid: "M200821309",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-one.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-one.png",
-          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
-          number: 58546,
+          state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "人鱼大Q",
             desc: "「此可动人偶含97个人鱼系统初始动作」按BJD大Q的五官与身体制作的人鱼系列人偶，有着BJD大Q同样精致的面容与上半身结构，从腰延伸出优雅纤长却又流畅逼真的鱼尾，腰间还点缀有特殊的有如裙摆的海藻装饰。该人偶能为绘制优雅的海中人鱼与童话人鱼公主等题材作品提供形象特征与动作参考。",
@@ -191,11 +216,10 @@ export default {
         },
         {
           title: "BJD大Q",
-          id: "M191001241",
+          moldid: "M191001241",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-two.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-two.png",
-          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
-          number: 58546,
+          state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "BJD大Q",
             desc: "「此可动人偶含2种表情、22个系统初始动作」 6头身比例的BJD大Q，拥有睁眼与闭眼2种可替换表情，恬静的表情，修长的睫毛，可爱的身材，非常适合绘制各类少女角色。",
@@ -209,11 +233,10 @@ export default {
         },
         {
           title: "BJD小Q",
-          id: "M210201478",
+          moldid: "M210201478",
           img: BASE_IMAGE_VOTE_URL + "/vote-even-three.png",
           selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-three.png",
-          state: 0, // 0 初始化状态 1 用户投票 2 投票关闭
-          number: 58546,
+          state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "BJD小Q",
             desc: "「此可动人偶含3种表情、22个系统初始动作」3头身比例的BJD小Q，拥有日系素模脸与BJD脸双面孔，丰富细节的关节与手脚，精致可爱的身材满足大部分Q版绘画的参考需求。",
@@ -245,6 +268,10 @@ export default {
       return className;
     },
     voteStateAction(state) {
+      if (state === 0 && this.otherInfo.isBooking === 0) {
+        errorInfo("请先预约");
+        return;
+      }
       voteState(
         {
           uid: this.uid,
@@ -265,8 +292,19 @@ export default {
           if (!this.selectEvent) {
             errorInfo("请先选择人偶");
           } else {
-            console.log(this.selectEvent);
+            voteToUser({
+              uid: this.uid,
+              loginKey: this.token,
+              moldId: this.selectEvent,
+            }).then((res) => {
+              if (res.code === 200) {
+                successInfo(res.msg);
+                this.$emit("getData");
+              } else errorInfo(res.msg);
+            });
           }
+        } else if (type === "refresh") {
+          this.$emit("getData");
         } else {
           // 预约
           this.voteStateAction(state);
@@ -275,7 +313,7 @@ export default {
     },
     changeSelectEven(item, index) {
       if (this.selectIndex === index) return;
-      this.selectEvent = item.id;
+      this.selectEvent = item.moldid;
       this.selectIndex = index;
     },
     openEvenDialog(item) {

@@ -43,7 +43,7 @@ export default {
         },
         {
           imgUrl: BASE_IMAGE_VOTE_URL + "/share.png",
-          url: window.location.origin + "/vote",
+          url: window.location.origin + window.location.pathname,
           type: "share",
         },
       ],

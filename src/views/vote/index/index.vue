@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 18:23:21
+ * @LastEditTime: 2022-04-25 11:07:07
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -28,7 +28,9 @@
     <vote-component
       @handleLoginDialog="showLoginDialog = true"
       :otherInfo="otherInfo"
+      :isVote="isVote"
       @getData="getUserOtherInfo"
+      ref="voteRef"
     />
     <!-- 活动区域 -->
     <shop-component />
@@ -91,6 +93,7 @@ import urlLink from "@/utils/link";
 import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { mapState } from "vuex";
 import { checkUserState } from "@/api/vote";
+import { getCode } from "@/utils/getCode";
 
 export default {
   name: "votePage",
@@ -109,6 +112,7 @@ export default {
     logout,
   },
   mounted() {
+    document.title = "Pofi 五一迎夏季";
     // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
     const state = this.$route.query.state;
     if (state && state === "success") {
@@ -116,15 +120,22 @@ export default {
         this.openSuccessDialog();
       });
     }
-    if (this.uid && this.token) {
-      this.getUserOtherInfo();
+    if (this._isWechat()) {
+      if (localCache.getCache("openId") == null) {
+        getCode("wx4e33f34be6700e46", this.$route.query.code);
+        return;
+      }
     }
+    this.getUserOtherInfo();
+    // if (this.uid && this.token) {
+
+    // }
   },
   data() {
     return {
       payInfo: {
         title: "充值128P币送米诺",
-        id: "M220301347",
+        id: "MDRCG12800",
       },
       bgImg: BASE_IMAGE_VOTE_URL + "/banner.png",
       selectShopInfo: {},
@@ -132,6 +143,7 @@ export default {
       showLoginDialog: false,
       showLogoutDialog: false,
       otherInfo: {},
+      isVote: false, // 是否投票
     };
   },
   computed: {
@@ -152,11 +164,28 @@ export default {
       }).then((result) => {
         if (result.code === 200) {
           this.otherInfo = result.data;
-        } else errorInfo(result.msg);
+          let res = this.$refs["voteRef"].bannerList;
+          const info = [];
+          result.data.voteList.forEach((item) => {
+            if (item.state === 1) this.isVote = true;
+            res.forEach((i) => {
+              if (item.moldid === i.moldid) {
+                info.push({
+                  ...i,
+                  ...item,
+                });
+              }
+            });
+          });
+          this.$refs["voteRef"].bannerList = info;
+        } else console.log(result.msg);
       });
     },
     phoneLogin(data) {
       const _this = this;
+      let tel = "" + data.no;
+      const phoneStr = tel.substr(0, 3) + "****" + tel.substr(7);
+      localCache.setCache("phoneStr", phoneStr);
       this.$store
         .dispatch("voteModule/loginAction", data)
         .then(() => {
@@ -169,6 +198,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("voteModule/logoutAction").then(() => {
+        this.$router.replace("/mayday22");
         window.location.reload();
       });
     },
