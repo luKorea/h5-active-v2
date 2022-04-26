@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-26 15:18:56
+ * @LastEditTime: 2022-04-26 16:35:30
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -207,6 +207,7 @@ export default {
       this.$store.dispatch("voteModule/logoutAction").then(() => {
         this.$router.replace("/mayday22");
         window.location.reload();
+        this.getUserOtherInfo();
       });
     },
     closeDialog() {
