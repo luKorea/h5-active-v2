@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-26 10:02:36
+ * @LastEditTime: 2022-04-26 10:07:12
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -444,7 +444,7 @@ export default {
   }
   .vote-even-wrap {
     position: absolute;
-    top: 160px;
+    top: 174px;
     display: flex;
     justify-content: center;
     // align-items: center;
