@@ -2,26 +2,33 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 14:13:46
+ * @LastEditTime: 2022-04-26 15:45:26
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
 <template>
-  <div class="count-wrap">
-    <div class="count-down">
-      <div class="img">
-        <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-      <div class="time-info">
-        <span class="tip">距离活动结束还有</span>
-        <span class="date">{{ day }}</span>
-        <span class="text">天</span>
-        <span class="date">{{ hour }}</span>
-        <span class="text">时</span>
-        <span class="date">{{ min }}</span>
-        <span class="text">分</span>
-        <!-- <span class="date">{{ second }}</span>
+  <div>
+    <div class="count-wrap">
+      <div class="count-down">
+        <div class="img">
+          <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
+        </div>
+        <div class="time-info">
+          <span class="tip">距离活动结束还有</span>
+          <span class="date">{{ day }}</span>
+          <span class="text">天</span>
+          <span class="date">{{ hour }}</span>
+          <span class="text">时</span>
+          <span class="date">{{ min }}</span>
+          <span class="text">分</span>
+          <!-- <span class="date">{{ second }}</span>
         <span class="text">秒</span> -->
+        </div>
+      </div>
+    </div>
+    <div class="title-wrap">
+      <div class="img" @click="goPage">
+        <img :src="titleImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
   </div>
@@ -30,10 +37,13 @@
 <script>
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import dayjs from "dayjs";
+import { openUrl } from "@/utils";
+import urlLink from "@/utils/link";
 export default {
   data() {
     return {
       bgImg: BASE_IMAGE_VOTE_URL + "/count-down-bg.png",
+      titleImg: BASE_IMAGE_VOTE_URL + "/banner-title.png",
       curStartTime: 1651766399, // 结束时间
       day: "0",
       hour: "00",
@@ -47,6 +57,9 @@ export default {
     });
   },
   methods: {
+    goPage() {
+      openUrl(urlLink.subLink);
+    },
     countTime() {
       // 获取当前时间
       let now = dayjs(new Date()).valueOf();
@@ -97,7 +110,7 @@ export default {
 .count-wrap {
   display: flex;
   padding: 20px;
-  margin-top: -80px;
+  margin-top: -120px;
   // margin-top: 200px;
   .count-down {
     position: relative;
@@ -144,6 +157,19 @@ export default {
         margin-left: 4px;
       }
     }
+  }
+}
+.title-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding: 20px;
+  margin-top: -10px;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 268px;
+    height: 100%;
   }
 }
 </style>

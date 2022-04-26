@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-25 17:07:21
+ * @LastEditTime: 2022-04-26 15:18:56
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -38,6 +38,9 @@
     <question-component />
     <!-- 企业微信 -->
     <wechat-component />
+    <send-link></send-link>
+    <!-- APP介绍区域 -->
+    <app-component />
     <vote-footer></vote-footer>
     <!-- 以下页面为公用页面 -->
     <!-- 支付弹框 -->
@@ -77,6 +80,7 @@ import PaySuccessComponent from "@/components/pay-success";
 import voteFooter from "../footer";
 import InfoFixed from "../common/info";
 import CountDown from "../common/count-down";
+import SendLink from "../common/part";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import PayEventComponent from "./components/pay-event-component.vue";
@@ -84,6 +88,7 @@ import VoteComponent from "./components/vote-component.vue";
 import shopComponent from "./components/shop-component.vue";
 import questionComponent from "./components/question-component.vue";
 import wechatComponent from "./components/wechat-component.vue";
+import appComponent from "./components/go-app.vue";
 
 import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 
@@ -102,12 +107,14 @@ export default {
     PayComponent,
     InfoFixed,
     CountDown,
+    SendLink,
     PaySuccessComponent,
     PayEventComponent,
     VoteComponent,
     shopComponent,
     questionComponent,
     wechatComponent,
+    appComponent,
     loginAndRegister,
     logout,
   },

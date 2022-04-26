@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 17:43:33
+ * @LastEditTime: 2022-04-26 15:45:04
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */
@@ -20,6 +20,8 @@ export default {
   anniversaryQQLink: "https://jq.qq.com/?_wv=1027&k=JOBzchfs",
   voteQQLink: "https://wpa1.qq.com/MRkCjpSu?_type=wpa&qidian=true",
   payNothingLink: "https://wenjuan.feishu.cn/m?t=sxa8FNrpKHAi-0i9t",
+  questionLink: "https://wj.qq.com/s2/10114210/e2a2/",
+  subLink: "https://mp.weixin.qq.com/s/kJSGrGyZqn4GOSQJxKKraQ",
   shoppingLink:
     'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
 };

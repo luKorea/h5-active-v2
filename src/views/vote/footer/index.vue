@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 14:25:19
+ * @LastEditTime: 2022-04-26 15:18:19
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -18,8 +18,6 @@
         </template>
       </div>
     </template>
-    <!-- 第三方链接 -->
-    <send-link></send-link>
     <div class="wrap">
       <div class="logo">
         <img :src="logoImg" referrerpolicy="no-referrer" alt="logo" />
@@ -37,13 +35,9 @@
 
 <script>
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
-import SendLink from "../common/part/index.vue";
 
 export default {
   name: "footerComponent",
-  components: {
-    SendLink,
-  },
   props: {
     showRules: {
       type: Boolean,

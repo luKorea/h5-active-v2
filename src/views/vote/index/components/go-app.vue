@@ -1,27 +1,21 @@
 <!--
  * @Author: your name
- * @Date: 2022-04-21 11:45:45
- * @LastEditTime: 2022-04-26 15:12:22
+ * @Date: 2022-04-26 15:07:37
+ * @LastEditTime: 2022-04-26 15:31:22
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /h5-active-v2/src/views/vote/index/components/question-component.vue
+ * @FilePath: /h5-active-v2/src/views/vote/index/components/go-app.vue
 -->
 <template>
   <div class="content-wrap">
-    <div class="question-wrap">
-      <div class="question-bg">
+    <div class="app-wrap">
+      <div class="app-bg">
         <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="question-title">
-        <img :src="imgInfo.titleImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-      <div class="question-tip">
-        <span>点击下图填写问卷，完成任务可获得P币奖励哦！</span>
-      </div>
-      <div class="question-banner" @click="goPage">
+      <div class="app-banner" @click="goPage">
         <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="question-btn" @click="goPage">
+      <div class="app-btn" @click="goPage">
         <img :src="imgInfo.btnImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
@@ -29,34 +23,33 @@
 </template>
 
 <script>
-import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
+import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 export default {
-  name: "questionComponent",
+  name: "AppComponent",
   data() {
     return {
       imgInfo: {
-        bgImg: BASE_IMAGE_VOTE_URL + "/question-bg.png",
-        titleImg: BASE_IMAGE_VOTE_URL + "/question-title.png",
-        bannerImg: BASE_IMAGE_VOTE_URL + "/question-banner.png",
-        btnImg: BASE_IMAGE_VOTE_URL + "/question-btn.png",
+        bgImg: BASE_IMAGE_VOTE_URL + "/app-bg.png",
+        bannerImg: BASE_IMAGE_VOTE_URL + "/app-banner.png",
+        btnImg: BASE_IMAGE_VOTE_URL + "/app-btn.png",
       },
     };
   },
   methods: {
     goPage() {
-      openUrl(urlLink.questionLink);
+      openUrl(urlLink.appLink);
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.question-wrap {
+.app-wrap {
   width: 100%;
   position: relative;
-  .question-bg {
+  .app-bg {
     width: 100%;
     height: 100%;
     display: flex;
@@ -67,7 +60,7 @@ export default {
       height: 100%;
     }
   }
-  .question-title {
+  .app-title {
     position: absolute;
     top: 14px;
     display: flex;
@@ -79,7 +72,7 @@ export default {
       height: 39px;
     }
   }
-  .question-tip {
+  .app-tip {
     position: absolute;
     top: 90px;
     display: flex;
@@ -95,27 +88,27 @@ export default {
       line-height: 22px;
     }
   }
-  .question-banner {
+  .app-banner {
     position: absolute;
-    top: 130px;
+    top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     img {
-      width: 305px;
+      width: 320px;
       height: 100%;
     }
   }
-  .question-btn {
+  .app-btn {
     position: absolute;
-    top: 330px;
+    top: 498px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     img {
-      width: 316px;
+      width: 153px;
       height: 100%;
     }
   }
