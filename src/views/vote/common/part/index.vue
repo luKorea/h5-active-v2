@@ -88,7 +88,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   .img-wrap {
     display: flex;
     flex-wrap: wrap;
