@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-25 17:19:19
+ * @LastEditTime: 2022-04-26 10:02:36
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -207,8 +207,8 @@ export default {
         {
           title: "人鱼大Q",
           moldid: "M200821309",
-          img: BASE_IMAGE_VOTE_URL + "/vote-even-one.png",
-          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-one.png",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-one1.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-one1.png",
           state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "人鱼大Q",
@@ -219,8 +219,8 @@ export default {
         {
           title: "BJD大Q",
           moldid: "M191001241",
-          img: BASE_IMAGE_VOTE_URL + "/vote-even-two.png",
-          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-two.png",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-two2.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-two2.png",
           state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "BJD大Q",
@@ -236,8 +236,8 @@ export default {
         {
           title: "BJD小Q",
           moldid: "M210201478",
-          img: BASE_IMAGE_VOTE_URL + "/vote-even-three.png",
-          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-three.png",
+          img: BASE_IMAGE_VOTE_URL + "/vote-even-three3.png",
+          selectImg: BASE_IMAGE_VOTE_URL + "/vote-even-select-three3.png",
           state: 0, // 	-1:投票关闭 0:可以投票 1:已投票
           info: {
             title: "BJD小Q",
@@ -459,27 +459,41 @@ export default {
       .item-img {
         width: 100%;
         height: 350px;
+        position: relative;
         img {
           width: 100%;
           height: 100%;
         }
         .img1 {
           width: 132px;
-          height: 100%;
+          // height: 100%;
           margin-left: -10px;
+          height: 350px;
+          // position: absolute;
+          // z-index: 10;
         }
         .img2 {
+          position: absolute;
           width: 130px;
-          height: 100%;
+          height: 370px;
+          bottom: 0px;
+          z-index: 1;
+          // margin-right: 10px;
         }
         .img3 {
+          // margin-left: 20px;
+          position: absolute;
+          bottom: 0px;
           width: 97px;
-          height: 100%;
+          height: 356px;
+          z-index: 0;
+          // height: 100%;
         }
       }
       .item-info {
         // width: 100%;
         position: absolute;
+        z-index: 21;
         top: 290px;
         display: flex;
         flex-direction: column;
