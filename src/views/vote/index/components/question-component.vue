@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:45:45
- * @LastEditTime: 2022-04-26 15:12:22
+ * @LastEditTime: 2022-04-26 17:10:41
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/question-component.vue
@@ -16,7 +16,7 @@
         <img :src="imgInfo.titleImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="question-tip">
-        <span>点击下图填写问卷，完成任务可获得P币奖励哦！</span>
+        <span>点击下图填写问卷，提交您对Pofi的建议与反馈吧！</span>
       </div>
       <div class="question-banner" @click="goPage">
         <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
@@ -38,8 +38,8 @@ export default {
     return {
       imgInfo: {
         bgImg: BASE_IMAGE_VOTE_URL + "/question-bg.png",
-        titleImg: BASE_IMAGE_VOTE_URL + "/question-title.png",
-        bannerImg: BASE_IMAGE_VOTE_URL + "/question-banner.png",
+        titleImg: BASE_IMAGE_VOTE_URL + "/question-title1.png",
+        bannerImg: BASE_IMAGE_VOTE_URL + "/question-banner1.png",
         btnImg: BASE_IMAGE_VOTE_URL + "/question-btn.png",
       },
     };

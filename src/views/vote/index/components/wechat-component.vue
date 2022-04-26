@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:45:45
- * @LastEditTime: 2022-04-21 14:39:15
+ * @LastEditTime: 2022-04-26 17:11:08
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/wechat-component.vue
@@ -16,8 +16,8 @@
         <img :src="imgInfo.titleImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <div class="wechat-tip">
-        <span>扫码添加首席福利官的企业微信领取任务，</span>
-        <span>完成任务可获得P币奖励哦！</span>
+        <span>添加Pofi福利官微信，进入Pofi福利群 </span>
+        <span>不错过Pofi的最新福利优惠！</span>
       </div>
       <div class="wechat-code">
         <img :src="imgInfo.qrcodeImg" alt="" referrerpolicy="no-referrer" />
@@ -34,7 +34,7 @@ export default {
     return {
       imgInfo: {
         bgImg: BASE_IMAGE_VOTE_URL + "/wechat-bg.png",
-        titleImg: BASE_IMAGE_VOTE_URL + "/wechat-title.png",
+        titleImg: BASE_IMAGE_VOTE_URL + "/wechat-title1.png",
         qrcodeImg: BASE_IMAGE_VOTE_URL + "/wechat-code.png",
       },
     };
