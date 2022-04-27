@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:45:45
- * @LastEditTime: 2022-04-26 17:10:41
+ * @LastEditTime: 2022-04-27 17:29:05
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/question-component.vue
@@ -40,7 +40,7 @@ export default {
         bgImg: BASE_IMAGE_VOTE_URL + "/question-bg.png",
         titleImg: BASE_IMAGE_VOTE_URL + "/question-title1.png",
         bannerImg: BASE_IMAGE_VOTE_URL + "/question-banner1.png",
-        btnImg: BASE_IMAGE_VOTE_URL + "/question-btn.png",
+        btnImg: BASE_IMAGE_VOTE_URL + "/question-btn1.png",
       },
     };
   },
