@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-26 15:41:51
+ * @LastEditTime: 2022-04-29 11:56:01
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -179,6 +179,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    selectValue: {
+      type: String,
+      default: "",
+    },
   },
   computed: {
     ...mapState({
@@ -317,6 +321,9 @@ export default {
       if (this.selectIndex === index) return;
       this.selectEvent = item.moldid;
       this.selectIndex = index;
+      this.$nextTick(() => {
+        this.$bus.$emit(item.moldid);
+      });
     },
     openEvenDialog(item) {
       this.selectInfo = item.info;

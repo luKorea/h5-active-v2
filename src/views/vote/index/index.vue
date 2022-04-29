@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-26 16:35:30
+ * @LastEditTime: 2022-04-29 13:35:38
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -30,6 +30,8 @@
       :otherInfo="otherInfo"
       :isVote="isVote"
       @getData="getUserOtherInfo"
+      @moId="selectValue"
+      selectValue="moId"
       ref="voteRef"
     />
     <!-- 活动区域 -->
@@ -119,6 +121,12 @@ export default {
     logout,
   },
   mounted() {
+    this.$nextTick(() => {
+      console.log(this.$bus.$on);
+      this.$bus.$on("item.moldid", (value) => {
+        console.log(value, "value");
+      });
+    });
     document.title = "Pofi 五一迎夏季";
     // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
     const state = this.$route.query.state;
@@ -259,6 +267,12 @@ export default {
       };
       console.log(data, "ali");
       aliPayAction(data);
+    },
+    selectValue() {
+      console.log(this.$bus);
+      this.$bus.$on("moId", (value) => {
+        console.log(value, "value");
+      });
     },
   },
 };
