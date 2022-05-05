@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-29 13:35:38
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-05-05 11:43:07
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -23,6 +23,7 @@
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
+      v-if="0"
     ></pay-event-component>
     <!-- 投票区域 -->
     <vote-component
