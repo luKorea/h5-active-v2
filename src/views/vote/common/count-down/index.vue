@@ -1,14 +1,14 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-26 15:45:26
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-05-05 16:15:53
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
 <template>
   <div>
-    <div class="count-wrap">
+    <!-- <div class="count-wrap">
       <div class="count-down">
         <div class="img">
           <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
@@ -21,11 +21,9 @@
           <span class="text">时</span>
           <span class="date">{{ min }}</span>
           <span class="text">分</span>
-          <!-- <span class="date">{{ second }}</span>
-        <span class="text">秒</span> -->
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="title-wrap">
       <div class="img" @click="goPage">
         <img :src="titleImg" alt="" referrerpolicy="no-referrer" />
@@ -164,7 +162,7 @@ export default {
   justify-content: center;
   align-items: center;
   // padding: 20px;
-  margin-top: -10px;
+  margin-top: -40px;
   width: 100%;
   height: 100%;
   img {

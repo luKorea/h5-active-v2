@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-05 11:43:07
+ * @LastEditTime: 2022-05-05 16:14:42
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -153,7 +153,7 @@ export default {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
       },
-      bgImg: BASE_IMAGE_VOTE_URL + "/banner.png",
+      bgImg: BASE_IMAGE_VOTE_URL + "/banner1.png",
       selectShopInfo: {},
       resetTime: null,
       showLoginDialog: false,

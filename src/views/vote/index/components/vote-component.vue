@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-04-29 11:56:01
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-05-05 16:16:50
+ * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
 -->
 <template>
-  <div class="content-wrap">
+  <div class="content-wrap" style="margin-top: -4px">
     <div class="vote-wrap">
       <div class="vote-bg">
         <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" />

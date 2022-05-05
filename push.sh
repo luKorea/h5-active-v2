@@ -2,8 +2,8 @@
 ###
  # @Author: korealu
  # @Date: 2022-03-08 15:23:56
- # @LastEditors: Please set LastEditors
- # @LastEditTime: 2022-04-19 16:59:23
+ # @LastEditors: korealu 643949593@qq.com
+ # @LastEditTime: 2022-05-05 16:20:05
  # @Description: file content
  # @FilePath: /h5-active-v2/push.sh
 ### 
@@ -16,3 +16,4 @@ cd "$baseball" || exit
 git add .
 npm run commit
 git push origin
+npm run build
