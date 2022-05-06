@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-05 16:14:42
+ * @LastEditTime: 2022-05-06 10:21:07
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -36,7 +36,7 @@
       ref="voteRef"
     />
     <!-- 活动区域 -->
-    <shop-component />
+    <!-- <shop-component /> -->
     <!-- 调查问卷 -->
     <question-component />
     <!-- 企业微信 -->
@@ -88,7 +88,7 @@ import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import PayEventComponent from "./components/pay-event-component.vue";
 import VoteComponent from "./components/vote-component.vue";
-import shopComponent from "./components/shop-component.vue";
+// import shopComponent from "./components/shop-component.vue";
 import questionComponent from "./components/question-component.vue";
 import wechatComponent from "./components/wechat-component.vue";
 import appComponent from "./components/go-app.vue";
@@ -114,7 +114,7 @@ export default {
     PaySuccessComponent,
     PayEventComponent,
     VoteComponent,
-    shopComponent,
+    // shopComponent,
     questionComponent,
     wechatComponent,
     appComponent,
