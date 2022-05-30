@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-21 18:12:08
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-05-30 11:45:24
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->
@@ -82,6 +82,9 @@ export default {
     },
     payAli() {
       this.$emit("payAli");
+    },
+    payMoney() {
+      this.$emit("payMoney");
     },
   },
 };

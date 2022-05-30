@@ -1,14 +1,14 @@
 /*
  * @Author: korealu
  * @Date: 2022-03-04 09:25:35
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-11 12:01:05
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-05-30 11:48:27
  * @Description: 封装支付宝微信支付
  * @FilePath: /h5-active-v2/src/utils/pay-config.js
  */
 import { errorInfo, _isWechatPay } from "@/utils";
 import urlencode from "urlencode";
-import { wechatPay, ailPay } from "@/api";
+import { wechatPay, ailPay, moneyPay } from "@/api";
 function _isWechat() {
   return navigator.userAgent.match(/micromessenger/i);
 }
@@ -48,4 +48,18 @@ export function aliPayAction(data) {
     .catch((err) => {
       console.log(err);
     });
+}
+
+export function moneyPayAction(data) {
+  return new Promise((resolve, reject) => {
+    moneyPay(data)
+      .then((res) => {
+        if (res.code === 200) {
+          resolve(res);
+        } else reject(res.msg);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 }

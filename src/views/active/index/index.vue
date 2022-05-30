@@ -1,56 +1,57 @@
 <!--
- * @Author: korealu
- * @Date: 2022-03-01 17:36:50
+ * @Author: korealu 643949593@qq.com
+ * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 10:52:34
- * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
- * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
+ * @LastEditTime: 2022-05-30 11:50:12
+ * @FilePath: /h5-active-v2/src/views/active/index/index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
+
 <template>
-  <div class="pose-recommend">
-    <!-- 头部区域 -->
-    <div class="pose-img">
-      <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
-    </div>
-    <count-down></count-down>
+  <div class="active-page">
     <info-fixed
       :userInfo="userInfo"
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
+      :selectPage="selectPage"
     ></info-fixed>
-    <!-- 购买区域 -->
-    <pay-event-component
+    <!-- 首页 -->
+    <active-home-page
+      v-if="selectPage === 1"
+      @openPage="handleChangeDifferentPage"
+    ></active-home-page>
+    <!-- 功能订阅 -->
+    <active-function-page
+      v-if="selectPage === 2"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
-      v-if="0"
-    ></pay-event-component>
-    <!-- 投票区域 -->
-    <vote-component
+      @openPage="handleChangeDifferentPage"
+    ></active-function-page>
+    <!-- P币购买 -->
+    <active-recharge-discounts-page
+      v-if="selectPage === 3"
       @handleLoginDialog="showLoginDialog = true"
+      @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
-      :isVote="isVote"
-      @getData="getUserOtherInfo"
-      @moId="selectValue"
-      selectValue="moId"
-      ref="voteRef"
-    />
-    <!-- 活动区域 -->
-    <!-- <shop-component /> -->
-    <!-- 调查问卷 -->
-    <question-component />
-    <!-- 企业微信 -->
-    <wechat-component />
-    <send-link></send-link>
-    <!-- APP介绍区域 -->
-    <app-component />
-    <vote-footer></vote-footer>
+      @openPage="handleChangeDifferentPage"
+    ></active-recharge-discounts-page>
+    <!-- 限定人偶 -->
+    <active-doll-gain-page
+      v-if="selectPage === 4"
+      @handleLoginDialog="showLoginDialog = true"
+      @handlePayDialog="handleChangePayModal"
+      :otherInfo="otherInfo"
+      @openPage="handleChangeDifferentPage"
+    ></active-doll-gain-page>
     <!-- 以下页面为公用页面 -->
+    <vote-footer></vote-footer>
     <!-- 支付弹框 -->
     <pay-component
       ref="payRef"
       @payWechat="payWechat"
       @payAli="payAli"
+      @payMoney="payMoney"
       :payInfo="payInfo"
       :userInfo="userInfo"
     ></pay-component>
@@ -77,125 +78,73 @@
 </template>
 
 <script>
-import PayComponent from "@/components/pay";
-import PaySuccessComponent from "@/components/pay-success";
+import activeHomePage from "../home/home.vue";
+import activeFunctionPage from "../functionSubscription/index.vue";
+import activeRechargeDiscountsPage from "../rechargeDiscounts/index.vue";
+import activeDollGainPage from "../dollGain/index.vue";
 
 import voteFooter from "../footer";
-import InfoFixed from "../common/info";
-import CountDown from "../common/count-down";
-import SendLink from "../common/part";
+import infoFixed from "../common/fixed";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
-import PayEventComponent from "./components/pay-event-component.vue";
-import VoteComponent from "./components/vote-component.vue";
-// import shopComponent from "./components/shop-component.vue";
-import questionComponent from "./components/question-component.vue";
-import wechatComponent from "./components/wechat-component.vue";
-import appComponent from "./components/go-app.vue";
-
-import { BASE_IMAGE_VOTE_URL } from "@/request/config";
-
-import { errorInfo, successInfo } from "@/utils";
 import localCache from "@/utils/cache";
-import urlLink from "@/utils/link";
-import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
-import { mapState } from "vuex";
-import { checkUserState } from "@/api/vote";
 import { getCode } from "@/utils/getCode";
-
+import { successInfo, errorInfo } from "@/utils";
+import urlLink from "@/utils/link";
+import { mapState } from "vuex";
+import {
+  wechatPayAction,
+  aliPayAction,
+  moneyPayAction,
+} from "@/utils/pay-config";
 export default {
-  name: "votePage",
+  name: "activePage",
   components: {
-    voteFooter,
-    PayComponent,
-    InfoFixed,
-    CountDown,
-    SendLink,
-    PaySuccessComponent,
-    PayEventComponent,
-    VoteComponent,
-    // shopComponent,
-    questionComponent,
-    wechatComponent,
-    appComponent,
+    activeHomePage,
+    activeFunctionPage,
+    activeRechargeDiscountsPage,
+    activeDollGainPage,
     loginAndRegister,
     logout,
+    infoFixed,
+    voteFooter,
   },
   mounted() {
-    this.$nextTick(() => {
-      console.log(this.$bus.$on);
-      this.$bus.$on("item.moldid", (value) => {
-        console.log(value, "value");
-      });
-    });
-    document.title = "Pofi 五一迎夏季";
-    // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
-    const state = this.$route.query.state;
-    if (state && state === "success") {
-      this.$nextTick(() => {
-        this.openSuccessDialog();
-      });
-    }
     if (this._isWechat()) {
       if (localCache.getCache("openId") == null) {
         getCode("wx4e33f34be6700e46", this.$route.query.code);
         return;
       }
     }
-    this.getUserOtherInfo();
-    // if (this.uid && this.token) {
-
-    // }
   },
   data() {
     return {
+      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
       },
-      bgImg: BASE_IMAGE_VOTE_URL + "/banner1.png",
-      selectShopInfo: {},
+      // bgImg: BASE_IMAGE_VOTE_URL + "/banner1.png",
       resetTime: null,
       showLoginDialog: false,
       showLogoutDialog: false,
       otherInfo: {},
-      isVote: false, // 是否投票
     };
   },
   computed: {
     ...mapState({
-      userInfo: (state) => state.voteModule.userInfo,
-      token: (state) => state.voteModule.token,
-      uid: (state) => state.voteModule.uid,
+      userInfo: (state) => state.activeModule.userInfo,
+      token: (state) => state.activeModule.token,
+      uid: (state) => state.activeModule.uid,
     }),
   },
   methods: {
+    // 打开不同页面
+    handleChangeDifferentPage(index) {
+      this.selectPage = index;
+    },
     openSuccessDialog() {
       this.$refs["successRef"].showDialog = true;
-    },
-    getUserOtherInfo() {
-      checkUserState({
-        uid: this.uid,
-        loginKey: this.token,
-      }).then((result) => {
-        if (result.code === 200) {
-          this.otherInfo = result.data;
-          let res = this.$refs["voteRef"].bannerList;
-          const info = [];
-          result.data.voteList.forEach((item) => {
-            if (item.state === 1) this.isVote = true;
-            res.forEach((i) => {
-              if (item.moldid === i.moldid) {
-                info.push({
-                  ...i,
-                  ...item,
-                });
-              }
-            });
-          });
-          this.$refs["voteRef"].bannerList = info;
-        } else console.log(result.msg);
-      });
     },
     phoneLogin(data) {
       const _this = this;
@@ -203,7 +152,7 @@ export default {
       const phoneStr = tel.substr(0, 3) + "****" + tel.substr(7);
       localCache.setCache("phoneStr", phoneStr);
       this.$store
-        .dispatch("voteModule/loginAction", data)
+        .dispatch("activeModule/loginAction", data)
         .then(() => {
           successInfo("登录成功");
           _this.showLoginDialog = false;
@@ -213,8 +162,8 @@ export default {
         .catch((err) => errorInfo(err));
     },
     logout() {
-      this.$store.dispatch("voteModule/logoutAction").then(() => {
-        this.$router.replace("/mayday22");
+      this.$store.dispatch("activeModule/logoutAction").then(() => {
+        this.$router.replace("/active");
         window.location.reload();
         this.getUserOtherInfo();
       });
@@ -229,6 +178,7 @@ export default {
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
     },
+    // 微信支付
     payWechat() {
       let data = {
         snId: this.payInfo.id,
@@ -252,6 +202,7 @@ export default {
         })
         .catch((err) => errorInfo(err));
     },
+    // 支付宝支付
     payAli() {
       let data = {
         snId: this.payInfo.id,
@@ -269,16 +220,32 @@ export default {
       console.log(data, "ali");
       aliPayAction(data);
     },
-    selectValue() {
-      console.log(this.$bus);
-      this.$bus.$on("moId", (value) => {
-        console.log(value, "value");
-      });
+    // 用户钱包支付
+    payMoney() {
+      let data = {
+        snId: this.payInfo.id,
+        chargeType: 1,
+        uid: this.uid,
+        loginKey: this.token,
+        from: 2,
+        // remark: JSON.stringify({
+        //   type: 8,
+        // }),
+        remark: "",
+        appid: urlLink.alipayAPPID,
+        returnUrl: `${window.location.href}?state=success`,
+      };
+      moneyPayAction(data)
+        .then((res) => {
+          successInfo(res.msg);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
 </script>
-
 <style>
 .content-wrap {
   display: flex;
@@ -288,7 +255,7 @@ export default {
 }
 </style>
 <style lang="less" scoped>
-.pose-recommend {
+.active-page {
   display: flex;
   flex-direction: column;
   background-color: #b0dbbf;
