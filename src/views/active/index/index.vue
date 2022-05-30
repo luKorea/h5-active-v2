@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 14:38:53
+ * @LastEditTime: 2022-05-30 17:21:10
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -93,7 +93,7 @@ import PayComponent from "@/components/pay";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import localCache from "@/utils/cache";
-import { getCode } from "@/utils/getCode";
+// import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
@@ -117,16 +117,16 @@ export default {
     ActiveFooter,
   },
   mounted() {
-    if (this._isWechat()) {
-      if (localCache.getCache("openId") == null) {
-        getCode("wx4e33f34be6700e46", this.$route.query.code);
-        return;
-      }
-    }
+    // if (this._isWechat()) {
+    //   if (localCache.getCache("openId") == null) {
+    //     getCode("wx4e33f34be6700e46", this.$route.query.code);
+    //     return;
+    //   }
+    // }
   },
   data() {
     return {
-      selectPage: 4, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
+      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
@@ -272,6 +272,7 @@ export default {
   flex-direction: column;
   background-color: #b0dbbf;
   width: 100%;
+  min-height: 100%;
   .pose-img {
     width: 100%;
     height: 100%;

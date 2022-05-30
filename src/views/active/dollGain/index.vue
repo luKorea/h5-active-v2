@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 15:09:19
+ * @LastEditTime: 2022-05-30 17:19:09
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,14 +29,30 @@ recordList：组队用户信息
       <div class="swiper-bg">
         <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div id="swiper">这是轮播区域</div>
+      <div class="swiper-info">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <template v-if="list && list.length > 0">
+              <div
+                class="swiper-slide"
+                v-for="(item, index) in list"
+                :key="index"
+              >
+                <img :src="item" referrerpolicy="no-referrer" />
+              </div>
+            </template>
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Swiper from "swiper";
-import { BASE_IMAGE_VOTE_URL } from "@/request/config";
+import { BASE_IMAGE_VOTE_URL, BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 export default {
   name: "activeDollGainPage",
   data() {
@@ -51,13 +67,39 @@ export default {
         titleImg: BASE_IMAGE_VOTE_URL + "/wechat-title1.png",
         qrcodeImg: BASE_IMAGE_VOTE_URL + "/wechat-code.png",
       },
+      list: [
+        BASE_IMAGE_ACTIVE_URL + "/one.jpg",
+        BASE_IMAGE_ACTIVE_URL + "/two.jpg",
+        BASE_IMAGE_ACTIVE_URL + "/three.jpg",
+        BASE_IMAGE_ACTIVE_URL + "/four.jpg",
+        BASE_IMAGE_ACTIVE_URL + "/five.jpg",
+        BASE_IMAGE_ACTIVE_URL + "/six.jpg",
+      ],
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      const wrap = new Swiper("#swiper");
-      console.log(wrap, "wrap");
+    const wrap = new Swiper(".swiper-container", {
+      autoplay: {
+        disableOnInteraction: false,
+        delay: 2000,
+      },
+      effect: "coverflow",
+      loop: true,
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 400,
+        modifier: 1,
+        slideShadows: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
     });
+    console.log(wrap);
   },
   methods: {
     handleLoginDialog() {
@@ -89,16 +131,30 @@ export default {
       height: 100%;
     }
   }
-  .wechat-code {
+  .swiper-info {
+    width: 100%;
+    height: 200px;
     position: absolute;
-    top: 160px;
+    top: 90px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    img {
-      width: 190px;
-      height: 190px;
+    flex-wrap: wrap;
+    .swiper-container {
+      width: 90%;
+      .swiper-slide {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        background-color: #fff;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
     }
   }
 }
