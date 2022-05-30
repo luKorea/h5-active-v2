@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 14:06:46
+ * @LastEditTime: 2022-05-30 14:42:03
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,10 +24,19 @@ recordList：组队用户信息
 点赞 /api/event/mid22/like 传uid和inviteCode
  -->
 <template>
-  <div>activeDollGainPage</div>
+  <div class="content-wrap">
+    <div class="swiper-wrap">
+      <div class="swiper-bg">
+        <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" />
+      </div>
+      <div id="swiper">这是轮播区域</div>
+    </div>
+  </div>
 </template>
 
 <script>
+import Swiper from "swiper";
+import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 export default {
   name: "activeDollGainPage",
   data() {
@@ -37,7 +46,18 @@ export default {
         tid: "M191001241",
         title: "618活动大Q",
       },
+      imgInfo: {
+        bgImg: BASE_IMAGE_VOTE_URL + "/wechat-bg.png",
+        titleImg: BASE_IMAGE_VOTE_URL + "/wechat-title1.png",
+        qrcodeImg: BASE_IMAGE_VOTE_URL + "/wechat-code.png",
+      },
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const wrap = new Swiper("#swiper");
+      console.log(wrap, "wrap");
+    });
   },
   methods: {
     handleLoginDialog() {
@@ -53,4 +73,33 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+@import url("../../../../node_modules/swiper/css/swiper.css");
+.swiper-wrap {
+  width: 100%;
+  position: relative;
+  .swiper-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .wechat-code {
+    position: absolute;
+    top: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    img {
+      width: 190px;
+      height: 190px;
+    }
+  }
+}
+</style>

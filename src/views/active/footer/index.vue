@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 11:34:54
+ * @LastEditTime: 2022-05-30 14:34:37
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
