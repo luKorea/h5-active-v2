@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 11:50:12
+ * @LastEditTime: 2022-05-30 13:36:36
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -85,6 +85,8 @@ import activeDollGainPage from "../dollGain/index.vue";
 
 import voteFooter from "../footer";
 import infoFixed from "../common/fixed";
+import PaySuccessComponent from "@/components/pay-success";
+import PayComponent from "@/components/pay";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import localCache from "@/utils/cache";
@@ -98,7 +100,7 @@ import {
   moneyPayAction,
 } from "@/utils/pay-config";
 export default {
-  name: "activePage",
+  name: "activePageComponent",
   components: {
     activeHomePage,
     activeFunctionPage,
@@ -106,6 +108,8 @@ export default {
     activeDollGainPage,
     loginAndRegister,
     logout,
+    PaySuccessComponent,
+    PayComponent,
     infoFixed,
     voteFooter,
   },
