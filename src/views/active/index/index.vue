@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 13:36:36
+ * @LastEditTime: 2022-05-30 14:00:21
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,6 +25,7 @@
       v-if="selectPage === 2"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
+      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-function-page>
@@ -33,6 +34,7 @@
       v-if="selectPage === 3"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
+      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-recharge-discounts-page>
@@ -41,6 +43,7 @@
       v-if="selectPage === 4"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
+      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-doll-gain-page>
@@ -143,6 +146,10 @@ export default {
     }),
   },
   methods: {
+    // 选中不同的套餐
+    handleChangeSelectContent(info) {
+      this.payInfo = info;
+    },
     // 打开不同页面
     handleChangeDifferentPage(index) {
       this.selectPage = index;
@@ -228,6 +235,7 @@ export default {
     payMoney() {
       let data = {
         snId: this.payInfo.id,
+        tid: this.payInfo.tid ? this.payInfo.tid : undefined,
         chargeType: 1,
         uid: this.uid,
         loginKey: this.token,

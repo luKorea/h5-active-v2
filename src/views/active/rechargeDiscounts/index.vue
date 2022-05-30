@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:17:44
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 11:56:35
+ * @LastEditTime: 2022-05-30 14:09:21
  * @FilePath: /h5-active-v2/src/views/active/rechargeDiscounts/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,9 +21,21 @@
 <script>
 export default {
   name: "activeRechargeDiscountsPage",
+  data() {
+    // MIDRCG6800	618活动68p币
+    // MIDRCG12800	618活动128p币
+    // MIDRCG20800	618活动208p币
+    // MIDRCG58800	618活动588p币
+    return {
+      key: "",
+    };
+  },
   methods: {
     handleLoginDialog() {
       this.$emit("handleLoginDialog");
+    },
+    handleChangeSelectContent(info) {
+      this.$emit("handleChangeSelectContent", info);
     },
     handlePayDialog() {
       this.$emit("handlePayDialog");
