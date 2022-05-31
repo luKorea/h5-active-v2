@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-31 09:42:02
+ * @LastEditTime: 2022-05-31 10:39:13
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,6 +13,7 @@
       :userInfo="userInfo"
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
+      @openPage="handleChangeDifferentPage"
       :selectPage="selectPage"
     ></info-fixed>
     <!-- 首页 -->
@@ -93,7 +94,7 @@ import PayComponent from "@/components/pay";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
 import logout from "../../login-and-register/logout.vue";
 import localCache from "@/utils/cache";
-// import { getCode } from "@/utils/getCode";
+import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
@@ -119,16 +120,18 @@ export default {
   },
   mounted() {
     // ；判断当前页面是否是
-    const query = this.$route.query;
-    if (query.pageCode && +query.pageCode === 4) {
+    const { inviteCode, pageCode } = this.$route.query;
+    console.log(inviteCode);
+    if (pageCode && +pageCode === 4) {
       this.selectPage = 4;
     } else this.selectPage = 1;
-    // if (this._isWechat()) {
-    //   if (localCache.getCache("openId") == null) {
-    //     getCode("wx4e33f34be6700e46", this.$route.query.code);
-    //     return;
-    //   }
-    // }
+    // 判断当前是否在微信内
+    if (this._isWechat()) {
+      if (localCache.getCache("openId") == null) {
+        getCode("wx4e33f34be6700e46", this.$route.query.code);
+        return;
+      }
+    }
     this.checkLinkIsInviter();
   },
   data() {
@@ -157,6 +160,8 @@ export default {
     checkLinkIsInviter() {
       getActivePageConfig({
         inviteCode: this.$route.query.inviteCode ?? undefined,
+        uid: this.uid ?? undefined,
+        loginKey: this.token ?? undefined,
       }).then((res) => {
         if (res.code === 200) {
           this.otherInfo = res.data;
@@ -184,14 +189,14 @@ export default {
         .then(() => {
           successInfo("登录成功");
           _this.showLoginDialog = false;
-          window.location.reload();
+          this.$router.go(0);
         })
         .catch((err) => errorInfo(err));
     },
     logout() {
       this.$store.dispatch("activeModule/logoutAction").then(() => {
-        this.$router.replace("/active");
-        window.location.reload();
+        // this.$router.replace("/active");
+        this.$router.go(0);
       });
     },
     closeDialog() {

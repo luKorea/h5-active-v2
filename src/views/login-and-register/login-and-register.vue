@@ -9,11 +9,11 @@
             type="text"
             class="input-text"
             style="margin-bottom: 6px"
-            v-model="formData.no"
+            v-model.trim="formData.no"
           />
           <input
             placeholder="请输入密码"
-            v-model="formData.pwd"
+            v-model.trim="formData.pwd"
             class="input-text"
             type="password"
           />
@@ -56,8 +56,8 @@ export default {
       status: 1, // 1. 登录 2. 注册
       appImg: require("@/assets/image/go-app.png"),
       formData: {
-        no: "",
-        pwd: "",
+        no: "17665142384",
+        pwd: "123456",
       },
     };
   },

@@ -9,7 +9,7 @@ export function getUserAccount(data) {
 }
 // 获取页面配置，判断是否拥有邀请码，确认是自己页面还是邀请页面
 export const getActivePageConfig = (params) => {
-  return request.get({
+  return request.post({
     url: "/api/event/mid22/config",
     data: params,
   });
