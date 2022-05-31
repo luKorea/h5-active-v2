@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-31 09:14:37
+ * @LastEditTime: 2022-05-31 09:42:02
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -102,6 +102,7 @@ import {
   aliPayAction,
   moneyPayAction,
 } from "@/utils/pay-config";
+import { getActivePageConfig } from "@/api/active";
 export default {
   name: "activePageComponent",
   components: {
@@ -117,12 +118,18 @@ export default {
     ActiveFooter,
   },
   mounted() {
+    // ；判断当前页面是否是
+    const query = this.$route.query;
+    if (query.pageCode && +query.pageCode === 4) {
+      this.selectPage = 4;
+    } else this.selectPage = 1;
     // if (this._isWechat()) {
     //   if (localCache.getCache("openId") == null) {
     //     getCode("wx4e33f34be6700e46", this.$route.query.code);
     //     return;
     //   }
     // }
+    this.checkLinkIsInviter();
   },
   data() {
     return {
@@ -146,6 +153,16 @@ export default {
     }),
   },
   methods: {
+    // 校验当前链接是邀请人链接还是被邀请人链接
+    checkLinkIsInviter() {
+      getActivePageConfig({
+        inviteCode: this.$route.query.inviteCode ?? undefined,
+      }).then((res) => {
+        if (res.code === 200) {
+          this.otherInfo = res.data;
+        } else errorInfo(res.msg);
+      });
+    },
     // 选中不同的套餐
     handleChangeSelectContent(info) {
       this.payInfo = info;
@@ -167,8 +184,7 @@ export default {
         .then(() => {
           successInfo("登录成功");
           _this.showLoginDialog = false;
-          this.getUserOtherInfo();
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((err) => errorInfo(err));
     },
@@ -176,7 +192,6 @@ export default {
       this.$store.dispatch("activeModule/logoutAction").then(() => {
         this.$router.replace("/active");
         window.location.reload();
-        this.getUserOtherInfo();
       });
     },
     closeDialog() {
@@ -234,18 +249,14 @@ export default {
     // 用户钱包支付
     payMoney() {
       let data = {
-        snId: this.payInfo.id,
-        tid: this.payInfo.tid ? this.payInfo.tid : undefined,
-        chargeType: 1,
         uid: this.uid,
         loginKey: this.token,
-        from: 2,
-        // remark: JSON.stringify({
-        //   type: 8,
-        // }),
-        remark: "",
-        appid: urlLink.alipayAPPID,
-        returnUrl: `${window.location.href}?state=success`,
+        cart: JSON.stringify({
+          snId: this.payInfo.id,
+          tid: this.payInfo.tid ? this.payInfo.tid : undefined,
+          paymentType: 1,
+          amount: 1,
+        }),
       };
       moneyPayAction(data)
         .then((res) => {

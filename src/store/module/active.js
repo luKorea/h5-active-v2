@@ -1,13 +1,13 @@
 /*
  * @Author: korealu
  * @Date: 2022-03-03 15:30:26
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-24 18:05:16
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-05-31 09:36:04
  * @Description: file content
  * @FilePath: /h5-active-v2/src/store/module/anniversary.js
  */
 import { userLogin } from "@/api/common";
-// import { getUserAccount } from "@/api/anniversary";
+import { getUserAccount } from "@/api/active";
 import localCache from "@/utils/cache";
 export default {
   state: {
@@ -53,15 +53,30 @@ export default {
         userLogin(payload).then((res) => {
           if (res.code === 200) {
             const data = res.data;
-            commit("SET_USERINFO", data);
             commit("SET_UID", data?.uid);
             commit("SET_TOKEN", data?.loginKey);
-            localCache.setCache("userInfo", data);
             localCache.setCache("uid", data?.uid);
             localCache.setCache("token", data?.loginKey);
-            resolve({
+            getUserAccount({
               uid: data.uid,
               loginKey: data.loginKey,
+            }).then((info) => {
+              if (info.code === 200) {
+                commit("SET_USERINFO", {
+                  ...data,
+                  ...info.data,
+                });
+                localCache.setCache("userInfo", {
+                  ...data,
+                  ...info.data,
+                });
+                resolve({
+                  uid: data.uid,
+                  loginKey: data.loginKey,
+                });
+              } else {
+                reject(info.msg);
+              }
             });
           } else {
             reject(res.msg);

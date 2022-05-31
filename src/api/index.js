@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-05-30 14:05:12
+ * @LastEditTime: 2022-05-31 09:24:11
  * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/api/index.js
@@ -74,30 +74,6 @@ export const moneyPay = (params) => {
   return request.post({
     url: "/api/trade/purchase",
     data: params,
-  });
-};
-
-// 获取页面配置，判断是否拥有邀请码，确认是自己页面还是邀请页面
-export const getActivePageConfig = (params) => {
-  return request.post({
-    url: "/api/event/mid22/config",
-    data: params,
-  });
-};
-// 邀请好友 /api/event/mid22/invite
-// data: uid
-export const inviteUser = (data) => {
-  return request.post({
-    url: "/api/event/mid22/invite",
-    data: data,
-  });
-};
-// 给好友点赞  /api/event/mid22/like 需要传邀请码，被邀请者给邀请者点赞
-//  传uid和inviteCode
-export const likeUser = (data) => {
-  return request.post({
-    url: "/api/event/mid22/invite",
-    data: data,
   });
 };
 
