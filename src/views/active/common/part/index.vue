@@ -98,7 +98,7 @@ export default {
     .img-item {
       width: 150px;
       height: 38px;
-      margin-top: 10px;
+      margin-bottom: 10px;
       img {
         width: 100%;
         height: 100%;
