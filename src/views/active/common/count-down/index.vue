@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-11 09:26:03
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-01 15:51:16
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -31,10 +31,17 @@
 import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
 import dayjs from "dayjs";
 export default {
+  props: {
+    // 结束时间，由外部传入
+    curStartTime: {
+      type: Number,
+      default: 1648742399,
+    },
+  },
   data() {
     return {
       bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/countDown.png",
-      curStartTime: 1648742399, // 结束时间
+      // curStartTime: 1648742399, // 结束时间
       day: "0",
       hour: "00",
       min: "00",
