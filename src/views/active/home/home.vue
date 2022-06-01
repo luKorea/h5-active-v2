@@ -2,12 +2,14 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:10:58
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 15:22:57
+ * @LastEditTime: 2022-06-01 17:45:13
  * @FilePath: /h5-active-v2/src/views/active/home/home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="home-container">
+    <!-- 头部区域 -->
+    <count-down :curStartTime="1656259199"></count-down>
     <!-- 顶部大item -->
     <div class="item-wrap">
       <template v-if="itemList && itemList.length > 0">
@@ -20,6 +22,9 @@
           <img :src="item.imgUrl" alt="" referrerpolicy="no-referrer" />
         </div>
       </template>
+    </div>
+    <div class="img-tip">
+      <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <!-- 调查问卷 -->
     <!-- <question-component /> -->
@@ -50,9 +55,10 @@
 
 <script>
 import SendLink from "../common/part";
+import CountDown from "../common/count-down";
 // import questionComponent from "./components/question-component.vue";
 // import wechatComponent from "./components/wechat-component.vue";
-import appComponent from "./components/go-app.vue";
+import appComponent from "../common/go-app/index.vue";
 import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 export default {
   name: "activeHomePage",
@@ -61,12 +67,14 @@ export default {
     // questionComponent,
     // wechatComponent,
     appComponent,
+    CountDown,
   },
   created() {
     document.title = "Pofi盛夏福利";
   },
   data() {
     return {
+      tipImg: BASE_IMAGE_ACTIVE_URL + "/trigon.png",
       itemList: [
         {
           id: 2,
@@ -103,6 +111,16 @@ export default {
 .home-container {
   width: 100%;
   background-color: #7a92fe;
+  .img-tip {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    // background-image: url("https://f3.pofiapp.com/event/active/trigon.png");
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .item-wrap {
     display: flex;
     flex-direction: column;

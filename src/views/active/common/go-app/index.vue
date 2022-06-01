@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:52:32
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 10:55:38
+ * @LastEditTime: 2022-06-01 17:11:11
  * @FilePath: /h5-active-v2/src/views/active/index/components/go-app.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,17 +15,18 @@
  * @FilePath: /h5-active-v2/src/views/vote/index/components/go-app.vue
 -->
 <template>
-  <div class="content-wrap">
+  <div class="content-wrap" style="margin-bottom: 0">
     <div class="app-wrap">
-      <div class="app-bg">
-        <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" />
-      </div>
-      <div class="app-banner" @click="goPage">
+      <div class="app-bg" @click="goPage">
         <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
+        <!-- <img :src="imgInfo.bgImg" alt="" referrerpolicy="no-referrer" /> -->
       </div>
-      <div class="app-btn" @click="goPage">
+      <!-- <div class="app-banner" @click="goPage">
+        <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
+      </div> -->
+      <!-- <div class="app-btn" @click="goPage">
         <img :src="imgInfo.btnImg" alt="" referrerpolicy="no-referrer" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -33,15 +34,15 @@
 <script>
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_VOTE_URL } from "@/request/config";
+import { BASE_IMAGE_VOTE_URL, BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 export default {
-  name: "AppComponent",
+  name: "activeAppPageComponent",
   data() {
     return {
       imgInfo: {
         bgImg: BASE_IMAGE_VOTE_URL + "/app-bg.png",
-        bannerImg: BASE_IMAGE_VOTE_URL + "/app-banner.png",
-        btnImg: BASE_IMAGE_VOTE_URL + "/app-btn.png",
+        bannerImg: BASE_IMAGE_ACTIVE_URL + "/app-banner.png",
+        btnImg: BASE_IMAGE_ACTIVE_URL + "/app-btn.png",
       },
     };
   },

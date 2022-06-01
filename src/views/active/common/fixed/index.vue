@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:06:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 10:20:09
+ * @LastEditTime: 2022-06-01 17:09:23
  * @FilePath: /h5-active-v2/src/views/active/common/fixed/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,16 +29,13 @@
       <img :src="serviceImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <div class="app-service" @click="goPage('home')" v-if="selectPage !== 1">
-      <img :src="serviceImg" alt="" referrerpolicy="no-referrer" />
+      <img :src="homeImg" alt="" referrerpolicy="no-referrer" />
     </div>
   </div>
 </template>
 
 <script>
-import {
-  BASE_IMAGE_VOTE_URL,
-  BASE_IMAGE_ANNIVERSARY_URL,
-} from "@/request/config";
+import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import { openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
@@ -57,9 +54,10 @@ export default {
   },
   data() {
     return {
-      logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/app-logo.png",
-      loginUrl: BASE_IMAGE_VOTE_URL + "/login.png",
-      serviceImg: BASE_IMAGE_VOTE_URL + "/service.png",
+      logoImg: BASE_IMAGE_ACTIVE_URL + "/app.png",
+      loginUrl: BASE_IMAGE_ACTIVE_URL + "/login.png",
+      serviceImg: BASE_IMAGE_ACTIVE_URL + "/service.png",
+      homeImg: BASE_IMAGE_ACTIVE_URL + "/home.png",
     };
   },
   methods: {
@@ -72,9 +70,9 @@ export default {
         this.$emit("handleLogout", "logout");
       } else if (type === "home") {
         this.$emit("openPage", 1);
-        this.$router.replace({
-          path: "/active",
-        });
+        // this.$router.replace({
+        //   path: "/active",
+        // });
       } else this.$emit("handleLoginDialog", true);
     },
   },

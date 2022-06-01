@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 15:52:02
+ * @LastEditTime: 2022-06-01 17:58:00
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,7 +26,6 @@
       v-if="selectPage === 2"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
-      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-function-page>
@@ -35,7 +34,6 @@
       v-if="selectPage === 3"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
-      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-recharge-discounts-page>
@@ -44,7 +42,6 @@
       v-if="selectPage === 4"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
-      @handleChangeSelectContent="handleChangeSelectContent"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
     ></active-doll-gain-page>
@@ -124,7 +121,7 @@ export default {
     console.log(inviteCode);
     if (pageCode && +pageCode === 4) {
       this.selectPage = 4;
-    } else this.selectPage = 1;
+    }
     // 判断当前是否在微信内
     if (this._isWechat()) {
       if (localCache.getCache("openId") == null) {
@@ -136,7 +133,7 @@ export default {
   },
   data() {
     return {
-      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
+      selectPage: 2, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
@@ -167,10 +164,6 @@ export default {
           this.otherInfo = res.data;
         } else errorInfo(res.msg);
       });
-    },
-    // 选中不同的套餐
-    handleChangeSelectContent(info) {
-      this.payInfo = info;
     },
     // 打开不同页面
     handleChangeDifferentPage(index) {
@@ -203,8 +196,13 @@ export default {
       this.showLoginDialog = false;
       this.showLogoutDialog = false;
     },
-    handleChangePayModal() {
-      this.$refs["payRef"].showDialog = true;
+    handleChangePayModal(info) {
+      this.payInfo = info;
+      if (!this.token) {
+        this.showLoginDialog = true;
+      } else {
+        this.$refs["payRef"].showDialog = true;
+      }
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);

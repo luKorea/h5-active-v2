@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 15:51:16
+ * @LastEditTime: 2022-06-01 17:07:45
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -14,23 +14,22 @@
       </div>
       <div class="time-info">
         <span class="tip">距离活动结束还有</span>
-        <span class="date">{{ day }}</span>
+        <span class="date one">{{ day }}</span>
         <span class="text">天</span>
-        <span class="date">{{ hour }}</span>
+        <span class="date two">{{ hour }}</span>
         <span class="text">时</span>
-        <span class="date">{{ min }}</span>
+        <span class="date three">{{ min }}</span>
         <span class="text">分</span>
-        <!-- <span class="date">{{ second }}</span>
-        <span class="text">秒</span> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import dayjs from "dayjs";
 export default {
+  name: "activeTimerPage",
   props: {
     // 结束时间，由外部传入
     curStartTime: {
@@ -40,7 +39,7 @@ export default {
   },
   data() {
     return {
-      bgImg: BASE_IMAGE_ANNIVERSARY_URL + "/countDown.png",
+      bgImg: BASE_IMAGE_ACTIVE_URL + "/timer.png",
       // curStartTime: 1648742399, // 结束时间
       day: "0",
       hour: "00",
@@ -104,7 +103,7 @@ export default {
 .count-wrap {
   display: flex;
   padding: 20px;
-  margin-top: -100px;
+  // margin-top: -100px;
   .count-down {
     position: relative;
     .img {
@@ -127,27 +126,50 @@ export default {
       justify-content: center;
       align-items: center;
       .tip {
-        font-size: 14px;
+        font-size: 16px;
         font-family: Source Han Sans CN;
-        font-weight: 400;
-        color: #404040;
+        font-weight: bold;
+        color: #fff;
+        margin-right: 2px;
       }
       .date {
         font-size: 26px;
         font-family: Source Han Sans CN;
-        font-weight: 400;
-        color: #0f0f0f;
-        border-bottom: 1px solid #b2b2b3;
-        margin-left: 3px;
-        line-height: 26px;
+        font-weight: bold;
+        color: #fff;
+        // border-bottom: 1px solid #b2b2b3;
+        // margin-left: px;
+        line-height: 28px;
+        height: 26px;
+        position: relative;
+        display: inline-block;
+        // text-decoration: line-through;
+        // &::before {
+        //   content: "-";
+        //   position: absolute;
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items: center;
+        //   width: 100%;
+        //   color: #404040;
+        //   // background-color: #404040;
+        // }
+      }
+      .one {
+        padding-left: 10px;
+      }
+      .two {
+        padding-left: 1px;
+      }
+      .three {
+        padding-right: 2px;
       }
       .text {
-        font-size: 13px;
+        font-size: 20px;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #404040;
-        margin-bottom: -16px;
-        margin-left: 4px;
+        color: #fff;
+        margin: 0 4px;
       }
     }
   }
