@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 18:02:51
+ * @LastEditTime: 2022-06-01 18:21:49
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -43,7 +43,13 @@
       </div>
       <div class="img-title-wrap">
         <div class="img-video">
-          <video :src="videoUrl" controls :poster="videoImg"></video>
+          <div id="playerId"></div>
+          <!-- <video controls :poster="videoImg">
+            <source
+              src="https://f3.pofiapp.com/event/active/video.mp4"
+              type="video/mp4"
+            />
+          </video> -->
           <!-- <img :src="videoImg" alt="" referrerpolicy="no-referrer" /> -->
         </div>
       </div>
@@ -73,6 +79,7 @@ import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import CountDown from "../common/count-down";
 import appComponent from "../common/go-app/index.vue";
 import UserInfo from "../common/user-info/user-info.vue";
+import Player from "xgplayer";
 export default {
   name: "activeFunctionPage",
   components: {
@@ -118,6 +125,18 @@ export default {
   },
   created() {
     document.title = "Pofi盛夏福利——功能订阅优惠";
+  },
+  mounted() {
+    this.$nextTick(() => {
+      new Player({
+        id: "playerId",
+        url: "https://f3.pofiapp.com/event/active/video.mp4",
+        // poster: "https://i.ytimg.com/vi/lK2ZbbQSHww/hqdefault.jpg",
+        poster: "https://f3.pofiapp.com/event/active/b1-video-banner.png",
+        width: 338,
+        height: 490,
+      });
+    });
   },
   methods: {
     handleLoginDialog() {
@@ -220,9 +239,9 @@ export default {
     }
     .img-video {
       width: 338px;
-      height: 100%;
+      height: 490px;
       margin-bottom: 20px;
-      img {
+      video {
         width: 100%;
         height: 100%;
       }

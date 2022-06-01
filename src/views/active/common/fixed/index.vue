@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:06:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 17:09:23
+ * @LastEditTime: 2022-06-01 18:18:17
  * @FilePath: /h5-active-v2/src/views/active/common/fixed/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -84,7 +84,7 @@ export default {
   position: fixed;
   right: 0;
   top: 200px;
-  z-index: 20;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   background-color: RGBA(34, 35, 41, 0.5);
