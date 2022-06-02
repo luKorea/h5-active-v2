@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 15:49:05
+ * @LastEditTime: 2022-06-02 17:30:07
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,10 +22,10 @@
         <img :src="svipImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
-    <div class="img-tip">
-      <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
-    </div>
     <div class="white-wrap">
+      <div class="img-tip">
+        <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
+      </div>
       <!-- 功能介绍 -->
       <div class="img-title-wrap">
         <div class="img-title">
@@ -287,7 +287,7 @@ export default {
     }
     background-color: #fff;
     width: 100%;
-    padding-top: 20px;
+    // padding-top: 20px;
     .send-link1 {
       display: flex;
       justify-content: center;

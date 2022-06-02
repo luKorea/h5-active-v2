@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:10:58
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 15:48:49
+ * @LastEditTime: 2022-06-02 17:32:51
  * @FilePath: /h5-active-v2/src/views/active/home/home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,15 +23,15 @@
         </div>
       </template>
     </div>
-    <div class="img-tip">
-      <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
-    </div>
     <!-- 调查问卷 -->
     <!-- <question-component /> -->
     <!-- 企业微信 -->
     <!-- <wechat-component /> -->
     <!-- 小item区域 -->
     <div class="white-wrap">
+      <div class="img-tip">
+        <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
+      </div>
       <div class="send-link1">
         <div class="img-wrap">
           <template v-if="itemList && itemList.length > 0">
@@ -147,12 +147,12 @@ export default {
   .white-wrap {
     background-color: #fff;
     width: 100%;
-    padding-top: 20px;
     .send-link1 {
       display: flex;
       justify-content: center;
       align-items: center;
       // margin: 20px 0;
+      margin-top: 20px;
       width: 100%;
       .img-wrap {
         display: flex;
