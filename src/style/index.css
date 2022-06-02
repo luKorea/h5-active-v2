@@ -1,0 +1,190 @@
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  margin: 0 auto;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+@font-face {
+  font-family: 'korea-number';
+  src: url(../assets/DS-Digital/DS-DIGIT-4.ttf);
+}
+/**用户ID**/
+.common-user-id {
+  width: 200px;
+  height: 34px;
+  line-height: 34px;
+  background: rgba(0, 0, 0, 0.17);
+  border-radius: 16px;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+}
+.common-user-id .left-text {
+  font-size: 13px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #FFFFFF;
+  padding-left: 8px;
+}
+.common-user-id .right-white {
+  width: 130px;
+  height: 24px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+.common-user-id .right-white .left-circle {
+  width: 19px;
+  height: 19px;
+  background: #DFDFDF;
+  border-radius: 50%;
+}
+.common-user-id .right-white .right-text {
+  font-size: 11px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #000000;
+  text-align: center;
+  padding-left: 1px;
+}
+/*用户组队信息*/
+.user-join-wrap {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  overflow-x: auto;
+}
+.user-join-wrap .user-join-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+.user-join-wrap .user-join-item:last-child {
+  margin-right: 0;
+}
+.user-join-wrap .user-join-item .user-icon {
+  width: 85px;
+  height: 85px;
+  background: #FFF4EB;
+  border-radius: 50%;
+}
+.user-join-wrap .user-join-item .user-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.user-join-wrap .user-join-item .item-add {
+  width: 85px;
+  height: 85px;
+  background: #FFF4EB;
+  border-radius: 50%;
+  position: relative;
+}
+.user-join-wrap .user-join-item .item-add:before {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  content: ' ';
+  height: 33px;
+  width: 4px;
+  background-color: #F57F4E;
+  transform: rotate(0deg);
+  border-radius: 4px;
+}
+.user-join-wrap .user-join-item .item-add:after {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  content: ' ';
+  height: 33px;
+  width: 4px;
+  border-radius: 4px;
+  background-color: #F57F4E;
+  transform: rotate(-90deg);
+}
+.user-join-wrap .user-join-item .item-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 14px;
+}
+.user-join-success {
+  text-align: center;
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #FFF4EB;
+  line-height: 17px;
+}
+input {
+  background: none;
+  outline: none;
+  border: none;
+}
+input:focus {
+  border: none;
+}
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #DFDFDF;
+}
+input::-moz-placeholder {
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #DFDFDF;
+}
+input:-ms-input-placeholder {
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #DFDFDF;
+}
+input::-ms-input-placeholder {
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #DFDFDF;
+}
+input::placeholder {
+  font-size: 12px;
+  font-family: Source Han Sans CN;
+  font-weight: 300;
+  color: #DFDFDF;
+}
+.app-img {
+  width: 165px;
+  height: 30px;
+  margin-top: 46px;
+}
+.app-img img {
+  width: 100%;
+  height: 100%;
+}
+.dialog-img {
+  width: 100%;
+  height: 100%;
+}
+.dialog-img img {
+  width: 100%;
+  height: 100%;
+}

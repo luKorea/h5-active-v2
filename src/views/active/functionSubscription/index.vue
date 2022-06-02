@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 18:21:49
+ * @LastEditTime: 2022-06-02 11:27:26
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -43,7 +43,8 @@
       </div>
       <div class="img-title-wrap">
         <div class="img-video">
-          <div id="playerId"></div>
+          <korea-video :options="playerOptions"> </korea-video>
+          <!-- <div id="playerId"></div> -->
           <!-- <video controls :poster="videoImg">
             <source
               src="https://f3.pofiapp.com/event/active/video.mp4"
@@ -79,18 +80,42 @@ import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import CountDown from "../common/count-down";
 import appComponent from "../common/go-app/index.vue";
 import UserInfo from "../common/user-info/user-info.vue";
-import Player from "xgplayer";
+// import Player from "xgplayer";
+import koreaVideo from "@/components/video/index.vue";
 export default {
   name: "activeFunctionPage",
   components: {
     CountDown,
     appComponent,
     UserInfo,
+    koreaVideo,
   },
   data() {
     // MIDFUNC_PRO_455D 618活动专业版15个月
     // MIDSVIP_455D 618活动专业版和绘画版15个月(赠送158PB)
     return {
+      playerOptions: {
+        // videojs options
+        muted: false,
+        language: "zh-CN",
+        width: 338,
+        height: 490,
+        preload: "auto",
+        sources: [
+          {
+            type: "video/mp4",
+            src: require("../../../assets/video.mp4"),
+          },
+        ],
+        poster: require("../../../assets/video-banner.png"),
+        notSupportedMessage: "此视频暂无法播放...",
+        controlBar: {
+          timeDivider: true,
+          durationDisplay: true,
+          remainingTimeDisplay: false,
+          fullscreenToggle: true, //全屏按钮
+        },
+      },
       payInfo: {
         title: "618活动专业版15个月",
         snId: "MIDFUNC_PRO_455D",
@@ -113,7 +138,7 @@ export default {
           src: BASE_IMAGE_ACTIVE_URL + "/b-even.png",
         },
         {
-          id: 4,
+          id: 5,
           src: BASE_IMAGE_ACTIVE_URL + "/b-real-even.png",
         },
         {
@@ -128,17 +153,21 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      new Player({
-        id: "playerId",
-        url: "https://f3.pofiapp.com/event/active/video.mp4",
-        // poster: "https://i.ytimg.com/vi/lK2ZbbQSHww/hqdefault.jpg",
-        poster: "https://f3.pofiapp.com/event/active/b1-video-banner.png",
-        width: 338,
-        height: 490,
-      });
+      // 西瓜播放器
+      // new Player({
+      //   id: "playerId",
+      //   url: "https://f3.pofiapp.com/event/active/video.mp4",
+      //   // poster: "https://i.ytimg.com/vi/lK2ZbbQSHww/hqdefault.jpg",
+      //   poster: "https://f3.pofiapp.com/event/active/b1-video-banner.png",
+      //   width: 338,
+      //   height: 490,
+      // });
     });
   },
   methods: {
+    onPlayerPlay(e) {
+      console.log(e, "ee");
+    },
     handleLoginDialog() {
       this.$emit("handleLoginDialog");
     },
@@ -146,11 +175,11 @@ export default {
       const info =
         type === "pro"
           ? {
-              title: "618活动专业版15个月",
+              title: "专业版15个月",
               snId: "MIDFUNC_PRO_455D",
             }
           : {
-              title: "618活动专业版和绘画版15个月(赠送158PB)",
+              title: "专业版和绘画版15个月(赠送158PB)",
               snId: "MIDSVIP_455D",
             };
       this.$emit("handlePayDialog", info);
@@ -161,6 +190,16 @@ export default {
   },
 };
 </script>
+<style>
+.vjs-poster,
+.video-js {
+  background-color: RGBA(145, 144, 143, 1);
+  border-radius: 20px;
+}
+.video-js .vjs-big-play-button {
+  visibility: hidden;
+}
+</style>
 <style lang="less" scoped>
 .home-container {
   width: 100%;
@@ -241,7 +280,7 @@ export default {
       width: 338px;
       height: 490px;
       margin-bottom: 20px;
-      video {
+      .video {
         width: 100%;
         height: 100%;
       }

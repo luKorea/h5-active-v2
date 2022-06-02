@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 17:58:00
+ * @LastEditTime: 2022-06-02 11:28:38
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -75,6 +75,12 @@
       @closeDialog="closeDialog"
       title="退出登录"
     />
+    <!-- 实体人偶 -->
+    <van-dialog v-model="showEvenDialog" :show-cancel-button="false">
+      <div class="dialog-img">
+        <img :src="qrCode" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -133,6 +139,8 @@ export default {
   },
   data() {
     return {
+      showEvenDialog: false,
+      qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
       selectPage: 2, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
@@ -167,7 +175,12 @@ export default {
     },
     // 打开不同页面
     handleChangeDifferentPage(index) {
-      this.selectPage = index;
+      if (index === 5) {
+        this.showEvenDialog = true;
+      } else {
+        this.selectPage = index;
+        this.showEvenDialog = false;
+      }
     },
     openSuccessDialog() {
       this.$refs["successRef"].showDialog = true;

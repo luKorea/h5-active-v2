@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 11:45:24
+ * @LastEditTime: 2022-06-02 09:16:08
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->
@@ -104,7 +104,7 @@ export default {
     position: absolute;
     top: 22px;
     height: 18px;
-    font-size: 20px;
+    font-size: 15px;
     font-family: Source Han Sans CN;
     font-weight: 500;
     color: #c9c9c9;

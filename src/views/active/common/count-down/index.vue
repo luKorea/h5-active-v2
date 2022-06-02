@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 17:07:45
+ * @LastEditTime: 2022-06-02 14:07:34
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -10,16 +10,16 @@
   <div class="count-wrap">
     <div class="count-down">
       <div class="img">
-        <img :src="bgImg" alt="" referrerpolicy="no-referrer" />
+        <!-- <img :src="bgImg" alt="" referrerpolicy="no-referrer" /> -->
       </div>
       <div class="time-info">
-        <span class="tip">距离活动结束还有</span>
-        <span class="date one">{{ day }}</span>
-        <span class="text">天</span>
-        <span class="date two">{{ hour }}</span>
-        <span class="text">时</span>
-        <span class="date three">{{ min }}</span>
-        <span class="text">分</span>
+        <div class="tip">距离活动结束还有</div>
+        <div class="date one">{{ day }}</div>
+        <div class="text">天</div>
+        <div class="date two">{{ hour }}</div>
+        <div class="text">时</div>
+        <div class="date three">{{ min }}</div>
+        <div class="text">分</div>
       </div>
     </div>
   </div>
@@ -102,14 +102,23 @@ export default {
 <style lang="less" scoped>
 .count-wrap {
   display: flex;
-  padding: 20px;
-  // margin-top: -100px;
+  justify-content: center;
+  align-items: center;
+  // padding: 20px;
+  width: 100%;
+  height: 54px;
+  margin-top: 100px;
+  margin-bottom: 20px;
   .count-down {
     position: relative;
+    height: 54px;
+    width: 342px;
     .img {
       width: 100%;
       height: 100%;
       position: relative;
+      background-color: #000;
+      border-radius: 4px;
       img {
         width: 100%;
         height: 100%;
@@ -125,16 +134,20 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 100%;
+      height: 100%;
       .tip {
         font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #fff;
-        margin-right: 2px;
+        padding-left: 10px;
+        padding-right: 8px;
+        box-sizing: border-box;
       }
       .date {
         font-size: 26px;
-        font-family: Source Han Sans CN;
+        font-family: "korea-number", Source Han Sans CN;
         font-weight: bold;
         color: #fff;
         // border-bottom: 1px solid #b2b2b3;
@@ -143,6 +156,8 @@ export default {
         height: 26px;
         position: relative;
         display: inline-block;
+        background-color: RGBA(51, 57, 84, 0.8);
+        padding: 0 2px;
         // text-decoration: line-through;
         // &::before {
         //   content: "-";
@@ -155,21 +170,12 @@ export default {
         //   // background-color: #404040;
         // }
       }
-      .one {
-        padding-left: 10px;
-      }
-      .two {
-        padding-left: 1px;
-      }
-      .three {
-        padding-right: 2px;
-      }
       .text {
-        font-size: 20px;
+        font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: #fff;
-        margin: 0 4px;
+        margin: 0 6px;
       }
     }
   }

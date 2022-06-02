@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:10:58
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 17:45:13
+ * @LastEditTime: 2022-06-02 11:27:36
  * @FilePath: /h5-active-v2/src/views/active/home/home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -92,7 +92,7 @@ export default {
           src: BASE_IMAGE_ACTIVE_URL + "/even-item.png",
         },
         {
-          id: 4,
+          id: 5,
           imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-pay.png",
           src: BASE_IMAGE_ACTIVE_URL + "/real-even-item.png",
         },

@@ -1,6 +1,6 @@
 <!-- 可自定义内容弹框 -->
 <template>
-  <van-overlay :show="showDialog" z-index="99" :lock-scroll="false">
+  <van-overlay :show="showDialog" z-index="999" :lock-scroll="false">
     <div class="modal-content" style="max-width: 540px">
       <div class="modal-info">
         <div class="close-wrap" :style="{ top: closeBtnTop }">
