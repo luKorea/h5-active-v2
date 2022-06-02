@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 11:27:26
+ * @LastEditTime: 2022-06-02 14:38:50
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -176,11 +176,11 @@ export default {
         type === "pro"
           ? {
               title: "专业版15个月",
-              snId: "MIDFUNC_PRO_455D",
+              id: "MIDFUNC_PRO_455D",
             }
           : {
               title: "专业版和绘画版15个月(赠送158PB)",
-              snId: "MIDSVIP_455D",
+              id: "MIDSVIP_455D",
             };
       this.$emit("handlePayDialog", info);
     },
