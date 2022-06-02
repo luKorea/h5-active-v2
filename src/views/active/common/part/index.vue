@@ -18,7 +18,7 @@
 <script>
 import { openUrl, copyShareLink } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_VOTE_URL } from "@/request/config";
+import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 
 export default {
   name: "send-link",
@@ -26,23 +26,23 @@ export default {
     return {
       list: [
         {
-          imgUrl: BASE_IMAGE_VOTE_URL + "/weibo.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/weibo.png",
           url: urlLink.weiboLink,
           type: "weibo",
         },
         {
-          imgUrl: BASE_IMAGE_VOTE_URL + "/redbook.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/redbook.png",
           url: urlLink.redBookLink,
           type: "redBook",
         },
         {
-          imgUrl: BASE_IMAGE_VOTE_URL + "/qq.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/qq.png",
           url: urlLink.voteQQLink,
           type: "qq",
           urlForWechat: urlLink.voteQQLink,
         },
         {
-          imgUrl: BASE_IMAGE_VOTE_URL + "/share.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/share.png",
           url: window.location.origin + window.location.pathname,
           type: "share",
         },
@@ -95,9 +95,10 @@ export default {
     justify-content: space-around;
     align-items: center;
     width: 80%;
+    margin: 20px 0;
     .img-item {
-      width: 150px;
-      height: 38px;
+      width: 140px;
+      height: 28px;
       margin-bottom: 10px;
       img {
         width: 100%;

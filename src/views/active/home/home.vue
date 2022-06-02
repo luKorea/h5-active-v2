@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:10:58
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 11:27:36
+ * @LastEditTime: 2022-06-02 15:48:49
  * @FilePath: /h5-active-v2/src/views/active/home/home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -35,14 +35,16 @@
       <div class="send-link1">
         <div class="img-wrap">
           <template v-if="itemList && itemList.length > 0">
-            <div
-              v-for="(item, index) in itemList"
-              :key="index"
-              class="img-item"
-              @click="openPage(item.id)"
-            >
-              <img :src="item.src" alt="" referrerpolicy="no-referrer" />
-            </div>
+            <template v-for="(item, index) in itemList">
+              <div
+                :key="index"
+                v-if="item.src"
+                class="img-item"
+                @click="openPage(item.id)"
+              >
+                <img :src="item.src" alt="" referrerpolicy="no-referrer" />
+              </div>
+            </template>
           </template>
         </div>
       </div>
@@ -88,13 +90,17 @@ export default {
         },
         {
           id: 4,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-function.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-even.png",
           src: BASE_IMAGE_ACTIVE_URL + "/even-item.png",
         },
         {
           id: 5,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-pay.png",
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-real-even.png",
           src: BASE_IMAGE_ACTIVE_URL + "/real-even-item.png",
+        },
+        {
+          id: undefined,
+          imgUrl: BASE_IMAGE_ACTIVE_URL + "/wechat-banner.png",
         },
       ],
     };

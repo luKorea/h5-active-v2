@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 14:27:26
+ * @LastEditTime: 2022-06-02 16:39:01
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,6 +36,7 @@
       @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
+      :endTime="endTime"
     ></active-recharge-discounts-page>
     <!-- 限定人偶 -->
     <active-doll-gain-page
@@ -44,6 +45,8 @@
       @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
       @openPage="handleChangeDifferentPage"
+      :endTime="endTime"
+      :startTime="startTime"
     ></active-doll-gain-page>
     <!-- 以下页面为公用页面 -->
     <active-footer :showRules="selectPage === 1"></active-footer>
@@ -101,12 +104,15 @@ import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
+import { reduceTime } from "@/utils";
+
 import {
   wechatPayAction,
   aliPayAction,
   moneyPayAction,
 } from "@/utils/pay-config";
 import { getActivePageConfig } from "@/api/active";
+import { Dialog } from "vant";
 export default {
   name: "activePageComponent",
   components: {
@@ -122,10 +128,14 @@ export default {
     ActiveFooter,
   },
   mounted() {
+    if (sessionStorage.getItem("selectPage")) {
+      this.selectPage = +sessionStorage.getItem("selectPage");
+    } else this.selectPage = 1;
     // ；判断当前页面是否是
     const { inviteCode, pageCode } = this.$route.query;
     console.log(inviteCode);
     if (pageCode && +pageCode === 4) {
+      sessionStorage.setItem("selectPage", 4);
       this.selectPage = 4;
     }
     // 判断当前是否在微信内
@@ -139,9 +149,11 @@ export default {
   },
   data() {
     return {
+      startTime: 1655395199,
+      endTime: 1655654399,
       showEvenDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
-      selectPage: 2, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
+      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
@@ -175,11 +187,38 @@ export default {
     },
     // 打开不同页面
     handleChangeDifferentPage(index) {
-      if (index === 5) {
-        this.showEvenDialog = true;
-      } else {
-        this.selectPage = index;
-        this.showEvenDialog = false;
+      if (index) {
+        if (index === 5) {
+          this.showEvenDialog = true;
+        } else {
+          if (index === 3 || index === 4) {
+            const start = reduceTime(this.startTime); // 活动开始
+            const end = reduceTime(this.endTime); // 活动结束
+            if (start === 2) {
+              Dialog.alert({
+                message: "该活动将于6月17日开始，敬请期待！",
+              });
+            } else if (end === 1) {
+              Dialog.alert({
+                message: "活动已结束",
+              });
+            } else {
+              this.mapDialog(index);
+            }
+          } else {
+            this.mapDialog(index);
+          }
+        }
+      }
+    },
+    mapDialog(index) {
+      sessionStorage.setItem("selectPage", index);
+      this.selectPage = index;
+      window.scrollTo(0, 0);
+      this.showEvenDialog = false;
+      if (index === 4 && this.$route.query.pageCode) {
+        let path = this.$route.path;
+        this.$router.push(path);
       }
     },
     openSuccessDialog() {

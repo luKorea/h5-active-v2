@@ -2,17 +2,21 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 14:34:37
+ * @LastEditTime: 2022-06-02 15:35:21
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
 <template>
   <div class="footer-container">
     <template v-if="showRules">
-      <div class="desc-title">活动规则</div>
+      <div class="title-wrap">
+        <div class="desc-title">
+          <img :src="ruleTitle" referrerpolicy="no-referrer" alt="ruleTitle" />
+        </div>
+      </div>
       <div class="desc-wrap">
         <template v-if="list && list.length > 0">
-          <div v-for="(item, index) in list" :key="index">
+          <div v-for="(item, index) in list" :key="index" class="item">
             {{ item }}
           </div>
         </template>
@@ -34,7 +38,10 @@
 </template>
 
 <script>
-import { BASE_IMAGE_ANNIVERSARY_URL } from "@/request/config";
+import {
+  BASE_IMAGE_ANNIVERSARY_URL,
+  BASE_IMAGE_ACTIVE_URL,
+} from "@/request/config";
 
 export default {
   name: "footerComponent",
@@ -49,6 +56,7 @@ export default {
       logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/logo.png",
       qrcode: BASE_IMAGE_ANNIVERSARY_URL + "/qrcode.png",
       drivar: BASE_IMAGE_ANNIVERSARY_URL + "/drivar.png",
+      ruleTitle: BASE_IMAGE_ACTIVE_URL + "/rule-title.png",
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
 
       list: [
@@ -69,22 +77,36 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  .title-wrap {
+    width: 90%;
+    .desc-title {
+      width: 163px;
+      height: 43px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
   .desc-title {
-    text-align: center;
-    height: 11px;
-    font-size: 12px;
-    font-family: Source Han Sans CN;
-    font-weight: 400;
-    color: #4d6556;
-    line-height: 25px;
+    // text-align: center;
+    // height: 11px;
+    // font-size: 12px;
+    // font-family: Source Han Sans CN;
+    // font-weight: 400;
+    // color: #4d6556;
+    // line-height: 25px;
   }
   .desc-wrap {
     font-size: 12px;
     font-family: Source Han Sans CN;
     font-weight: 300;
-    color: #4d6556;
+    color: #848484;
     line-height: 25px;
-    margin: 20px 30px 30px 30px;
+    margin: 20px 20px 30px 20px;
+    .item {
+      margin-bottom: 20px;
+    }
   }
   .wrap {
     display: flex;

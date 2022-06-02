@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-01 10:53:12
+ * @LastEditTime: 2022-06-02 16:37:52
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -53,8 +53,20 @@ recordList：组队用户信息
 <script>
 import Swiper from "swiper";
 import { BASE_IMAGE_VOTE_URL, BASE_IMAGE_ACTIVE_URL } from "@/request/config";
+import { reduceTime } from "@/utils";
+import { Dialog } from "vant";
 export default {
   name: "activeDollGainPage",
+  props: {
+    startTime: {
+      type: Number,
+      required: true,
+    },
+    endTime: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       payInfo: {
@@ -81,6 +93,21 @@ export default {
     document.title = "Pofi盛夏福利——限定人偶获取";
   },
   mounted() {
+    const start = reduceTime(this.startTime); // 活动开始
+    const end = reduceTime(this.endTime); // 活动结束
+    if (start === 2) {
+      Dialog.alert({
+        message: "该活动将于6月17日开始，敬请期待！",
+        showConfirmButton: false,
+      });
+      // this.$emit("openPage", 1);
+    } else if (end === 1) {
+      Dialog.alert({
+        message: "活动已结束",
+        showConfirmButton: false,
+      });
+      // this.$emit("openPage", 1);
+    }
     const wrap = new Swiper(".swiper-container", {
       autoplay: {
         disableOnInteraction: false,

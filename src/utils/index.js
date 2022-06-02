@@ -1,12 +1,25 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
- * @LastEditors: korealu
- * @LastEditTime: 2022-03-09 09:26:23
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-02 16:28:11
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
 import { Toast } from "vant";
+import dayjs from "dayjs";
+
+export const reduceTime = (endTime) => {
+  const nowTime = (dayjs().valueOf() / 1000).toFixed(0);
+  console.log(nowTime, endTime);
+  let result = 0; // 0. 活动时间内 1 已过期 2. 时间未到
+  if (nowTime > endTime) {
+    result = 1;
+  } else if (nowTime < endTime) {
+    result = 2;
+  } else result = 0;
+  return result;
+};
 
 export const openUrl = (url, blank = "_self") => {
   window.open(url, blank);
