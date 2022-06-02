@@ -84,6 +84,7 @@
         <img :src="qrCode" />
       </div>
     </van-dialog>
+    <back-top></back-top>
   </div>
 </template>
 
@@ -93,12 +94,14 @@ import activeFunctionPage from "../functionSubscription/index.vue";
 import activeRechargeDiscountsPage from "../rechargeDiscounts/index.vue";
 import activeDollGainPage from "../dollGain/index.vue";
 
-import ActiveFooter from "../footer";
-import infoFixed from "../common/fixed";
-import PaySuccessComponent from "@/components/pay-success";
 import PayComponent from "@/components/pay";
-import loginAndRegister from "../../login-and-register/login-and-register.vue";
+import BackTop from "@/components/back-top/index.vue";
+import infoFixed from "../common/fixed";
 import logout from "../../login-and-register/logout.vue";
+import loginAndRegister from "../../login-and-register/login-and-register.vue";
+
+import ActiveFooter from "../footer";
+import PaySuccessComponent from "@/components/pay-success";
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo } from "@/utils";
@@ -126,6 +129,7 @@ export default {
     PayComponent,
     infoFixed,
     ActiveFooter,
+    BackTop,
   },
   mounted() {
     if (sessionStorage.getItem("selectPage")) {
