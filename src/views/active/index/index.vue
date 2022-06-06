@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-06 11:14:53
+ * @LastEditTime: 2022-06-06 15:57:39
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -86,7 +86,7 @@
         <img :src="qrCode" />
       </div>
     </van-dialog>
-    <back-top></back-top>
+    <!-- <back-top></back-top> -->
   </div>
 </template>
 
@@ -97,7 +97,7 @@ import activeRechargeDiscountsPage from "../rechargeDiscounts/index.vue";
 import activeDollGainPage from "../dollGain/index.vue";
 
 import PayComponent from "@/components/pay";
-import BackTop from "@/components/back-top/index.vue";
+// import BackTop from "@/components/back-top/index.vue";
 import infoFixed from "../common/fixed";
 import logout from "../../login-and-register/logout.vue";
 import loginAndRegister from "../../login-and-register/login-and-register.vue";
@@ -132,7 +132,7 @@ export default {
     PayComponent,
     infoFixed,
     ActiveFooter,
-    BackTop,
+    // BackTop,
   },
   mounted() {
     if (sessionStorage.getItem("selectPage")) {
@@ -171,7 +171,7 @@ export default {
       endTime: 1655654399,
       showEvenDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
-      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
+      selectPage: 4, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
