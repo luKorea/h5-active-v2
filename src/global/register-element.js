@@ -1,8 +1,8 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-22 10:22:42
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-06 09:41:02
  * @Description: file content
  * @FilePath: /h5-active-v2/src/global/register-element.js
  */
@@ -17,6 +17,7 @@ import {
   Overlay,
   CountDown,
   Icon,
+  Loading,
 } from "vant";
 import "vant/lib/index.css"; // 全局引入样式
 
@@ -32,6 +33,7 @@ const components = [
 ];
 
 Vue.use(Dialog);
+Vue.use(Loading);
 
 export default function (app) {
   components.forEach((component) => {

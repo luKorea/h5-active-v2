@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from "qs";
 import { Toast, Dialog } from "vant";
 // import store from "@/store";
 // import Vue from "vue"
@@ -115,7 +114,6 @@ class KoreaRequest {
   }
 
   post(config) {
-    qs.stringify(config.data);
     return this.request({ ...config, method: "POST" });
   }
 

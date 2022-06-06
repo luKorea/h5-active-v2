@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 16:39:01
+ * @LastEditTime: 2022-06-06 09:45:43
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,33 +21,35 @@
       v-if="selectPage === 1"
       @openPage="handleChangeDifferentPage"
     ></active-home-page>
-    <!-- 功能订阅 -->
-    <active-function-page
-      v-if="selectPage === 2"
-      @handleLoginDialog="showLoginDialog = true"
-      @handlePayDialog="handleChangePayModal"
-      :otherInfo="otherInfo"
-      @openPage="handleChangeDifferentPage"
-    ></active-function-page>
-    <!-- P币购买 -->
-    <active-recharge-discounts-page
-      v-if="selectPage === 3"
-      @handleLoginDialog="showLoginDialog = true"
-      @handlePayDialog="handleChangePayModal"
-      :otherInfo="otherInfo"
-      @openPage="handleChangeDifferentPage"
-      :endTime="endTime"
-    ></active-recharge-discounts-page>
-    <!-- 限定人偶 -->
-    <active-doll-gain-page
-      v-if="selectPage === 4"
-      @handleLoginDialog="showLoginDialog = true"
-      @handlePayDialog="handleChangePayModal"
-      :otherInfo="otherInfo"
-      @openPage="handleChangeDifferentPage"
-      :endTime="endTime"
-      :startTime="startTime"
-    ></active-doll-gain-page>
+    <template>
+      <!-- 功能订阅 -->
+      <active-function-page
+        v-if="selectPage === 2"
+        @handleLoginDialog="showLoginDialog = true"
+        @handlePayDialog="handleChangePayModal"
+        :otherInfo="otherInfo"
+        @openPage="handleChangeDifferentPage"
+      ></active-function-page>
+      <!-- P币购买 -->
+      <active-recharge-discounts-page
+        v-if="selectPage === 3"
+        @handleLoginDialog="showLoginDialog = true"
+        @handlePayDialog="handleChangePayModal"
+        :otherInfo="otherInfo"
+        @openPage="handleChangeDifferentPage"
+        :endTime="endTime"
+      ></active-recharge-discounts-page>
+      <!-- 限定人偶 -->
+      <active-doll-gain-page
+        v-if="selectPage === 4"
+        @handleLoginDialog="showLoginDialog = true"
+        @handlePayDialog="handleChangePayModal"
+        :otherInfo="otherInfo"
+        @openPage="handleChangeDifferentPage"
+        :endTime="endTime"
+        :startTime="startTime"
+      ></active-doll-gain-page>
+    </template>
     <!-- 以下页面为公用页面 -->
     <active-footer :showRules="selectPage === 1"></active-footer>
     <!-- 支付弹框 -->
@@ -153,6 +155,7 @@ export default {
   },
   data() {
     return {
+      showLoading: false,
       startTime: 1655395199,
       endTime: 1655654399,
       showEvenDialog: false,
