@@ -69,14 +69,6 @@ export const ailPay = (params) => {
     data: params,
   });
 };
-// 用户钱包支付
-export const moneyPay = (params) => {
-  return request.post({
-    url: "/api/trade/purchase",
-    data: params,
-  });
-};
-
 // 获取活动文字描述
 export const getActiveDesc = () => {
   return request.post({

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 15:30:26
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-31 10:07:08
+ * @LastEditTime: 2022-06-06 11:12:24
  * @Description: file content
  * @FilePath: /h5-active-v2/src/store/module/anniversary.js
  */
@@ -47,6 +47,31 @@ export default {
       userInfo && commit("SET_USERINFO", userInfo);
       uid && commit("SET_UID", uid);
       otherInfo && commit("SET_OTHERINFO", otherInfo);
+    },
+    getUserInfo({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        getUserAccount({
+          uid: payload.uid,
+          loginKey: payload.loginKey,
+        }).then((info) => {
+          if (info.code === 200) {
+            commit("SET_USERINFO", {
+              ...payload,
+              ...info.data,
+            });
+            localCache.setCache("userInfo", {
+              ...payload,
+              ...info.data,
+            });
+            resolve({
+              uid: payload.uid,
+              loginKey: payload.loginKey,
+            });
+          } else {
+            reject(info.msg);
+          }
+        });
+      });
     },
     loginAction({ commit }, payload) {
       return new Promise((resolve, reject) => {

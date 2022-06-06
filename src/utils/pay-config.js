@@ -2,13 +2,13 @@
  * @Author: korealu
  * @Date: 2022-03-04 09:25:35
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 11:48:27
+ * @LastEditTime: 2022-06-06 10:39:40
  * @Description: 封装支付宝微信支付
  * @FilePath: /h5-active-v2/src/utils/pay-config.js
  */
 import { errorInfo, _isWechatPay } from "@/utils";
 import urlencode from "urlencode";
-import { wechatPay, ailPay, moneyPay } from "@/api";
+import { wechatPay, ailPay, moneyPay } from "@/api/common";
 function _isWechat() {
   return navigator.userAgent.match(/micromessenger/i);
 }

@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-22 10:23:23
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-06 10:30:59
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/go-app/index.vue
 -->
@@ -30,7 +30,7 @@
 
 <script>
 import KoreaDialog from "@/components/korea-dialog/korea-dialog.vue";
-import { openUrl } from "@/utils";
+import { clearRouterQuery, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 export default {
   name: "appModal",
@@ -58,6 +58,7 @@ export default {
     },
     closeDialog() {
       this.showDialog = false;
+      clearRouterQuery(this);
     },
     goApp() {
       openUrl(urlLink.appLink);

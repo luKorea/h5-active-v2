@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 11:21:28
+ * @LastEditTime: 2022-06-06 10:53:15
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -44,8 +44,8 @@ const routes = [
   {
     path: "/mayday22",
     name: "votePage",
-    component: () => import("@/views/endPage/index.vue"),
-    // component: () => import("@/views/vote/index/index.vue"),
+    // component: () => import("@/views/endPage/index.vue"),
+    component: () => import("@/views/vote/index/index.vue"),
   },
   // 618活动
   {

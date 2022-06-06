@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 16:28:11
+ * @LastEditTime: 2022-06-06 10:29:56
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -166,4 +166,9 @@ export const RandomId = (n) => {
     res += str[id];
   }
   return res;
+};
+
+export const clearRouterQuery = (queryParams) => {
+  let path = queryParams.$route.path;
+  queryParams.$router.push(path);
 };

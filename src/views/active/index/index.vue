@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-06 09:45:43
+ * @LastEditTime: 2022-06-06 11:14:53
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -64,7 +64,7 @@
     <!-- 支付成功弹框 -->
     <pay-success-component
       ref="successRef"
-      title="请直接打开 Pofi 无限人偶 APP，刷新人偶库即可拥有米诺。"
+      title="充值已到账，请打开APP刷新查看"
     ></pay-success-component>
     <!--登录注册页面-->
     <login-and-register
@@ -106,7 +106,7 @@ import ActiveFooter from "../footer";
 import PaySuccessComponent from "@/components/pay-success";
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
-import { successInfo, errorInfo } from "@/utils";
+import { successInfo, errorInfo, clearRouterQuery } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
 import { reduceTime } from "@/utils";
@@ -118,6 +118,7 @@ import {
 } from "@/utils/pay-config";
 import { getActivePageConfig } from "@/api/active";
 import { Dialog } from "vant";
+import { checkUserHasEvent } from "@/api/common";
 export default {
   name: "activePageComponent",
   components: {
@@ -144,12 +145,22 @@ export default {
       sessionStorage.setItem("selectPage", 4);
       this.selectPage = 4;
     }
+    // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
+    const state = this.$route.query.state;
+    if (state && state === "success") {
+      this.$nextTick(() => {
+        this.openSuccessDialog();
+      });
+    }
     // 判断当前是否在微信内
     if (this._isWechat()) {
       if (localCache.getCache("openId") == null) {
         getCode("wx4e33f34be6700e46", this.$route.query.code);
         return;
       }
+    }
+    if (this.uid && this.token) {
+      this.$store.dispatch("activeModule/getUserInfo", this.userInfo);
     }
     this.checkLinkIsInviter();
   },
@@ -224,8 +235,7 @@ export default {
       window.scrollTo(0, 0);
       this.showEvenDialog = false;
       if (index === 4 && this.$route.query.pageCode) {
-        let path = this.$route.path;
-        this.$router.push(path);
+        clearRouterQuery(this);
       }
     },
     openSuccessDialog() {
@@ -260,11 +270,30 @@ export default {
       if (!this.token) {
         this.showLoginDialog = true;
       } else {
-        this.$refs["payRef"].showDialog = true;
+        this.checkHasEven()
+          .then(() => {
+            this.$refs["payRef"].showDialog = true;
+          })
+          .catch((err) => errorInfo(err));
       }
     },
     _isWechat() {
       return navigator.userAgent.match(/micromessenger/i);
+    },
+    checkHasEven() {
+      return new Promise((resolve, reject) => {
+        checkUserHasEvent({
+          uid: this.uid,
+          snId: this.payInfo.id,
+          loginKey: this.token,
+        }).then((res) => {
+          if (res.code === 200 && res.state) {
+            resolve();
+          } else if (res.code === 200 && res.state === false) {
+            reject("您已经拥有该套餐，无需再购买");
+          } else reject(res.msg);
+        });
+      });
     },
     // 微信支付
     payWechat() {
