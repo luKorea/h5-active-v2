@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 17:30:07
+ * @LastEditTime: 2022-06-06 13:42:58
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -98,8 +98,8 @@ export default {
         // videojs options
         muted: false,
         language: "zh-CN",
-        width: 338,
-        height: 490,
+        width: 290,
+        height: 516,
         preload: "auto",
         sources: [
           {
@@ -192,7 +192,8 @@ export default {
 </script>
 <style>
 .vjs-poster,
-.video-js {
+.video-js,
+.video-js .vjs-tech {
   background-color: RGBA(145, 144, 143, 1);
   border-radius: 20px;
 }
@@ -277,8 +278,8 @@ export default {
       }
     }
     .img-video {
-      width: 338px;
-      height: 490px;
+      width: 290px;
+      height: 516px;
       margin-bottom: 20px;
       .video {
         width: 100%;
