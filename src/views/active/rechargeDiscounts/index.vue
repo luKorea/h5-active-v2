@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 14:50:09
+ * @LastEditTime: 2022-06-07 18:19:11
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,13 +26,13 @@
         </div>
       </template>
     </div>
-    <div class="img-tip">
-      <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
-    </div>
     <div class="white-wrap">
+      <div class="img-tip" style="margin-top: 0">
+        <img :src="tipImg" alt="" referrerpolicy="no-referrer" />
+      </div>
       <!-- 功能介绍 -->
       <div class="img-title-wrap">
-        <div class="img-title">
+        <div class="img-title" style="margin: 20px 0 0 0">
           <img :src="bannerTitle" alt="" referrerpolicy="no-referrer" />
         </div>
       </div>
@@ -40,7 +40,7 @@
         <img :src="bannerImg" alt="" referrerpolicy="no-referrer" />
       </div>
       <!-- 轮播图 -->
-      <div class="img-title-wrap">
+      <div class="img-title-wrap" style="margin: 20px 0 0 0">
         <div class="img-title" style="margin: 0">
           <img
             :src="swiperTitle"
@@ -307,15 +307,6 @@ export default {
       }
     }
   }
-  .img-tip {
-    width: 100%;
-    height: 100%;
-    // background-image: url("https://f3.pofiapp.com/event/active/trigon.png");
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
   .item-wrap {
     display: flex;
     flex-direction: column;
@@ -334,6 +325,15 @@ export default {
     }
   }
   .white-wrap {
+    .img-tip {
+      width: 100%;
+      height: 100%;
+      // background-image: url("https://f3.pofiapp.com/event/active/trigon.png");
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
     .img-title-wrap {
       width: 100%;
       display: flex;
@@ -368,12 +368,12 @@ export default {
     }
     background-color: #fff;
     width: 100%;
-    padding-top: 20px;
+    // padding-top: 20px;
     .send-link1 {
       display: flex;
       justify-content: center;
       align-items: center;
-      // margin: 20px 0;
+      margin: 20px 0 0 0;
       width: 100%;
       .img-wrap {
         display: flex;
