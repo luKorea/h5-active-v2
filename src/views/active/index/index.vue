@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-06 15:57:39
+ * @LastEditTime: 2022-06-07 11:54:32
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -46,6 +46,7 @@
         @handlePayDialog="handleChangePayModal"
         :otherInfo="otherInfo"
         @openPage="handleChangeDifferentPage"
+        @getConfig="checkLinkIsInviter"
         :endTime="endTime"
         :startTime="startTime"
       ></active-doll-gain-page>
@@ -83,7 +84,12 @@
     <!-- 实体人偶 -->
     <van-dialog v-model="showEvenDialog" :show-cancel-button="false">
       <div class="dialog-img">
-        <img :src="qrCode" />
+        <img :src="qrCode" referrerpolicy="no-referrer" />
+      </div>
+    </van-dialog>
+    <van-dialog v-model="showWechatDialog" :show-cancel-button="false">
+      <div class="dialog-img">
+        <img :src="wechat" referrerpolicy="no-referrer" />
       </div>
     </van-dialog>
     <!-- <back-top></back-top> -->
@@ -109,7 +115,7 @@ import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo, clearRouterQuery } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
-import { reduceTime } from "@/utils";
+// import { reduceTime } from "@/utils";
 
 import {
   wechatPayAction,
@@ -117,7 +123,7 @@ import {
   moneyPayAction,
 } from "@/utils/pay-config";
 import { getActivePageConfig } from "@/api/active";
-import { Dialog } from "vant";
+// import { Dialog } from "vant";
 import { checkUserHasEvent } from "@/api/common";
 export default {
   name: "activePageComponent",
@@ -164,13 +170,21 @@ export default {
     }
     this.checkLinkIsInviter();
   },
+  watch: {
+    $route(to, from) {
+      console.log(to, from);
+      window.location.reload();
+    },
+  },
   data() {
     return {
       showLoading: false,
       startTime: 1655395199,
       endTime: 1655654399,
       showEvenDialog: false,
+      showWechatDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
+      wechat: require("@/assets/wechat-banner.png"),
       selectPage: 4, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
@@ -208,24 +222,27 @@ export default {
       if (index) {
         if (index === 5) {
           this.showEvenDialog = true;
+        } else if (index === 6) {
+          this.showWechatDialog = true;
         } else {
-          if (index === 3 || index === 4) {
-            const start = reduceTime(this.startTime); // 活动开始
-            const end = reduceTime(this.endTime); // 活动结束
-            if (start === 2) {
-              Dialog.alert({
-                message: "该活动将于6月17日开始，敬请期待！",
-              });
-            } else if (end === 1) {
-              Dialog.alert({
-                message: "活动已结束",
-              });
-            } else {
-              this.mapDialog(index);
-            }
-          } else {
-            this.mapDialog(index);
-          }
+          this.mapDialog(index);
+          // if (index === 3 || index === 4) {
+          //   const start = reduceTime(this.startTime); // 活动开始
+          //   const end = reduceTime(this.endTime); // 活动结束
+          //   if (start === 2) {
+          //     Dialog.alert({
+          //       message: "该活动将于6月17日开始，敬请期待！",
+          //     });
+          //   } else if (end === 1) {
+          //     Dialog.alert({
+          //       message: "活动已结束",
+          //     });
+          //   } else {
+          //     this.mapDialog(index);
+          //   }
+          // } else {
+          //   this.mapDialog(index);
+          // }
         }
       }
     },

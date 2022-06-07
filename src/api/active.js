@@ -26,7 +26,7 @@ export const inviteUser = (data) => {
 //  传uid和inviteCode
 export const likeUser = (data) => {
   return request.post({
-    url: "/api/event/mid22/invite",
+    url: "/api/event/mid22/like",
     data: data,
   });
 };

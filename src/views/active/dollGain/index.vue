@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-06 18:26:57
+ * @LastEditTime: 2022-06-07 11:42:48
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -28,129 +28,180 @@ recordList：组队用户信息
     <!-- 头部区域 -->
     <count-down :curStartTime="1656259199"></count-down>
     <div class="user-info">
-      <user-info @handleLoginDialog="handleLoginDialog"></user-info>
+      <user-info-component
+        @handleLoginDialog="handleLoginDialog"
+      ></user-info-component>
     </div>
     <!-- 邀请区域 -->
     <div class="get-wrap">
       <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
-      <template
-        v-if="
-          (otherInfo.record &&
-            otherInfo.record.userInfo &&
-            otherInfo.record.userInfo.length === 0) ||
-          otherInfo.record.userInfo === null
-        "
-      >
-        <!-- 未登录以及未拥有人偶展示 -->
-        <div class="init-wrap" v-if="otherInfo && !otherInfo.have">
-          <div class="btn bug" @click="handleDifferentOperation('buy')">
-            <img :src="initBug" alt="" referrerpolicy="no-referrer" />
+      <template v-if="otherInfo && !otherInfo.have">
+        <template v-if="mapInitState && !showInviteWrap">
+          <!-- 未登录以及未拥有人偶展示 -->
+          <div class="init-wrap" v-if="otherInfo && !otherInfo.have">
+            <div class="btn bug" @click="handleDifferentOperation('buy')">
+              <img :src="initBug" alt="" referrerpolicy="no-referrer" />
+            </div>
+            <div class="btn share" @click="handleDifferentOperation('share')">
+              <img :src="shareImg" alt="" referrerpolicy="no-referrer" />
+            </div>
           </div>
-          <div class="btn share" @click="handleDifferentOperation('share')">
-            <img :src="shareImg" alt="" referrerpolicy="no-referrer" />
-          </div>
-        </div>
-      </template>
-      <template v-else>
-        <div class="invite-wrap">
-          <div class="user-info">
-            <!-- 邀请者看到的信息 -->
-            <template v-if="!$route.query.inviteCode">
-              <div class="info">
-                <div class="icon">
-                  <img
-                    :src="userInfo.iconUrl"
-                    alt=""
-                    referrerpolicy="no-referrer"
-                  />
-                </div>
-                <div class="pofi-id">POFI ID: {{ userInfo.nickId }}</div>
-              </div>
-              <div class="icon-wrap">
-                <template v-if="mapIcon">
-                  <div
-                    v-for="item in otherInfo.record.userInfo"
-                    :key="item.id"
-                    class="icon"
-                  >
+        </template>
+        <template
+          v-if="
+            showInviteWrap ||
+            (otherInfo && otherInfo.record && otherInfo.record.inviteCode)
+          "
+        >
+          <div class="invite-wrap">
+            <div class="user-info">
+              <!-- 邀请者看到的信息 -->
+              <template v-if="!$route.query.inviteCode">
+                <div class="info">
+                  <div class="icon">
                     <img
-                      :src="item.iconUrl"
+                      :src="userInfo.iconUrl"
                       alt=""
                       referrerpolicy="no-referrer"
                     />
                   </div>
-                  <template v-if="otherInfo.record.userInfo.length < 3">
+                  <div class="pofi-id">POFI ID: {{ userInfo.nickId }}</div>
+                </div>
+                <div class="icon-wrap">
+                  <template v-if="mapIcon">
                     <div
-                      v-for="i in 3 - otherInfo.record.userInfo.length"
-                      :key="i"
+                      v-for="item in otherInfo.record.userInfo"
+                      :key="item.id"
+                      class="icon"
+                    >
+                      <img
+                        :src="item.iconUrl"
+                        alt=""
+                        referrerpolicy="no-referrer"
+                      />
+                    </div>
+                    <template v-if="otherInfo.record.userInfo.length < 3">
+                      <div
+                        v-for="i in 3 - otherInfo.record.userInfo.length"
+                        :key="i"
+                        class="icon"
+                        @click="handleNoDifferentOperation('share')"
+                      >
+                        <img
+                          :src="addBtn"
+                          alt=""
+                          referrerpolicy="no-referrer"
+                        />
+                      </div>
+                    </template>
+                  </template>
+                  <template v-else>
+                    <div
+                      v-for="item in 3"
+                      :key="item"
                       class="icon"
                       @click="handleNoDifferentOperation('share')"
                     >
                       <img :src="addBtn" alt="" referrerpolicy="no-referrer" />
                     </div>
                   </template>
-                </template>
-                <template v-else>
+                </div>
+              </template>
+              <!-- 被邀请者看到的信息 -->
+              <template v-else>
+                <div class="info">
                   <div
-                    v-for="item in 3"
-                    :key="item"
                     class="icon"
-                    @click="handleNoDifferentOperation('share')"
+                    v-if="otherInfo.record && otherInfo.record.iconUrl"
                   >
-                    <img :src="addBtn" alt="" referrerpolicy="no-referrer" />
+                    <img
+                      :src="otherInfo.record.iconUrl"
+                      alt=""
+                      referrerpolicy="no-referrer"
+                    />
                   </div>
-                </template>
-              </div>
-            </template>
-            <!-- 被邀请者看到的信息 -->
-            <template v-else>
-              <div class="info">
-                <div class="icon">
-                  <img
-                    :src="otherInfo.record.iconUrl"
-                    alt=""
-                    referrerpolicy="no-referrer"
-                  />
+                  <div
+                    class="pofi-id"
+                    v-if="otherInfo.record && otherInfo.record.nickId"
+                  >
+                    邀请者的POFI昵称：{{ otherInfo.record.nickId }}
+                  </div>
                 </div>
-                <div class="pofi-id">
-                  邀请者的POFI昵称：{{ otherInfo.record.nickId }}
+                <div class="icon-wrap">
+                  <template v-if="mapIcon">
+                    <div
+                      v-for="item in otherInfo.record.userInfo"
+                      :key="item.id"
+                      class="icon"
+                    >
+                      <img
+                        :src="item.iconUrl"
+                        alt=""
+                        referrerpolicy="no-referrer"
+                      />
+                    </div>
+                    <template v-if="otherInfo.record.userInfo.length < 3">
+                      <div
+                        v-for="i in 3 - otherInfo.record.userInfo.length"
+                        :key="i"
+                        class="icon"
+                        @click="handleNoDifferentOperation('like')"
+                      >
+                        <img
+                          :src="addBtn"
+                          alt=""
+                          referrerpolicy="no-referrer"
+                        />
+                      </div>
+                    </template>
+                  </template>
+                  <template v-else>
+                    <div
+                      v-for="item in 3"
+                      :key="item"
+                      class="icon"
+                      @click="handleNoDifferentOperation('like')"
+                    >
+                      <img :src="addBtn" alt="" referrerpolicy="no-referrer" />
+                    </div>
+                  </template>
                 </div>
-              </div>
-            </template>
+              </template>
+            </div>
+            <div class="share-wrap">
+              <!-- 点击邀请按钮邀请好友 -->
+              <img
+                :src="getUser"
+                class="share-btn"
+                alt=""
+                referrerpolicy="no-referrer"
+                v-if="!$route.query.inviteCode"
+                @click="handleNoDifferentOperation('share')"
+              />
+              <!-- 邀请完毕可以购买 -->
+              <img
+                :src="bugBtn"
+                class="buy-btn"
+                alt=""
+                referrerpolicy="no-referrer"
+                v-if="successState"
+                @click="handleNoDifferentOperation('buy')"
+              />
+              <!-- 被邀请人查看到的页面，可以点赞 -->
+              <img
+                :src="likeBtn"
+                class="like-btn"
+                alt=""
+                referrerpolicy="no-referrer"
+                v-else-if="$route.query.inviteCode"
+                @click="handleNoDifferentOperation('like')"
+              />
+            </div>
           </div>
-          <div class="share-wrap">
-            <!-- 点击邀请按钮邀请好友 -->
-            <img
-              :src="getUser"
-              class="share-btn"
-              alt=""
-              referrerpolicy="no-referrer"
-              v-if="!$route.query.inviteCode"
-              @click="handleNoDifferentOperation('share')"
-            />
-            <!-- 邀请完毕可以购买 -->
-            <img
-              :src="bugBtn"
-              class="buy-btn"
-              alt=""
-              referrerpolicy="no-referrer"
-              v-if="successState"
-              @click="handleNoDifferentOperation('buy')"
-            />
-            <!-- 被邀请人查看到的页面，可以点赞 -->
-            <img
-              :src="likeBtn"
-              class="like-btn"
-              alt=""
-              referrerpolicy="no-referrer"
-              v-else-if="$route.query.inviteCode"
-              @click="handleNoDifferentOperation('like')"
-            />
-          </div>
-        </div>
+        </template>
       </template>
       <!--已拥有人偶 -->
-      <div class="have-wrap" v-if="otherInfo && otherInfo.have">
+      <div class="have-wrap" v-else>
         <div class="btn">
           <img :src="haveBtn" alt="" referrerpolicy="no-referrer" />
         </div>
@@ -212,19 +263,21 @@ import Swiper from "swiper";
 import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import CountDown from "../common/count-down";
 import appComponent from "../common/go-app/index.vue";
-import UserInfo from "../common/user-info/user-info.vue";
+import UserInfoComponent from "../common/user-info/user-info.vue";
 // import { reduceTime, openUrl, copyShareLink, errorInfo } from '@/utils';
 // import { Dialog } from "vant";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
-import { openUrl, copyShareLink, successInfo, errorInfo } from "@/utils";
+// import { openUrl, copyShareLink, clearRouterQuery, errorInfo } from "@/utils";
+import { openUrl, copyShareLink, clearRouterQuery, errorInfo } from "@/utils";
 import { inviteUser, likeUser } from "@/api/active";
+import { Dialog } from "vant";
 export default {
   name: "activeDollGainPage",
   components: {
     CountDown,
     appComponent,
-    UserInfo,
+    UserInfoComponent,
   },
   props: {
     startTime: {
@@ -246,6 +299,15 @@ export default {
       token: (state) => state.activeModule.token,
       uid: (state) => state.activeModule.uid,
     }),
+    // 初始化展示状态
+    mapInitState() {
+      return (
+        !this.$route.query.inviteCode &&
+        !this.otherInfo?.record?.inviteCode &&
+        (this.otherInfo?.record?.userInfo?.length === 0 ||
+          this.otherInfo?.record?.userInfo === null)
+      );
+    },
     mapIcon() {
       let result = false;
       if (this.otherInfo?.record?.userInfo?.length > 0) {
@@ -285,15 +347,15 @@ export default {
       addBtn: BASE_IMAGE_ACTIVE_URL + "/b3-add.png",
       itemList: [
         {
-          id: 3,
+          id: 2,
           src: BASE_IMAGE_ACTIVE_URL + "/b-function.png",
         },
         {
-          id: 4,
+          id: 3,
           src: BASE_IMAGE_ACTIVE_URL + "/b-pay.png",
         },
         {
-          id: 5,
+          id: 6,
           src: BASE_IMAGE_ACTIVE_URL + "/b-wechat.png",
         },
         {
@@ -313,6 +375,9 @@ export default {
     document.title = "Pofi盛夏福利——限定人偶获取";
   },
   mounted() {
+    if (this.$route.query.inviteCode) {
+      this.showInviteWrap = true;
+    }
     // const start = reduceTime(this.startTime); // 活动开始
     // const end = reduceTime(this.endTime); // 活动结束
     // if (start === 2) {
@@ -352,6 +417,9 @@ export default {
     console.log(wrap);
   },
   methods: {
+    openPage(index) {
+      this.$emit("openPage", index);
+    },
     goPage(type) {
       if (type === "shop") {
         openUrl(urlLink.shoppingLink);
@@ -366,8 +434,7 @@ export default {
           this.showInviteWrap = false;
           this.handlePayDialog();
           return;
-        }
-        if (type === "share" && this.otherInfo.vote) {
+        } else if (type === "share" && this.otherInfo.vote) {
           this.showInviteWrap = false;
           this.handlePayDialog();
           return;
@@ -375,23 +442,25 @@ export default {
       }
     },
     handleNoDifferentOperation(type) {
-      // 这里的是没有投票
-      if (!this.otherInfo.vote && this.showInviteWrap) {
-        this.showInviteWrap = true;
-        if (type === "buy") {
-          this.handlePayDialog();
-          return;
-        }
-        if (type === "share") {
-          this.shareCode();
-          return;
-        }
-        if (type === "like") {
-          this.likeCode();
-          return;
+      if (!this.uid || !this.token) {
+        this.handleLoginDialog();
+      } else {
+        // 这里的是没有投票
+        if (!this.otherInfo.vote) {
+          if (type === "buy") {
+            this.handlePayDialog();
+            return;
+          }
+          if (type === "share") {
+            this.shareCode();
+            return;
+          }
+          if (type === "like") {
+            this.likeCode();
+            return;
+          }
         }
       }
-      return;
     },
     // 生成分享链接
     shareCode() {
@@ -407,21 +476,55 @@ export default {
           }
         });
       } else {
-        const href = `${window.location.origin}${window.location.pathname}?inviteCode=${this.otherInfo.record.inviteCode}&pageCode=4`;
+        const href = `${window.location.origin}${window.location.pathname}?inviteCode=${this.otherInfo?.record?.inviteCode}&pageCode=4`;
         copyShareLink(href, this);
       }
     },
     // 点赞
     likeCode() {
       if (this.uid && this.token) {
-        likeUser({
-          uid: this.uid,
-          inviteCode: this.$route.query.inviteCode,
-        }).then((res) => {
-          if (res.code === 200) {
-            successInfo("点赞成功");
-          } else errorInfo(res.msg);
-        });
+        if (this.otherInfo?.record?.userInfo?.length >= 3) {
+          Dialog.alert({
+            message: "好友邀请任务已完成",
+          }).then(() => {
+            clearRouterQuery(this);
+          });
+        } else {
+          likeUser({
+            uid: this.uid,
+            inviteCode: this.$route.query.inviteCode,
+            loginKey: this.token,
+          }).then((res) => {
+            if (res.code === 200) {
+              this.$emit("getConfig");
+              Dialog.confirm({
+                message: "点赞成功",
+                confirmButtonText: "我也要买",
+                cancelButtonText: "取消",
+              })
+                .then(() => {
+                  clearRouterQuery(this);
+                  this.$forceUpdate();
+                })
+                .catch(() => {
+                  console.log("用户取消");
+                });
+            } else if (res.code === 107) {
+              Dialog.confirm({
+                message: res.msg,
+                confirmButtonText: "我也要买",
+                cancelButtonText: "取消",
+              })
+                .then(() => {
+                  clearRouterQuery(this);
+                  this.$forceUpdate();
+                })
+                .catch(() => {
+                  console.log("用户取消");
+                });
+            } else errorInfo(res.msg);
+          });
+        }
       } else this.handleLoginDialog();
     },
     handleLoginDialog() {
@@ -464,18 +567,18 @@ export default {
       width: 100%;
       height: 165px;
       position: absolute;
-      top: 235px;
+      top: 215px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       .swiper-container {
-        width: 100%;
+        width: 90%;
         .swiper-slide {
           width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
-          // padding: 10px;
+          padding: 10px;
           // background-color: #fff;
           img {
             width: 297px;

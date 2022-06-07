@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-01-13 17:43:39
- * @LastEditTime: 2022-04-24 17:52:15
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-06-07 09:58:31
+ * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/vue.config.js
  */
@@ -12,6 +12,9 @@ module.exports = {
   outputDir: "web",
   //去除生产环境的 productionSourceMap
   productionSourceMap: false,
+  configureWebpack: (config) => {
+    config.devtool = "source-map";
+  },
   devServer: {
     hot: true,
     open: true,
