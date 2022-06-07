@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 15:13:11
+ * @LastEditTime: 2022-06-07 15:23:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/go-app/index.vue
 -->
@@ -105,6 +105,7 @@ export default {
     },
     openPage(pageNumber) {
       this.$emit("openPage", pageNumber);
+      clearRouterQuery(this);
     },
   },
 };
