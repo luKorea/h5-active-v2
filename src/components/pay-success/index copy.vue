@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 15:13:11
+ * @LastEditTime: 2022-06-06 10:30:59
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/go-app/index.vue
 -->
@@ -12,7 +12,6 @@
     @closeDialog="closeDialog"
     @confirm="handleConfirm"
     @cancel="handleCancel"
-    :bgImg="bgImg"
   >
     <template #content>
       <div class="pay-wrap">
@@ -20,22 +19,9 @@
           <van-icon name="passed" class="pay-icon" />
           <div class="pay-text">支付成功!</div>
         </div>
-        <div class="pay-info">
-          <div class="pay-tip">
-            <img :src="titleImg" referrerpolicy="no-referrer" />
-          </div>
-          <div class="item-wrap">
-            <template v-if="itemList && itemList.length > 0">
-              <div
-                :key="item.id"
-                class="item"
-                v-for="item in itemList"
-                @click="openPage(item.id)"
-              >
-                <img :src="item.src" referrerpolicy="no-referrer" />
-              </div>
-            </template>
-          </div>
+        <div class="pay-title">{{ title }}</div>
+        <div class="pay-img" @click="goApp">
+          <img :src="appImg" referrerpolicy="no-referrer" alt="" />
         </div>
       </div>
     </template>
@@ -46,7 +32,6 @@
 import KoreaDialog from "@/components/korea-dialog/korea-dialog.vue";
 import { clearRouterQuery, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 export default {
   name: "appModal",
   components: {
@@ -61,31 +46,7 @@ export default {
   data() {
     return {
       showDialog: false,
-      bgImg: BASE_IMAGE_ACTIVE_URL + "/pay-success.png",
-      titleImg: BASE_IMAGE_ACTIVE_URL + "/pay-title.png",
       appImg: require("@/assets/image/go-app.png"),
-      itemList: [
-        {
-          id: 2,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-function.png",
-          src: BASE_IMAGE_ACTIVE_URL + "/function-item.png",
-        },
-        {
-          id: 3,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-pay.png",
-          src: BASE_IMAGE_ACTIVE_URL + "/pay-item.png",
-        },
-        {
-          id: 4,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-even.png",
-          src: BASE_IMAGE_ACTIVE_URL + "/even-item.png",
-        },
-        {
-          id: 5,
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/home-real-even.png",
-          src: BASE_IMAGE_ACTIVE_URL + "/real-even-item.png",
-        },
-      ],
     };
   },
   methods: {
@@ -103,9 +64,6 @@ export default {
       openUrl(urlLink.appLink);
       this.closeDialog();
     },
-    openPage(pageNumber) {
-      this.$emit("openPage", pageNumber);
-    },
   },
 };
 </script>
@@ -113,7 +71,7 @@ export default {
 <style lang="less" scoped>
 .pay-wrap {
   position: absolute;
-  top: 50px;
+  top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -129,7 +87,7 @@ export default {
     .pay-icon {
       font-size: 48px;
       color: #c9c9c9;
-      margin-bottom: 40px;
+      margin-bottom: 10px;
     }
     .pay-text {
       height: 22px;
@@ -150,7 +108,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 70px;
+    margin-top: 30px;
   }
   .pay-img {
     width: 165px;
@@ -159,40 +117,6 @@ export default {
     img {
       width: 100%;
       height: 100%;
-    }
-  }
-  .pay-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 322px;
-    height: 243px;
-    background: #666666;
-    border-radius: 28px;
-    margin-top: 50px;
-    .pay-tip {
-      width: 254px;
-      height: 45px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .item-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      width: 100%;
-      .item {
-        width: 144px;
-        height: 83px;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
     }
   }
 }

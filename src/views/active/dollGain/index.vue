@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 11:42:48
+ * @LastEditTime: 2022-06-07 12:00:53
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -367,6 +367,7 @@ export default {
         BASE_IMAGE_ACTIVE_URL + "/b3-one.png",
         BASE_IMAGE_ACTIVE_URL + "/b3-two.png",
         BASE_IMAGE_ACTIVE_URL + "/b3-three.png",
+        BASE_IMAGE_ACTIVE_URL + "/b3-four.png",
       ],
       tipImg: BASE_IMAGE_ACTIVE_URL + "/trigon.png",
     };
@@ -536,7 +537,11 @@ export default {
   },
 };
 </script>
-
+<style>
+.swiper-pagination-bullet-active {
+  background: rgba(51, 51, 51, 1) !important;
+}
+</style>
 <style lang="less" scoped>
 @import url("../../../../node_modules/swiper/css/swiper.css");
 .doll-container {

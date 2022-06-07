@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 11:54:32
+ * @LastEditTime: 2022-06-07 15:16:39
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -65,6 +65,7 @@
     <!-- 支付成功弹框 -->
     <pay-success-component
       ref="successRef"
+      @openPage="handleChangeDifferentPage"
       title="充值已到账，请打开APP刷新查看"
     ></pay-success-component>
     <!--登录注册页面-->
@@ -169,6 +170,7 @@ export default {
       this.$store.dispatch("activeModule/getUserInfo", this.userInfo);
     }
     this.checkLinkIsInviter();
+    // this.openSuccessDialog();
   },
   watch: {
     $route(to, from) {
@@ -185,7 +187,7 @@ export default {
       showWechatDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
       wechat: require("@/assets/wechat-banner.png"),
-      selectPage: 4, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
+      selectPage: 1, // 1. 首页 2. 功能订阅 3. P币充值 4. 限定人偶
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",
@@ -219,6 +221,7 @@ export default {
     },
     // 打开不同页面
     handleChangeDifferentPage(index) {
+      this.$refs["successRef"].showDialog = false;
       if (index) {
         if (index === 5) {
           this.showEvenDialog = true;
@@ -368,7 +371,9 @@ export default {
       };
       moneyPayAction(data)
         .then((res) => {
-          successInfo(res.msg);
+          if (res.code === 200) {
+            this.openSuccessDialog();
+          } else errorInfo(res.msg);
         })
         .catch((err) => {
           console.log(err);
