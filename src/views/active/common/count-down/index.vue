@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 14:07:34
+ * @LastEditTime: 2022-06-08 18:29:31
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -117,7 +117,7 @@ export default {
       width: 100%;
       height: 100%;
       position: relative;
-      background-color: #000;
+      background-color: rgba(119, 49, 118, 0.48);
       border-radius: 4px;
       img {
         width: 100%;
