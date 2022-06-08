@@ -60,12 +60,12 @@ class KoreaRequest {
             message: "登录超时，请重新登录",
           }).then(() => {
             localStorage.clear();
-            if(window.location.pathname === '/mayday22') {
-              window.location.replace("/mayday22");
-            } else {
-              window.location.replace("/active");
-            }
-            // window.location.reload();
+//             if(window.location.pathname === '/mayday22') {
+//               window.location.replace("/mayday22");
+//             } else {
+//               window.location.replace("/active");
+//             }
+            window.location.reload();
             // store.dispatch("logoutAction").then(() => {
             //   window.location.reload();
             // });
