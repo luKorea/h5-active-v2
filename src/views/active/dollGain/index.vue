@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 17:06:20
+ * @LastEditTime: 2022-06-08 17:58:03
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,44 +47,59 @@ recordList：组队用户信息
             </div>
           </div>
         </template>
-        <template
-          v-if="
-            !otherInfo.vote &&
-            (showInviteWrap ||
-              (otherInfo && otherInfo.record && otherInfo.record.inviteCode))
-          "
-        >
-          <div class="invite-wrap">
-            <div class="user-info">
-              <!-- 邀请者看到的信息 -->
-              <template v-if="!$route.query.inviteCode">
-                <div class="info">
-                  <div class="icon">
-                    <img
-                      :src="userInfo.iconUrl"
-                      alt=""
-                      referrerpolicy="no-referrer"
-                    />
-                  </div>
-                  <div class="pofi-id">POFI ID: {{ userInfo.nickId }}</div>
-                </div>
-                <div class="icon-wrap">
-                  <template v-if="mapIcon">
-                    <div
-                      v-for="item in otherInfo.record.userInfo"
-                      :key="item.id"
-                      class="icon"
-                    >
+        <template v-if="$route.query.inviteCode || (uid && !otherInfo.vote)">
+          <template
+            v-if="
+              !otherInfo.vote &&
+              (showInviteWrap || (otherInfo && otherInfo.record))
+            "
+          >
+            <div class="invite-wrap">
+              <div class="user-info">
+                <!-- 邀请者看到的信息 -->
+                <template v-if="!$route.query.inviteCode">
+                  <div class="info">
+                    <div class="icon">
                       <img
-                        :src="item.iconUrl"
+                        :src="userInfo.iconUrl"
                         alt=""
                         referrerpolicy="no-referrer"
                       />
                     </div>
-                    <template v-if="otherInfo.record.userInfo.length < 3">
+                    <div class="pofi-id">POFI ID: {{ userInfo.nickId }}</div>
+                  </div>
+                  <div class="icon-wrap">
+                    <template v-if="mapIcon">
                       <div
-                        v-for="i in 3 - otherInfo.record.userInfo.length"
-                        :key="i"
+                        v-for="item in otherInfo.record.userInfo"
+                        :key="item.id"
+                        class="icon"
+                      >
+                        <img
+                          :src="item.iconUrl"
+                          alt=""
+                          referrerpolicy="no-referrer"
+                        />
+                      </div>
+                      <template v-if="otherInfo.record.userInfo.length < 3">
+                        <div
+                          v-for="i in 3 - otherInfo.record.userInfo.length"
+                          :key="i"
+                          class="icon"
+                          @click="handleNoDifferentOperation('share')"
+                        >
+                          <img
+                            :src="addBtn"
+                            alt=""
+                            referrerpolicy="no-referrer"
+                          />
+                        </div>
+                      </template>
+                    </template>
+                    <template v-else>
+                      <div
+                        v-for="item in 3"
+                        :key="item"
                         class="icon"
                         @click="handleNoDifferentOperation('share')"
                       >
@@ -95,56 +110,60 @@ recordList：组队用户信息
                         />
                       </div>
                     </template>
-                  </template>
-                  <template v-else>
-                    <div
-                      v-for="item in 3"
-                      :key="item"
-                      class="icon"
-                      @click="handleNoDifferentOperation('share')"
-                    >
-                      <img :src="addBtn" alt="" referrerpolicy="no-referrer" />
-                    </div>
-                  </template>
-                </div>
-              </template>
-              <!-- 被邀请者看到的信息 -->
-              <template v-else>
-                <div class="info">
-                  <div
-                    class="icon"
-                    v-if="otherInfo.record && otherInfo.record.iconUrl"
-                  >
-                    <img
-                      :src="otherInfo.record.iconUrl"
-                      alt=""
-                      referrerpolicy="no-referrer"
-                    />
                   </div>
-                  <div
-                    class="pofi-id"
-                    v-if="otherInfo.record && otherInfo.record.nickId"
-                  >
-                    邀请者的POFI昵称：{{ otherInfo.record.nickId }}
-                  </div>
-                </div>
-                <div class="icon-wrap">
-                  <template v-if="mapIcon">
+                </template>
+                <!-- 被邀请者看到的信息 -->
+                <template v-else>
+                  <div class="info">
                     <div
-                      v-for="item in otherInfo.record.userInfo"
-                      :key="item.id"
                       class="icon"
+                      v-if="otherInfo.record && otherInfo.record.iconUrl"
                     >
                       <img
-                        :src="item.iconUrl"
+                        :src="otherInfo.record.iconUrl"
                         alt=""
                         referrerpolicy="no-referrer"
                       />
                     </div>
-                    <template v-if="otherInfo.record.userInfo.length < 3">
+                    <div
+                      class="pofi-id"
+                      v-if="otherInfo.record && otherInfo.record.nickId"
+                    >
+                      邀请者的POFI昵称：{{ otherInfo.record.nickId }}
+                    </div>
+                  </div>
+                  <div class="icon-wrap">
+                    <template v-if="mapIcon">
                       <div
-                        v-for="i in 3 - otherInfo.record.userInfo.length"
-                        :key="i"
+                        v-for="item in otherInfo.record.userInfo"
+                        :key="item.id"
+                        class="icon"
+                      >
+                        <img
+                          :src="item.iconUrl"
+                          alt=""
+                          referrerpolicy="no-referrer"
+                        />
+                      </div>
+                      <template v-if="otherInfo.record.userInfo.length < 3">
+                        <div
+                          v-for="i in 3 - otherInfo.record.userInfo.length"
+                          :key="i"
+                          class="icon"
+                          @click="handleNoDifferentOperation('like')"
+                        >
+                          <img
+                            :src="addBtn"
+                            alt=""
+                            referrerpolicy="no-referrer"
+                          />
+                        </div>
+                      </template>
+                    </template>
+                    <template v-else>
+                      <div
+                        v-for="item in 3"
+                        :key="item"
                         class="icon"
                         @click="handleNoDifferentOperation('like')"
                       >
@@ -155,50 +174,40 @@ recordList：组队用户信息
                         />
                       </div>
                     </template>
-                  </template>
-                  <template v-else>
-                    <div
-                      v-for="item in 3"
-                      :key="item"
-                      class="icon"
-                      @click="handleNoDifferentOperation('like')"
-                    >
-                      <img :src="addBtn" alt="" referrerpolicy="no-referrer" />
-                    </div>
-                  </template>
-                </div>
-              </template>
+                  </div>
+                </template>
+              </div>
+              <div class="share-wrap">
+                <!-- 点击邀请按钮邀请好友 -->
+                <img
+                  :src="getUser"
+                  class="share-btn"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  v-if="!$route.query.inviteCode && !successState"
+                  @click="handleNoDifferentOperation('share')"
+                />
+                <!-- 邀请完毕可以购买 -->
+                <img
+                  :src="bugBtn"
+                  class="buy-btn"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  v-if="successState"
+                  @click="handleNoDifferentOperation('buy')"
+                />
+                <!-- 被邀请人查看到的页面，可以点赞 -->
+                <img
+                  :src="likeBtn"
+                  class="like-btn"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  v-else-if="$route.query.inviteCode"
+                  @click="handleNoDifferentOperation('like')"
+                />
+              </div>
             </div>
-            <div class="share-wrap">
-              <!-- 点击邀请按钮邀请好友 -->
-              <img
-                :src="getUser"
-                class="share-btn"
-                alt=""
-                referrerpolicy="no-referrer"
-                v-if="!$route.query.inviteCode && !successState"
-                @click="handleNoDifferentOperation('share')"
-              />
-              <!-- 邀请完毕可以购买 -->
-              <img
-                :src="bugBtn"
-                class="buy-btn"
-                alt=""
-                referrerpolicy="no-referrer"
-                v-if="successState"
-                @click="handleNoDifferentOperation('buy')"
-              />
-              <!-- 被邀请人查看到的页面，可以点赞 -->
-              <img
-                :src="likeBtn"
-                class="like-btn"
-                alt=""
-                referrerpolicy="no-referrer"
-                v-else-if="$route.query.inviteCode"
-                @click="handleNoDifferentOperation('like')"
-              />
-            </div>
-          </div>
+          </template>
         </template>
       </template>
       <!--已拥有人偶 -->
@@ -576,7 +585,7 @@ export default {
       width: 100%;
       height: 165px;
       position: absolute;
-      top: 215px;
+      top: 200px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -638,10 +647,10 @@ export default {
       align-items: center;
       .btn {
         width: 318px;
-        height: 63px;
+        height: 83px;
         img {
           width: 318px;
-          height: 63px;
+          height: 83px;
         }
       }
     }

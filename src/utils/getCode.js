@@ -1,8 +1,8 @@
 /*
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-25 17:21:10
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-08 17:20:35
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/getCode.js
  */
@@ -13,7 +13,8 @@ import localCache from "@/utils/cache";
 export function getCode(appid, code) {
   // "http://event.pofi.pro" ??
   // let local = "http://event.pofi.pro";
-  let local = window.location.origin + window.location.pathname; //当前地址
+  // let local = window.location.origin + window.location.pathname; //当前地址
+  let local = window.location.href; //当前地址
   console.log(code, "微信授权code", "链接", local);
   //没有授权的code
   if (code == null || code === "") {
