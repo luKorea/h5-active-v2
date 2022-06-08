@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 12:00:53
+ * @LastEditTime: 2022-06-08 16:56:35
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,9 +36,9 @@ recordList：组队用户信息
     <div class="get-wrap">
       <img :src="imgInfo.bannerImg" alt="" referrerpolicy="no-referrer" />
       <template v-if="otherInfo && !otherInfo.have">
-        <template v-if="mapInitState && !showInviteWrap">
+        <template v-if="!uid || otherInfo.vote">
           <!-- 未登录以及未拥有人偶展示 -->
-          <div class="init-wrap" v-if="otherInfo && !otherInfo.have">
+          <div class="init-wrap">
             <div class="btn bug" @click="handleDifferentOperation('buy')">
               <img :src="initBug" alt="" referrerpolicy="no-referrer" />
             </div>
@@ -49,8 +49,9 @@ recordList：组队用户信息
         </template>
         <template
           v-if="
-            showInviteWrap ||
-            (otherInfo && otherInfo.record && otherInfo.record.inviteCode)
+            !otherInfo.vote &&
+            (showInviteWrap ||
+              (otherInfo && otherInfo.record && otherInfo.record.inviteCode))
           "
         >
           <div class="invite-wrap">
@@ -175,7 +176,7 @@ recordList：组队用户信息
                 class="share-btn"
                 alt=""
                 referrerpolicy="no-referrer"
-                v-if="!$route.query.inviteCode"
+                v-if="!$route.query.inviteCode && !successState"
                 @click="handleNoDifferentOperation('share')"
               />
               <!-- 邀请完毕可以购买 -->
@@ -329,7 +330,7 @@ export default {
     return {
       showInviteWrap: false,
       payInfo: {
-        snId: "MIDIM191001241",
+        id: "MIDIM191001241",
         tid: "M191001241",
         title: "618活动大Q",
       },
@@ -433,11 +434,13 @@ export default {
         // 已经投票,点击购买
         if (type === "buy" && this.otherInfo.vote) {
           this.showInviteWrap = false;
-          this.handlePayDialog();
+          // this.handlePayDialog();
+          this.$emit("payMoney", this.payInfo);
           return;
         } else if (type === "share" && this.otherInfo.vote) {
           this.showInviteWrap = false;
-          this.handlePayDialog();
+          const href = `${window.location.origin}${window.location.pathname}?pageCode=4`;
+          copyShareLink(href, this);
           return;
         } else this.showInviteWrap = true;
       }
@@ -449,7 +452,8 @@ export default {
         // 这里的是没有投票
         if (!this.otherInfo.vote) {
           if (type === "buy") {
-            this.handlePayDialog();
+            // this.handlePayDialog();
+            this.$emit("payMoney", this.payInfo);
             return;
           }
           if (type === "share") {

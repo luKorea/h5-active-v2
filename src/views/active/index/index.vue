@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 15:16:39
+ * @LastEditTime: 2022-06-08 16:48:18
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,6 +47,7 @@
         :otherInfo="otherInfo"
         @openPage="handleChangeDifferentPage"
         @getConfig="checkLinkIsInviter"
+        @payMoney="payMoney"
         :endTime="endTime"
         :startTime="startTime"
       ></active-doll-gain-page>
@@ -126,6 +127,7 @@ import {
 import { getActivePageConfig } from "@/api/active";
 // import { Dialog } from "vant";
 import { checkUserHasEvent } from "@/api/common";
+import { Dialog } from "vant";
 export default {
   name: "activePageComponent",
   components: {
@@ -358,25 +360,39 @@ export default {
       aliPayAction(data);
     },
     // 用户钱包支付
-    payMoney() {
+    payMoney(payInfo) {
       let data = {
         uid: this.uid,
         loginKey: this.token,
-        cart: JSON.stringify({
-          snId: this.payInfo.id,
-          tid: this.payInfo.tid ? this.payInfo.tid : undefined,
-          paymentType: 1,
-          amount: 1,
-        }),
+        cart: JSON.stringify([
+          {
+            snId: payInfo.id,
+            tid: payInfo.tid,
+            paymentType: 1,
+            amount: 1,
+          },
+        ]),
       };
       moneyPayAction(data)
         .then((res) => {
+          this.checkLinkIsInviter();
           if (res.code === 200) {
-            this.openSuccessDialog();
-          } else errorInfo(res.msg);
+            successInfo("购买成功");
+          }
         })
         .catch((err) => {
-          console.log(err);
+          Dialog.confirm({
+            message: err,
+            confirmButtonText: "去充值",
+            cancelButtonText: "取消",
+          })
+            .then(() => {
+              this.mapDialog(3);
+              this.$forceUpdate();
+            })
+            .catch(() => {
+              console.log("用户取消");
+            });
         });
     },
   },

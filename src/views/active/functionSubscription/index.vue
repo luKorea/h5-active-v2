@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 12:01:47
+ * @LastEditTime: 2022-06-08 15:37:12
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -261,8 +261,8 @@ export default {
       align-items: center;
     }
     .img-title {
-      width: 277px;
-      height: 60px;
+      width: 306px;
+      height: 55px;
       margin: 20px 0;
       img {
         width: 100%;

@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 18:19:11
+ * @LastEditTime: 2022-06-08 16:29:38
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -44,7 +44,7 @@
         <div class="img-title" style="margin: 0">
           <img
             :src="swiperTitle"
-            style="width: 277px; height: 40px"
+            style="width: 305px; height: 35px"
             alt=""
             referrerpolicy="no-referrer"
           />
@@ -268,7 +268,7 @@ export default {
       width: 100%;
       // height: 165px;
       position: absolute;
-      top: 20px;
+      top: 14px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -341,8 +341,8 @@ export default {
       align-items: center;
     }
     .img-title {
-      width: 277px;
-      height: 40px;
+      width: 305px;
+      height: 35px;
       margin: 20px 0;
       img {
         width: 100%;
