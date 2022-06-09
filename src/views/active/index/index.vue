@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 11:30:22
+ * @LastEditTime: 2022-06-09 14:25:41
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -120,7 +120,7 @@ import { getCode } from "@/utils/getCode";
 import { successInfo, errorInfo, clearRouterQuery, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
-// import { reduceTime } from "@/utils";
+import { reduceTime } from "@/utils";
 
 import {
   wechatPayAction,
@@ -235,24 +235,24 @@ export default {
         } else if (index === 6) {
           this.showWechatDialog = true;
         } else {
-          this.mapDialog(index);
-          // if (index === 3 || index === 4) {
-          //   const start = reduceTime(this.startTime); // 活动开始
-          //   const end = reduceTime(this.endTime); // 活动结束
-          //   if (start === 2) {
-          //     Dialog.alert({
-          //       message: "该活动将于6月17日开始，敬请期待！",
-          //     });
-          //   } else if (end === 1) {
-          //     Dialog.alert({
-          //       message: "活动已结束",
-          //     });
-          //   } else {
-          //     this.mapDialog(index);
-          //   }
-          // } else {
-          //   this.mapDialog(index);
-          // }
+          // this.mapDialog(index);
+          if (index === 3 || index === 4) {
+            const start = reduceTime(this.startTime); // 活动开始
+            const end = reduceTime(this.endTime); // 活动结束
+            if (start === 2) {
+              Dialog.alert({
+                message: "该活动将于6月17日开始，敬请期待！",
+              });
+            } else if (end === 1) {
+              Dialog.alert({
+                message: "活动已结束",
+              });
+            } else {
+              this.mapDialog(index);
+            }
+          } else {
+            this.mapDialog(index);
+          }
         }
       }
     },
