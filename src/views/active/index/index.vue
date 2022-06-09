@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 11:05:55
+ * @LastEditTime: 2022-06-09 11:30:22
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -117,7 +117,7 @@ import ActiveFooter from "../footer";
 import PaySuccessComponent from "@/components/pay-success";
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
-import { successInfo, errorInfo, clearRouterQuery } from "@/utils";
+import { successInfo, errorInfo, clearRouterQuery, openUrl } from "@/utils";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
 // import { reduceTime } from "@/utils";
@@ -230,7 +230,8 @@ export default {
       this.$refs["successRef"].showDialog = false;
       if (index) {
         if (index === 5) {
-          this.showEvenDialog = true;
+          // this.showEvenDialog = true;
+          openUrl(urlLink.redBookLink);
         } else if (index === 6) {
           this.showWechatDialog = true;
         } else {

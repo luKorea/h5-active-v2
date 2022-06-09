@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 10:52:10
+ * @LastEditTime: 2022-06-09 11:59:05
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */
@@ -12,6 +12,8 @@ export default {
   appLink: "https://a.app.qq.com/o/simple.jsp?pkgname=com.rn.pofi",
   weiboLink: "https://weibo.com/pofiapp",
   redBookLink: "https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33",
+  redBookLink1:
+    "https://www.xiaohongshu.com/user/profile/603381480000000001005d5a?xhsshare=CopyLink&appuid=603381480000000001005d5a&apptime=1654743440",
   shareToFriendLink: window.location.href,
   wechatOpenQQLink: "https://wpa1.qq.com/ivgX4lEz?_type=wpa&qidian=true",
   qqLink: "https://wpa1.qq.com/ivgX4lEz?_type=wpa&qidian=true",

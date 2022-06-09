@@ -1,8 +1,16 @@
 <!--
+ * @Author: korealu 643949593@qq.com
+ * @Date: 2022-06-09 11:36:50
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-06-09 11:36:58
+ * @FilePath: /h5-active-v2/src/components/pay/index copy.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 11:57:44
+ * @LastEditTime: 2022-06-02 09:16:08
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->
@@ -17,9 +25,6 @@
       <div class="pay-wrap">
         <!-- 这里展示用户选中的商品信息 -->
         <div class="pay-title">{{ payInfo.title }}</div>
-        <div class="pay-title" style="margin-top: 26px; font-size: 12px">
-          {{ payInfo.subTitle }}
-        </div>
         <!-- 这里展示用户的基本信息 -->
         <div class="user-info">
           <div class="user-avatar">
@@ -30,11 +35,8 @@
           </div>
         </div>
         <!-- 充值说明 -->
-        <div class="pay-info" v-if="!payInfo.desc">
+        <div class="pay-info">
           充值说明：请仔细核对充值 Pofi ID，充值完成后不支持退款。
-        </div>
-        <div class="pay-info" v-else>
-          {{ payInfo.desc }}
         </div>
         <div class="pay-btn">
           <div class="wechat-pay" @click="payWechat">
@@ -108,7 +110,7 @@ export default {
   margin: 0 auto;
   .pay-title {
     position: absolute;
-    top: 20px;
+    top: 22px;
     height: 18px;
     font-size: 15px;
     font-family: Source Han Sans CN;
@@ -123,11 +125,11 @@ export default {
     font-family: Source Han Sans CN;
     font-weight: 500;
     color: #c9c9c9;
-    width: 70%;
+    width: 60%;
   }
   .user-info {
     position: absolute;
-    top: 64px;
+    top: 60px;
     left: 0;
     width: 100%;
     display: flex;
@@ -162,7 +164,7 @@ export default {
     display: flex;
     // margin-top: 15px;
     position: absolute;
-    top: 180px;
+    top: 170px;
     width: 100%;
     justify-content: center;
     align-items: center;

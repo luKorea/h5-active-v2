@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 09:54:57
+ * @LastEditTime: 2022-06-09 11:47:51
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -158,7 +158,8 @@ export default {
           id: 1,
           payInfo: {
             id: "MIDRCG6800",
-            title: "618活动68p币",
+            subTitle: "预计到账74P币",
+            title: "支付68元",
           },
           img: BASE_IMAGE_ACTIVE_URL + "/b2-68.png",
         },
@@ -166,7 +167,8 @@ export default {
           id: 2,
           payInfo: {
             id: "MIDRCG12800",
-            title: "618活动128p币",
+            subTitle: "预计到账158P币",
+            title: "支付128元",
           },
           img: BASE_IMAGE_ACTIVE_URL + "/b2-128.png",
         },
@@ -174,7 +176,8 @@ export default {
           id: 3,
           payInfo: {
             id: "MIDRCG20800",
-            title: "618活动208p币",
+            subTitle: "预计到账336P币",
+            title: "支付208元",
           },
           img: BASE_IMAGE_ACTIVE_URL + "/b2-208.png",
         },
@@ -182,7 +185,8 @@ export default {
           id: 4,
           payInfo: {
             id: "MIDRCG58800",
-            title: "618活动588p币",
+            subTitle: "预计到账1176P币",
+            title: "支付588元",
           },
           img: BASE_IMAGE_ACTIVE_URL + "/b2-588.png",
         },

@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 09:39:24
+ * @LastEditTime: 2022-06-09 11:55:56
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -185,11 +185,15 @@ export default {
       const info =
         type === "pro"
           ? {
-              title: "专业版15个月",
+              title: "支付88元",
+              subTitle: "Pro专业版15个月",
+              desc: "充值说明：请仔细核对充值 Pofi ID，充值完成后不支持退款。充值完成后，功能使用时长会随原IDy已有时长延长。",
               id: "MIDFUNC_PRO_455D",
             }
           : {
-              title: "专业版和绘画版15个月(赠送158PB)",
+              title: "支付218元",
+              subTitle: "Pofi全功能15个月+158P币",
+              desc: "充值说明：请仔细核对充值 Pofi ID，充值完成后不支持退款。充值完成后，功能使用时长会随原IDy已有时长延长。",
               id: "MIDFUNC_SVIP_455D",
             };
       this.$emit("handlePayDialog", info);

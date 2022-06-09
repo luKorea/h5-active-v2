@@ -32,7 +32,7 @@ export default {
         },
         {
           imgUrl: BASE_IMAGE_ACTIVE_URL + "/redbook.png",
-          url: urlLink.redBookLink,
+          url: urlLink.redBookLink1,
           type: "redBook",
         },
         {
