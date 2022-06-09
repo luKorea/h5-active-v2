@@ -2,13 +2,16 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 16:29:38
+ * @LastEditTime: 2022-06-09 09:54:57
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="home-container">
     <!-- 头部区域 -->
+    <div class="banner-header">
+      <img :src="headerImg" alt="" referrerpolicy="no-referrer" />
+    </div>
     <count-down :curStartTime="endTime"></count-down>
     <div class="user-info">
       <user-info @handleLoginDialog="handleLoginDialog"></user-info>
@@ -104,7 +107,11 @@ export default {
   props: {
     endTime: {
       type: Number,
-      require: true,
+      required: true,
+    },
+    startTime: {
+      type: Number,
+      required: true,
     },
   },
   components: {
@@ -118,6 +125,7 @@ export default {
     // MIDRCG20800 618活动208p币
     // MIDRCG58800 618活动588p币
     return {
+      headerImg: BASE_IMAGE_ACTIVE_URL + "/pay-header.png",
       payInfo: {
         title: "618活动专业版15个月",
         snId: "MIDFUNC_PRO_455D",
@@ -194,6 +202,21 @@ export default {
     document.title = "Pofi盛夏福利——P币充值优惠";
   },
   mounted() {
+    // const start = reduceTime(this.startTime); // 活动开始
+    // const end = reduceTime(this.endTime); // 活动结束
+    // if (start === 2) {
+    //   Dialog.alert({
+    //     message: "该活动将于6月17日开始，敬请期待！",
+    //     showConfirmButton: false,
+    //   });
+    //   // this.$emit("openPage", 1);
+    // } else if (end === 1) {
+    //   Dialog.alert({
+    //     message: "活动已结束",
+    //     showConfirmButton: false,
+    //   });
+    //   // this.$emit("openPage", 1);
+    // }
     const wrap = new Swiper(".swiper-container", {
       autoplay: {
         disableOnInteraction: false,

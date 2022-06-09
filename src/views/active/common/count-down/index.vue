@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 18:29:31
+ * @LastEditTime: 2022-06-09 09:44:15
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -107,7 +107,7 @@ export default {
   // padding: 20px;
   width: 100%;
   height: 54px;
-  margin-top: 100px;
+  margin-top: -30px;
   margin-bottom: 20px;
   .count-down {
     position: relative;

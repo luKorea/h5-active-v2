@@ -2,14 +2,17 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 15:37:12
+ * @LastEditTime: 2022-06-09 09:39:24
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="home-container">
     <!-- 头部区域 -->
-    <count-down :curStartTime="1656259199"></count-down>
+    <div class="banner-header">
+      <img :src="headerImg" alt="" referrerpolicy="no-referrer" />
+    </div>
+    <count-down :curStartTime="endTime"></count-down>
     <div class="user-info">
       <user-info @handleLoginDialog="handleLoginDialog"></user-info>
     </div>
@@ -90,10 +93,17 @@ export default {
     UserInfo,
     koreaVideo,
   },
+  props: {
+    endTime: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     // MIDFUNC_PRO_455D 618活动专业版15个月
     // MIDSVIP_455D 618活动专业版和绘画版15个月(赠送158PB)
     return {
+      headerImg: BASE_IMAGE_ACTIVE_URL + "/function-header.png",
       playerOptions: {
         // videojs options
         muted: false,

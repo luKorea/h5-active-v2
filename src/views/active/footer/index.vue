@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-02 15:35:21
+ * @LastEditTime: 2022-06-09 11:14:59
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -56,7 +56,8 @@ export default {
       logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/logo.png",
       qrcode: BASE_IMAGE_ANNIVERSARY_URL + "/qrcode.png",
       drivar: BASE_IMAGE_ANNIVERSARY_URL + "/drivar.png",
-      ruleTitle: BASE_IMAGE_ACTIVE_URL + "/rule-title.png",
+      ruleTitle:
+        BASE_IMAGE_ACTIVE_URL + "/rule-title.png" + "?" + new Date().getTime(),
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
 
       list: [

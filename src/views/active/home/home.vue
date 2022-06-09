@@ -2,14 +2,17 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:10:58
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 18:18:20
+ * @LastEditTime: 2022-06-09 10:16:13
  * @FilePath: /h5-active-v2/src/views/active/home/home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="home-container">
+    <div class="banner-header">
+      <img :src="headerImg" alt="" referrerpolicy="no-referrer" />
+    </div>
     <!-- 头部区域 -->
-    <count-down :curStartTime="1656259199"></count-down>
+    <count-down :curStartTime="endTime"></count-down>
     <!-- 顶部大item -->
     <div class="item-wrap">
       <template v-if="itemList && itemList.length > 0">
@@ -64,6 +67,12 @@ import appComponent from "../common/go-app/index.vue";
 import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 export default {
   name: "activeHomePage",
+  props: {
+    endTime: {
+      type: Number,
+      required: true,
+    },
+  },
   components: {
     SendLink,
     // questionComponent,
@@ -76,6 +85,7 @@ export default {
   },
   data() {
     return {
+      headerImg: BASE_IMAGE_ACTIVE_URL + "/home-header.png",
       tipImg: BASE_IMAGE_ACTIVE_URL + "/trigon.png",
       itemList: [
         {

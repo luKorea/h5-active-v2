@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 16:48:18
+ * @LastEditTime: 2022-06-09 11:05:55
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,6 +20,7 @@
     <active-home-page
       v-if="selectPage === 1"
       @openPage="handleChangeDifferentPage"
+      :endTime="homeEndTime"
     ></active-home-page>
     <template>
       <!-- 功能订阅 -->
@@ -29,6 +30,7 @@
         @handlePayDialog="handleChangePayModal"
         :otherInfo="otherInfo"
         @openPage="handleChangeDifferentPage"
+        :endTime="homeEndTime"
       ></active-function-page>
       <!-- P币购买 -->
       <active-recharge-discounts-page
@@ -38,6 +40,7 @@
         :otherInfo="otherInfo"
         @openPage="handleChangeDifferentPage"
         :endTime="endTime"
+        :startTime="startTime"
       ></active-recharge-discounts-page>
       <!-- 限定人偶 -->
       <active-doll-gain-page
@@ -183,8 +186,9 @@ export default {
   data() {
     return {
       showLoading: false,
-      startTime: 1655395199,
-      endTime: 1655654399,
+      homeEndTime: new Date("2022-06-26 23:59:59").getTime() / 1000,
+      startTime: new Date("2022-06-17 00:00:00").getTime() / 1000,
+      endTime: new Date("2022-06-19 23:59:59").getTime() / 1000,
       showEvenDialog: false,
       showWechatDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
@@ -376,6 +380,7 @@ export default {
       moneyPayAction(data)
         .then((res) => {
           this.checkLinkIsInviter();
+          this.$store.dispatch("activeModule/getUserInfo", this.userInfo);
           if (res.code === 200) {
             successInfo("购买成功");
           }

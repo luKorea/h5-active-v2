@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-08 17:58:03
+ * @LastEditTime: 2022-06-09 11:01:57
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,7 +26,10 @@ recordList：组队用户信息
 <template>
   <div class="doll-container">
     <!-- 头部区域 -->
-    <count-down :curStartTime="1656259199"></count-down>
+    <div class="banner-header">
+      <img :src="headerImg" alt="" referrerpolicy="no-referrer" />
+    </div>
+    <count-down :curStartTime="endTime"></count-down>
     <div class="user-info">
       <user-info-component
         @handleLoginDialog="handleLoginDialog"
@@ -215,6 +218,13 @@ recordList：组队用户信息
         <div class="btn">
           <img :src="haveBtn" alt="" referrerpolicy="no-referrer" />
         </div>
+        <div class="btn">
+          <img
+            :src="shareImg"
+            referrerpolicy="no-referrer"
+            @click="handleDifferentOperation('share')"
+          />
+        </div>
       </div>
     </div>
     <!-- 轮播图 -->
@@ -274,12 +284,16 @@ import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
 import CountDown from "../common/count-down";
 import appComponent from "../common/go-app/index.vue";
 import UserInfoComponent from "../common/user-info/user-info.vue";
-// import { reduceTime, openUrl, copyShareLink, errorInfo } from '@/utils';
-// import { Dialog } from "vant";
 import { mapState } from "vuex";
 import urlLink from "@/utils/link";
 // import { openUrl, copyShareLink, clearRouterQuery, errorInfo } from "@/utils";
-import { openUrl, copyShareLink, clearRouterQuery, errorInfo } from "@/utils";
+import {
+  // reduceTime,
+  openUrl,
+  copyShareLink,
+  clearRouterQuery,
+  errorInfo,
+} from "@/utils";
 import { inviteUser, likeUser } from "@/api/active";
 import { Dialog } from "vant";
 export default {
@@ -337,6 +351,7 @@ export default {
   },
   data() {
     return {
+      headerImg: BASE_IMAGE_ACTIVE_URL + "/even-header.png",
       showInviteWrap: false,
       payInfo: {
         id: "MIDIM191001241",
@@ -344,9 +359,12 @@ export default {
         title: "618活动大Q",
       },
       imgInfo: {
-        bgImg: BASE_IMAGE_ACTIVE_URL + "/b3-swiper.png",
-        bannerImg: BASE_IMAGE_ACTIVE_URL + "/b3-banner.png",
-        shopImg: BASE_IMAGE_ACTIVE_URL + "/b3-shop.png",
+        bgImg:
+          BASE_IMAGE_ACTIVE_URL + "/b3-swiper.png" + "?" + new Date().getTime(),
+        bannerImg:
+          BASE_IMAGE_ACTIVE_URL + "/b3-banner.png" + "?" + new Date().getTime(),
+        shopImg:
+          BASE_IMAGE_ACTIVE_URL + "/b3-shop.png" + "?" + new Date().getTime(),
       },
       haveBtn: BASE_IMAGE_ACTIVE_URL + "/b3-have.png",
       initBug: BASE_IMAGE_ACTIVE_URL + "/b3-init-buy.png",
@@ -394,15 +412,16 @@ export default {
     // if (start === 2) {
     //   Dialog.alert({
     //     message: "该活动将于6月17日开始，敬请期待！",
-    //     showConfirmButton: false,
+    //   }).then(() => {
+    //     this.$emit("openPage", 1);
     //   });
-    //   // this.$emit("openPage", 1);
     // } else if (end === 1) {
     //   Dialog.alert({
     //     message: "活动已结束",
     //     showConfirmButton: false,
+    //   }).then(() => {
+    //     this.$emit("openPage", 1);
     //   });
-    //   // this.$emit("openPage", 1);
     // }
     const wrap = new Swiper(".swiper-container", {
       autoplay: {
@@ -446,7 +465,10 @@ export default {
           // this.handlePayDialog();
           this.$emit("payMoney", this.payInfo);
           return;
-        } else if (type === "share" && this.otherInfo.vote) {
+        } else if (
+          type === "share" &&
+          (this.otherInfo.vote || this.otherInfo.have)
+        ) {
           this.showInviteWrap = false;
           const href = `${window.location.origin}${window.location.pathname}?pageCode=4`;
           copyShareLink(href, this);
@@ -639,13 +661,21 @@ export default {
     }
     .have-wrap {
       position: absolute;
-      bottom: 80px;
+      bottom: 26px;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       .btn {
+        width: 318px;
+        height: 83px;
+        img {
+          width: 318px;
+          height: 83px;
+        }
+      }
+      .share-info {
         width: 318px;
         height: 83px;
         img {
