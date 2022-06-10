@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-10 14:19:02
+ * @LastEditTime: 2022-06-10 14:28:26
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -15,7 +15,7 @@
     <count-down></count-down>
     <info-fixed
       :userInfo="userInfo"
-      @handleLoginDialog="showLoginDialog = true"
+      @handleLoginDialog="dialogShow"
       @handleLogout="showLogoutDialog = true"
     ></info-fixed>
     <!-- 购买区域 -->
