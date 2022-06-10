@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 11:25:33
- * @LastEditTime: 2022-05-05 16:16:50
+ * @LastEditTime: 2022-06-10 14:25:12
  * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/views/vote/index/components/vote-component.vue
@@ -67,15 +67,22 @@
       <!-- 投票区域, 区分状态 -->
       <div class="vote-state">
         <img
+          :src="imgInfo.endImg"
+          alt=""
+          referrerpolicy="no-referrer"
+          @click="handleOperation('start')"
+          v-if="!isVote && !token"
+        />
+        <img
           :src="imgInfo.startImg"
           alt=""
           referrerpolicy="no-referrer"
           @click="handleOperation('start')"
-          v-if="!isVote"
+          v-if="!isVote && token"
         />
         <img
           :src="imgInfo.refreshImg"
-          v-else
+          v-if="isVote && token"
           alt=""
           @click="handleOperation('refresh')"
           referrerpolicy="no-referrer"
@@ -93,7 +100,14 @@
           @click="handleOperation('subscribe', 1)"
           alt=""
           referrerpolicy="no-referrer"
-          v-if="!token || otherInfo.isBooking === 0"
+          v-if="token && otherInfo.isBooking === 0"
+        />
+        <img
+          :src="imgInfo.endImg"
+          @click="handleOperation('subscribe', 1)"
+          alt=""
+          referrerpolicy="no-referrer"
+          v-if="!token"
         />
         <!-- 预约成功 -->
         <img
@@ -163,7 +177,7 @@ import { BASE_IMAGE_VOTE_URL } from "@/request/config";
 import koreaDialog from "@/components/korea-dialog/korea-dialog";
 import { errorInfo, successInfo } from "@/utils";
 import { mapState } from "vuex";
-import { voteState, voteToUser } from "@/api/vote";
+import { voteState } from "@/api/vote";
 import localCache from "@/utils/cache";
 export default {
   name: "VoteComponent",
@@ -196,6 +210,7 @@ export default {
   data() {
     return {
       imgInfo: {
+        endImg: BASE_IMAGE_VOTE_URL + "/end-img.png",
         bgImg: BASE_IMAGE_VOTE_URL + "/vote-bg1.png",
         titleImg: BASE_IMAGE_VOTE_URL + "/vote-title.png",
         subTitleImg: BASE_IMAGE_VOTE_URL + "/vote-subTitle.png",
@@ -292,30 +307,32 @@ export default {
       });
     },
     handleOperation(type, state) {
-      if (this.token) {
-        // 投票
-        if (type === "start") {
-          if (!this.selectEvent) {
-            errorInfo("请先选择人偶");
-          } else {
-            voteToUser({
-              uid: this.uid,
-              loginKey: this.token,
-              moldId: this.selectEvent,
-            }).then((res) => {
-              if (res.code === 200) {
-                successInfo(res.msg);
-                this.$emit("getData");
-              } else errorInfo(res.msg);
-            });
-          }
-        } else if (type === "refresh") {
-          this.$emit("getData");
-        } else {
-          // 预约
-          this.voteStateAction(state);
-        }
-      } else this.$emit("handleLoginDialog");
+      console.log(type, state);
+      this.$emit("handleLoginDialog");
+      // if (this.token) {
+      //   // 投票
+      //   if (type === "start") {
+      //     if (!this.selectEvent) {
+      //       errorInfo("请先选择人偶");
+      //     } else {
+      //       voteToUser({
+      //         uid: this.uid,
+      //         loginKey: this.token,
+      //         moldId: this.selectEvent,
+      //       }).then((res) => {
+      //         if (res.code === 200) {
+      //           successInfo(res.msg);
+      //           this.$emit("getData");
+      //         } else errorInfo(res.msg);
+      //       });
+      //     }
+      //   } else if (type === "refresh") {
+      //     this.$emit("getData");
+      //   } else {
+      //     // 预约
+      //     this.voteStateAction(state);
+      //   }
+      // } else this.$emit("handleLoginDialog");
     },
     changeSelectEven(item, index) {
       if (this.selectIndex === index) return;
