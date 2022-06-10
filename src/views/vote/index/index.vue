@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-01 17:36:50
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-05-30 10:52:34
+ * @LastEditTime: 2022-06-10 11:55:11
  * @Description: 分五个页面， 一个头部轮播图。一个购买页面，一个三选一投票页面，一个商品页面
  * @FilePath: /h5-active-v2/src/views/anniversary/pose-recommend/index.vue
 -->
@@ -15,19 +15,19 @@
     <count-down></count-down>
     <info-fixed
       :userInfo="userInfo"
-      @handleLoginDialog="showLoginDialog = true"
+      @handleLoginDialog="dialogShow"
       @handleLogout="showLogoutDialog = true"
     ></info-fixed>
     <!-- 购买区域 -->
     <pay-event-component
-      @handleLoginDialog="showLoginDialog = true"
+      @handleLoginDialog="dialogShow"
       @handlePayDialog="handleChangePayModal"
       :otherInfo="otherInfo"
       v-if="0"
     ></pay-event-component>
     <!-- 投票区域 -->
     <vote-component
-      @handleLoginDialog="showLoginDialog = true"
+      @handleLoginDialog="dialogShow"
       :otherInfo="otherInfo"
       :isVote="isVote"
       @getData="getUserOtherInfo"
@@ -102,6 +102,7 @@ import { aliPayAction, wechatPayAction } from "@/utils/pay-config";
 import { mapState } from "vuex";
 import { checkUserState } from "@/api/vote";
 import { getCode } from "@/utils/getCode";
+import { Dialog } from "vant";
 
 export default {
   name: "votePage",
@@ -170,6 +171,20 @@ export default {
     }),
   },
   methods: {
+    dialogShow() {
+      Dialog.confirm({
+        message:
+          "梦中情“偶”投票活动已结束！最高票限定人偶“BJD大Q”将于618活动中开放18P币获取！",
+        cancelButtonText: "关闭",
+        confirmButtonText: "前往618活动",
+      })
+        .then(() => {
+          this.$router.push("/active");
+        })
+        .catch(() => {
+          console.log(1);
+        });
+    },
     openSuccessDialog() {
       this.$refs["successRef"].showDialog = true;
     },

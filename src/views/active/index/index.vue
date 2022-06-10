@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 14:25:41
+ * @LastEditTime: 2022-06-10 11:39:31
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -186,9 +186,9 @@ export default {
   data() {
     return {
       showLoading: false,
-      homeEndTime: new Date("2022-06-26 23:59:59").getTime() / 1000,
-      startTime: new Date("2022-06-17 00:00:00").getTime() / 1000,
-      endTime: new Date("2022-06-19 23:59:59").getTime() / 1000,
+      homeEndTime: new Date("2022/06/26 23:59:59").getTime() / 1000,
+      startTime: new Date("2022/06/17 00:00:00").getTime() / 1000,
+      endTime: new Date("2022/06/19 23:59:59").getTime() / 1000,
       showEvenDialog: false,
       showWechatDialog: false,
       qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
