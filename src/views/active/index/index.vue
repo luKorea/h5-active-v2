@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-10 11:39:31
+ * @LastEditTime: 2022-06-17 16:55:30
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -157,6 +157,10 @@ export default {
       sessionStorage.setItem("selectPage", 4);
       this.selectPage = 4;
     }
+    //   if (pageCode) {
+    //   sessionStorage.setItem("selectPage", +pageCode);
+    //   this.selectPage = +pageCode;
+    // }
     // TODO 获取地址栏是否带有state参数，带有参数展示支付成功弹
     const state = this.$route.query.state;
     if (state && state === "success") {
