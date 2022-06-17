@@ -21,8 +21,8 @@ module.exports = {
     compress: true,
     proxy: {
       "^/api": {
-        // target: "https://event.pofi.pro",
-        target: "https://test.pofi.pro",
+        target: "https://event.pofi.pro",
+        // target: "https://test.pofi.pro",
         // target: "http://192.168.28.45:18001",
         // pathRewrite: {
         //   "^/api": "",

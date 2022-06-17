@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 11:15:40
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 14:28:25
+ * @LastEditTime: 2022-06-17 11:00:55
  * @FilePath: /h5-active-v2/src/views/active/functionSubscription/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -51,12 +51,7 @@ recordList：组队用户信息
           </div>
         </template>
         <template v-if="$route.query.inviteCode || (uid && !otherInfo.vote)">
-          <template
-            v-if="
-              !otherInfo.vote &&
-              (showInviteWrap || (otherInfo && otherInfo.record))
-            "
-          >
+          <template v-if="showInviteWrap || (otherInfo && otherInfo.record)">
             <div class="invite-wrap">
               <div class="user-info">
                 <!-- 邀请者看到的信息 -->
@@ -480,21 +475,34 @@ export default {
         this.handleLoginDialog();
       } else {
         // 这里的是没有投票
-        if (!this.otherInfo.vote) {
-          if (type === "buy") {
-            // this.handlePayDialog();
-            this.$emit("payMoney", this.payInfo);
-            return;
-          }
-          if (type === "share") {
-            this.shareCode();
-            return;
-          }
-          if (type === "like") {
-            this.likeCode();
-            return;
-          }
+        if (type === "buy") {
+          // this.handlePayDialog();
+          this.$emit("payMoney", this.payInfo);
+          return;
         }
+        if (type === "share") {
+          this.shareCode();
+          return;
+        }
+        if (type === "like") {
+          this.likeCode();
+          return;
+        }
+        //   if (!this.otherInfo.vote) {
+        //     if (type === "buy") {
+        //       // this.handlePayDialog();
+        //       this.$emit("payMoney", this.payInfo);
+        //       return;
+        //     }
+        //     if (type === "share") {
+        //       this.shareCode();
+        //       return;
+        //     }
+        //     if (type === "like") {
+        //       this.likeCode();
+        //       return;
+        //     }
+        //   }
       }
     },
     // 生成分享链接
