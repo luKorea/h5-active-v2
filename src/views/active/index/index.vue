@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-05-30 10:50:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-20 09:22:50
+ * @LastEditTime: 2022-06-28 10:02:45
  * @FilePath: /h5-active-v2/src/views/active/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
     <!-- 首页 -->
     <active-home-page
       v-if="selectPage === 1"
-      @openPage="handleChangeDifferentPage"
+      @openPage="showCloseDialog"
       :endTime="homeEndTime"
     ></active-home-page>
     <template>
@@ -29,7 +29,7 @@
         @handleLoginDialog="showLoginDialog = true"
         @handlePayDialog="handleChangePayModal"
         :otherInfo="otherInfo"
-        @openPage="handleChangeDifferentPage"
+        @openPage="showCloseDialog"
         :endTime="homeEndTime"
       ></active-function-page>
       <!-- P币购买 -->
@@ -217,6 +217,11 @@ export default {
     }),
   },
   methods: {
+    showCloseDialog() {
+      Dialog({
+        message: "活动已结束",
+      });
+    },
     // 校验当前链接是邀请人链接还是被邀请人链接
     checkLinkIsInviter() {
       getActivePageConfig({
