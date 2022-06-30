@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-07 10:27:24
+ * @LastEditTime: 2022-06-30 17:03:03
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -168,7 +168,34 @@ export const RandomId = (n) => {
   return res;
 };
 
-export const clearRouterQuery = (queryParams) => {
-  let path = queryParams.$route.path;
-  queryParams.$router.push(path);
-};
+export function openApp() {
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+    let loadDateTime = new Date();
+    window.setTimeout(function () {
+      let timeOutDateTime = new Date();
+      if (timeOutDateTime - loadDateTime < 5000) {
+        // 跳转至app下载页 以微信为例
+        window.location =
+          "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.mm";
+      } else {
+        window.close();
+      }
+    }, 25);
+    // 打开本地的app 以微信为例
+    window.location = "poficreate://";
+  } else if (navigator.userAgent.match(/android/i)) {
+    let loadDateTime = new Date();
+    window.setTimeout(function () {
+      let timeOutDateTime = new Date();
+      if (timeOutDateTime - loadDateTime < 5000) {
+        // 跳转至app下载页
+        window.location =
+          "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.mm";
+      } else {
+        window.close();
+      }
+    }, 25);
+    // 打开本地的app
+    window.location = "poficreate://";
+  }
+}
