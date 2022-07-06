@@ -20,6 +20,8 @@
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
     ></info-fixed>
+    <!-- 底部 -->
+    <footer-component></footer-component>
     <!--登录注册页面-->
     <login-and-register
       :show-dialog="showLoginDialog"
@@ -61,6 +63,7 @@ import PaySuccessComponent from "@/components/pay-success";
 
 import infoFixed from "./common/fixed";
 import CountDown from "./common/count-down";
+import footerComponent from "./footer";
 
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
@@ -79,6 +82,7 @@ export default {
     loginAndRegister,
     PayComponent,
     PaySuccessComponent,
+    footerComponent,
   },
   computed: {
     ...mapState({
