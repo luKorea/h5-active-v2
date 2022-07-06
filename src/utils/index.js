@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-05 10:17:27
+ * @LastEditTime: 2022-07-06 10:57:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -199,3 +199,12 @@ export function openApp() {
     window.location = "poficreate://";
   }
 }
+
+export const reduceEndTime = (endTime) => {
+  let result = false;
+  const end = reduceTime(endTime); // 活动结束
+  if (end === 1) {
+    result = true;
+  }
+  return result;
+};
