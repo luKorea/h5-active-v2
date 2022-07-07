@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-02 10:01:28
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 09:44:15
+ * @LastEditTime: 2022-07-07 15:32:26
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/common/count-down/index.vue
 -->
@@ -106,19 +106,23 @@ export default {
   align-items: center;
   // padding: 20px;
   width: 100%;
-  height: 54px;
-  margin-top: -30px;
+  height: 57px;
+  // margin-top: -30px;
   margin-bottom: 20px;
+  position: relative;
+  top: 13px;
   .count-down {
     position: relative;
-    height: 54px;
+    height: 57px;
     width: 342px;
     .img {
       width: 100%;
       height: 100%;
       position: relative;
-      background-color: rgba(119, 49, 118, 0.48);
-      border-radius: 4px;
+      background-color: rgba(67, 159, 134, 1);
+      border: 2px solid #1e1e1e;
+      border-radius: 8px;
+      box-sizing: border-box;
       img {
         width: 100%;
         height: 100%;

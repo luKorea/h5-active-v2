@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-06 11:14:43
+ * @LastEditTime: 2022-07-07 15:31:49
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -41,14 +41,12 @@
       ref="payRef"
       @payWechat="payWechat"
       @payAli="payAli"
-      @payMoney="payMoney"
       :payInfo="payInfo"
       :userInfo="userInfo"
     ></pay-component>
     <!-- 支付成功弹框 -->
     <pay-success-component
       ref="successRef"
-      @openPage="handleChangeDifferentPage"
       title="充值已到账，请打开APP刷新查看"
     ></pay-success-component>
   </div>
@@ -107,7 +105,7 @@ export default {
   mounted() {
     this.activeIsState = reduceEndTime(this.endTime);
     // 判断当前是否在微信内
-    if (this._isWechat()) {
+    if (this._isWechat() && process.env.NODE_ENV === "production") {
       if (localCache.getCache("openId") == null) {
         getCode("wx4e33f34be6700e46", this.$route.query.code);
         return;

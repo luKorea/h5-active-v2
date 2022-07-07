@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-06 10:48:03
+ * @LastEditTime: 2022-07-07 17:08:23
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -58,6 +58,12 @@ const routes = [
   {
     path: "/summerVacation22",
     name: "summerVacationPage",
+    component: () => import("@/views/summerVacation/index.vue"),
+  },
+  // 只用于展示
+  {
+    path: "/presentTheWork",
+    name: "presentTheWorkPage",
     component: () => import("@/views/summerVacation/index.vue"),
   },
 ];

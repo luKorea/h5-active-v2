@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-06 11:14:43
+ * @LastEditTime: 2022-07-07 16:55:00
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,8 +20,23 @@
       @handleLoginDialog="showLoginDialog = true"
       @handleLogout="showLogoutDialog = true"
     ></info-fixed>
+    <page-info-component @goAnchor="goAnchor"></page-info-component>
+    <!-- item选项吸顶 -->
+    <template v-if="selectList && selectList.length > 0">
+      <div class="select-wrap">
+        <div
+          class="select-item"
+          :class="selectBtnIndex === item.ref && 'select'"
+          v-for="item in selectList"
+          :key="item.ref"
+          @click="handleChangeItem(item.ref)"
+        >
+          {{ item.name }}
+        </div>
+      </div>
+    </template>
     <!-- 底部 -->
-    <footer-component></footer-component>
+    <!-- <footer-component></footer-component> -->
     <!--登录注册页面-->
     <login-and-register
       :show-dialog="showLoginDialog"
@@ -41,14 +56,12 @@
       ref="payRef"
       @payWechat="payWechat"
       @payAli="payAli"
-      @payMoney="payMoney"
       :payInfo="payInfo"
       :userInfo="userInfo"
     ></pay-component>
     <!-- 支付成功弹框 -->
     <pay-success-component
       ref="successRef"
-      @openPage="handleChangeDifferentPage"
       title="充值已到账，请打开APP刷新查看"
     ></pay-success-component>
   </div>
@@ -63,26 +76,35 @@ import PaySuccessComponent from "@/components/pay-success";
 
 import infoFixed from "./common/fixed";
 import CountDown from "./common/count-down";
-import footerComponent from "./footer";
+// import footerComponent from "./footer";
+import pageInfoComponent from "./component/function-desc.vue";
 
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
-import { errorInfo, successInfo, reduceEndTime } from "@/utils";
+import { errorInfo, successInfo, reduceEndTime, openUrl } from "@/utils";
 import { wechatPayAction, aliPayAction } from "@/utils/pay-config";
 import urlLink from "@/utils/link";
 import { mapState } from "vuex";
 import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
+import {
+  checkUserHasEvent,
+  checkPageConfig,
+  randomPose,
+  getAward,
+} from "@/api/summary";
+import smoothscroll from "smoothscroll-polyfill";
 
 export default {
   name: "summaryContainer",
   components: {
     infoFixed,
     CountDown,
+    pageInfoComponent,
     logout,
     loginAndRegister,
     PayComponent,
     PaySuccessComponent,
-    footerComponent,
+    // footerComponent,
   },
   computed: {
     ...mapState({
@@ -93,7 +115,7 @@ export default {
   },
   data() {
     return {
-      headerImg: BASE_IMAGE_SUMMARY_URL + "/home-header.png",
+      headerImg: BASE_IMAGE_SUMMARY_URL + "/header-banner.png",
       endTime: new Date("2022/07/31 23:59:59").getTime() / 1000,
       showLoginDialog: false,
       showLogoutDialog: false,
@@ -102,12 +124,25 @@ export default {
         id: "MDRCG12800",
       },
       activeIsState: false,
+      selectBtnIndex: "one",
+      selectList: [
+        { name: "功能订阅", ref: "one" },
+        { name: "充值送人偶", ref: "two" },
+        { name: "Pose库半价", ref: "three" },
+        { name: "实体人偶", ref: "four" },
+      ],
+      pageConfig: {},
+      poseList: [],
     };
   },
   mounted() {
+    document.title = "Pofi 暑假爆肝计划";
     this.activeIsState = reduceEndTime(this.endTime);
+    if (this.token && this.uid) {
+      this.getPageConfig();
+    }
     // 判断当前是否在微信内
-    if (this._isWechat()) {
+    if (this._isWechat() && process.env.NODE_ENV === "production") {
       if (localCache.getCache("openId") == null) {
         getCode("wx4e33f34be6700e46", this.$route.query.code);
         return;
@@ -115,6 +150,61 @@ export default {
     }
   },
   methods: {
+    // 获取页面配置
+    getPageConfig() {
+      checkPageConfig({
+        loginKey: this.token,
+        uid: this.uid,
+      }).then((res) => {
+        if (res.code === 200) {
+          this.pageConfig = res.data;
+          // 判断是否具有领取资格
+          if (res.data.receive) {
+            this.getAwardToTime();
+          }
+        } else errorInfo(res.msg);
+      });
+    },
+    // 获取随机库
+    getPoseList() {
+      randomPose().then((res) => {
+        if (res.code === 200) {
+          this.poseList = res.data;
+        } else errorInfo(res.msg);
+      });
+    },
+    // 获取9P币，如果receive返回1，可以领取9P币
+    getAwardToTime() {
+      getAward({
+        loginKey: this.token,
+        uid: this.uid,
+      }).then((res) => {
+        if (res.code === 200) {
+          console.log(res.data);
+          // this.pageConfig = res.data;
+        }
+      });
+    },
+    goAnchor(ele) {
+      if (ele === "download") {
+        openUrl(urlLink.appLink);
+      } else {
+        this.handleScroll(ele);
+      }
+    },
+    handleScroll(ele) {
+      this.selectBtnIndex = ele;
+      smoothscroll.polyfill();
+      if (this.$refs[ele]) {
+        this.$refs[ele].$el.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    },
+    handleChangeItem(ele) {
+      if (this.selectBtnIndex === ele) return;
+      this.handleScroll(ele);
+    },
     phoneLogin(data) {
       const _this = this;
       let tel = "" + data.no;
@@ -138,6 +228,21 @@ export default {
     closeDialog() {
       this.showLoginDialog = false;
       this.showLogoutDialog = false;
+    },
+    checkHasEven() {
+      return new Promise((resolve, reject) => {
+        checkUserHasEvent({
+          uid: this.uid,
+          snId: this.payInfo.id,
+          loginKey: this.token,
+        }).then((res) => {
+          if (res.code === 200 && res.state) {
+            resolve();
+          } else if (res.code === 200 && res.state === false) {
+            reject("您已经拥有该套餐，无需再购买");
+          } else reject(res.msg);
+        });
+      });
     },
     handleChangePayModal(info) {
       this.payInfo = info;
@@ -170,7 +275,6 @@ export default {
         returnUrl: `${window.location.href}?state=success`,
         openId: this._isWechat() ? localCache.getCache("openId") : null,
       };
-      console.log(data, "wechat");
       wechatPayAction(data)
         .then(() => {
           this.$refs["payRef"].showDialog = false;
@@ -200,4 +304,57 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  width: 100%;
+  background-color: rgba(16, 73, 61, 1);
+  .banner-header {
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .select-wrap {
+    position: sticky;
+    top: 0 !important;
+    display: flex;
+    // justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 36px;
+    line-height: 30px;
+    // line-height: 20px;
+    box-sizing: border-box;
+    border: 3px solid #1e1e1e;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: zihun105hao-jianyahei;
+    margin-bottom: 47px;
+    .select-item {
+      width: 98px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .select {
+      text-align: center;
+      background: #fb9833;
+      border: 2px solid #1e1e1e;
+      border-top: none;
+      border-bottom: none;
+      border-radius: 3px;
+      box-sizing: border-box;
+      color: #1e1e1e;
+    }
+  }
+}
+</style>

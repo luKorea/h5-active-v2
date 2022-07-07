@@ -7,26 +7,34 @@ export function getUserAccount(data) {
     showLoading: false,
   });
 }
-// 获取页面配置，判断是否拥有邀请码，确认是自己页面还是邀请页面
-export const getActivePageConfig = (params) => {
+// 获取页面配置
+export function checkPageConfig(data) {
   return request.post({
-    url: "/api/event/mid22/config",
-    data: params,
+    url: "/api/event/summer2022/config",
+    data: data,
+    showLoading: true,
+  });
+}
+// 支付前校验是否已经拥有
+export const checkUserHasEvent = (params) => {
+  return request.post({
+    url: "/api/event/summer2022/checkTrade",
+    params: params,
   });
 };
-// 邀请好友 /api/event/mid22/invite
-// data: uid
-export const inviteUser = (data) => {
+
+// Pose库随机展示
+export const randomPose = (params) => {
   return request.post({
-    url: "/api/event/mid22/invite",
-    data: data,
+    url: "/api/event/summer2022/randomList",
+    params: params,
   });
 };
-// 给好友点赞  /api/event/mid22/like 需要传邀请码，被邀请者给邀请者点赞
-//  传uid和inviteCode
-export const likeUser = (data) => {
+
+// 领取9PB
+export const getAward = (params) => {
   return request.post({
-    url: "/api/event/mid22/like",
-    data: data,
+    url: "/api/event/summer2022/receive",
+    params: params,
   });
 };
