@@ -16,6 +16,10 @@ body,
   font-family: 'zihun105hao-jianyahei';
   src: url(../assets/font/font-text.ttf);
 }
+@font-face {
+  font-family: 'korea-text';
+  src: url(../assets/font/demo.ttf);
+}
 /**用户ID**/
 .common-user-id {
   width: 200px;
