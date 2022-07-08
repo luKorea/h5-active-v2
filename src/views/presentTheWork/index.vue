@@ -2,22 +2,35 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-07 17:12:17
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-07 18:12:32
+ * @LastEditTime: 2022-07-08 10:44:09
  * @FilePath: /h5-active-v2/src/views/presentTheWork/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEv
 -->
 <template>
   <div class="present-page">
-    <div
-      class="item"
-      v-for="item in list"
-      :key="item.url"
-      @click="goPage(item.url)"
-    >
-      <div class="title">{{ item.name }}</div>
-      <div class="img">
-        <img :src="item.imgUrl" alt="" referrerpolicy="no-referrer" />
-      </div>
+    <van-dropdown-menu class="fixed-top" active-color="#1989fa">
+      <van-dropdown-item
+        @change="handleChangePage"
+        v-model="pageOne"
+        :options="list"
+      />
+      <van-dropdown-item
+        @change="handleChangePage"
+        v-model="pageTwo"
+        :options="list2"
+      />
+    </van-dropdown-menu>
+    <div class="wrap">
+      <template v-for="item in list">
+        <template v-if="item.imgUrl">
+          <div class="item" :key="item.value" @click="toRouter(item.value)">
+            <div class="title">{{ item.text }}</div>
+            <div class="img">
+              <img :src="item.imgUrl" alt="" referrerpolicy="no-referrer" />
+            </div>
+          </div>
+        </template>
+      </template>
     </div>
   </div>
 </template>
@@ -27,30 +40,67 @@ export default {
   name: "presentTheWorkComponent",
   data() {
     return {
+      pageOne: 0,
+      pageTwo: 0,
       list: [
         {
-          name: "Pofi 暑假爆肝活动",
-          url: "/summerVacation22",
+          text: "活动落地页",
+          value: 0,
+        },
+        {
+          text: "暑假爆肝活动",
+          value: "/summerVacation22",
           imgUrl: "https://f3.pofiapp.com/event/pageImage/newYear'sDay.jpg",
         },
         {
-          name: "Pofi 618活动",
-          url: "/active",
-          imgUrl: "https://f3.pofiapp.com/event/pageImage/advertisement.jpg",
-        },
-        {
-          name: "Pofi 周年庆",
-          url: "/Ann2022",
+          text: "618活动",
+          value: "/active",
           imgUrl: "https://f3.pofiapp.com/event/pageImage/618.jpg",
         },
         {
-          name: "Pofi 投票活动",
-          url: "/mayday22",
+          text: "周年庆",
+          value: "/advertisement",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/advertisement.jpg",
+        },
+        {
+          text: "投票活动",
+          value: "/mayday22",
           imgUrl: "https://f3.pofiapp.com/event/pageImage/vote.jpg",
         },
         {
-          name: "Pofi 贺新春日纪",
-          url: "/group",
+          text: "贺新春日纪",
+          value: "/group",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/newYear'sDay.jpg",
+        },
+      ],
+      list2: [
+        {
+          text: "抽奖页面",
+          value: 0,
+        },
+        {
+          text: "暑假爆肝活动",
+          value: "/summerVacation22",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/newYear'sDay.jpg",
+        },
+        {
+          text: "618活动",
+          value: "/active",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/618.jpg",
+        },
+        {
+          text: "周年庆",
+          value: "/advertisement",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/advertisement.jpg",
+        },
+        {
+          text: "投票活动",
+          value: "/mayday22",
+          imgUrl: "https://f3.pofiapp.com/event/pageImage/vote.jpg",
+        },
+        {
+          text: "贺新春日纪",
+          value: "/group",
           imgUrl: "https://f3.pofiapp.com/event/pageImage/newYear'sDay.jpg",
         },
       ],
@@ -60,7 +110,10 @@ export default {
     document.title = "作品集展示页面";
   },
   methods: {
-    goPage(url) {
+    handleChangePage(e) {
+      e !== 0 && this.toRouter(e);
+    },
+    toRouter(url) {
       this.$router.push({
         path: url,
       });
@@ -73,15 +126,32 @@ export default {
 .present-page {
   width: 100%;
   min-height: 100%;
-  background-color: rgb(217, 207, 207);
+  // background-color: rgb(217, 207, 207);
+  // background: linear-gradient(90deg, #dcf8ef, #fee2f8);
+  // background: linear-gradient(90deg, #cd9cf2, #f6f3ff);
+  background: linear-gradient(90deg, #1d6fa3, #65fdf0);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  // padding: 20px 0;
+  .fixed-top {
+    width: 100%;
+    position: sticky;
+    top: 0 !important;
+    background: linear-gradient(90deg, #cd9cf2, #f6f3ff) !important;
+  }
+  .wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
   .item {
     width: 90%;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px;
     margin-bottom: 10px;
     padding: 40px 10px;
@@ -90,6 +160,7 @@ export default {
       font-size: 16px;
       text-align: center;
       margin-bottom: 10px;
+      color: #fff;
     }
     .img {
       width: 100%;

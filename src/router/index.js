@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-13 17:43:39
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-07 17:19:45
+ * @LastEditTime: 2022-07-08 10:44:27
  * @Description: file content
  * @FilePath: /h5-active-v2/src/router/index.js
  */
@@ -21,7 +21,8 @@ const routes = [
   },
   // 周年庆模块
   {
-    path: "/Ann2022",
+    // path: "/Ann2022",
+    path: "/advertisement",
     name: "advertisementLogin",
     // component: () => import("@/views/endPage/index.vue"),
     component: () => import("@/views/anniversary/login/login.vue"),

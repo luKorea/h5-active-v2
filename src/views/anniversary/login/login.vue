@@ -1,8 +1,8 @@
 <!--
  * @Author: korealu
  * @Date: 2022-03-01 16:42:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-02 16:30:04
+ * @LastEditors: korealu 643949593@qq.com
+ * @LastEditTime: 2022-07-08 10:42:14
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/login/login.vue
 -->
@@ -111,12 +111,12 @@ export default {
           .then((res) => {
             console.log(res);
             successInfo("登录成功");
-            // this.$router.push({
-            //   path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
-            // });
             this.$router.push({
-              path: "/end",
+              path: res === "B1" ? "/ordinaryRecommend" : "/poseRecommend",
             });
+            // this.$router.push({
+            //   path: "/end",
+            // });
           })
           .catch((err) => errorInfo(err));
       }

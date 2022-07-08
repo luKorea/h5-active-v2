@@ -47,7 +47,8 @@ export default {
     },
     logout() {
       this.$store.dispatch("anniversaryModule/logoutAction").then(() => {
-        this.$router.replace("/Ann2022");
+        // this.$router.replace("/Ann2022");
+        this.$router.replace("/advertisement");
       });
     },
   },
