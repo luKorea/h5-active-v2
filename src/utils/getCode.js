@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-11 10:27:17
+ * @LastEditTime: 2022-07-11 15:22:31
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/getCode.js
  */

@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-09 11:59:05
+ * @LastEditTime: 2022-07-11 16:51:53
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */
@@ -25,4 +25,5 @@ export default {
   subLink: "https://mp.weixin.qq.com/s/kJSGrGyZqn4GOSQJxKKraQ",
   shoppingLink:
     'https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1640343152"',
+  programLink: "weixin://dl/business/?t=kgNgDXReWak",
 };

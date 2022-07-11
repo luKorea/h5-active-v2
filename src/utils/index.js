@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-06 10:57:40
+ * @LastEditTime: 2022-07-11 14:45:47
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -208,3 +208,115 @@ export const reduceEndTime = (endTime) => {
   }
   return result;
 };
+
+// 随机生成假数据
+export function random(min, untilMax) {
+  if (min === untilMax) {
+    return min;
+  } else {
+    return Math.floor(Math.random() * (untilMax - min)) + min;
+  }
+}
+export function generatorDrawList(giftList, startTime = 3, endTime = 31) {
+  giftList = giftList ?? [
+    "实体人偶奖",
+    "专业版Pro奖",
+    "限定人偶大礼包",
+    "BJD大Q",
+    "BJD薇薇安",
+    "莉莉丝",
+    "BJD小Q",
+  ];
+  let numRank = [
+    "135",
+    "136",
+    "137",
+    "138",
+    "139",
+    "147",
+    "148",
+    "150",
+    "151",
+    "152",
+    "157",
+    "158",
+    "159",
+    "178",
+    "182",
+    "183",
+    "184",
+    "187",
+    "188",
+    "198",
+    "130",
+    "131",
+    "132",
+    "155",
+    "156",
+    "185",
+    "186",
+    "145",
+    "146",
+    "166",
+    "167",
+    "175",
+    "176",
+    "170",
+    "171",
+    "133",
+    "153",
+    "177",
+    "180",
+    "181",
+    "189",
+    "191",
+    "199",
+  ];
+  let temp = [];
+  let date = new Date();
+  let year = date.getFullYear();
+  let mon = date.getMonth() + 1;
+  let day = date.getUTCDate();
+  let h = date.getHours();
+  let m = date.getMinutes();
+  let s = date.getSeconds();
+  let c = 0;
+  let dM = 0;
+  if (mon === 1 || mon === startTime) {
+    if (mon === startTime && day > endTime) {
+      return;
+    }
+    giftList.forEach(function (item) {
+      let obj = {};
+      let mM = m;
+      if (c > s) {
+        dM++;
+        c = random(30, 65) * -1;
+      }
+      c++;
+      if (m - dM < 0) {
+        mM = 59 + (m - dM);
+      } else {
+        mM = m - dM;
+      }
+      obj["time"] =
+        year +
+        "/" +
+        mon +
+        "/" +
+        day +
+        "/" +
+        h +
+        ":" +
+        (new RegExp(/^\d$/g).test(mM.toString()) ? `0${mM}` : mM);
+      obj["obj"] = item;
+      obj["number"] =
+        numRank[random(0, numRank.length)] + "****" + random(1000, 10000);
+      temp[temp.length] = obj;
+    });
+  }
+  return {
+    initialIndex: random(0, temp.length),
+    list: temp,
+  };
+}
