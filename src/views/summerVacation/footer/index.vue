@@ -1,8 +1,9 @@
+import { BASE_IMAGE_SUMMARY_URL } from '@/request/config';
 <!--
  * @Author: korealu
  * @Date: 2022-03-01 16:42:05
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-06 11:05:35
+ * @LastEditTime: 2022-07-11 17:24:40
  * @Description: file content
  * @FilePath: /h5-active-v2/src/views/anniversary/footer/index.vue
 -->
@@ -40,7 +41,7 @@
 <script>
 import {
   BASE_IMAGE_ANNIVERSARY_URL,
-  BASE_IMAGE_ACTIVE_URL,
+  BASE_IMAGE_SUMMARY_URL,
 } from "@/request/config";
 
 export default {
@@ -56,8 +57,7 @@ export default {
       logoImg: BASE_IMAGE_ANNIVERSARY_URL + "/logo.png",
       qrcode: BASE_IMAGE_ANNIVERSARY_URL + "/qrcode.png",
       drivar: BASE_IMAGE_ANNIVERSARY_URL + "/drivar.png",
-      ruleTitle:
-        BASE_IMAGE_ACTIVE_URL + "/rule-title.png" + "?" + new Date().getTime(),
+      ruleTitle: BASE_IMAGE_SUMMARY_URL + "/rule-title.png",
       copyTitle: "本活动由Pofi无限人偶提供 | Pofi，让绘画，更简单。",
 
       list: [
@@ -81,8 +81,8 @@ export default {
   .title-wrap {
     width: 90%;
     .desc-title {
-      width: 163px;
-      height: 43px;
+      width: 145px;
+      height: 38px;
       img {
         width: 100%;
         height: 100%;

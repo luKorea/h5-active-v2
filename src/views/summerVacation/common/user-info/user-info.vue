@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 13:49:40
- * @LastEditTime: 2022-06-10 14:39:08
+ * @LastEditTime: 2022-07-11 18:04:45
  * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/components/user-info/user-info.vue
@@ -22,9 +22,9 @@
           <span style="margin-right: 10px"
             >Pofi ID : {{ userInfo.nickId }}</span
           >
-          <span v-if="userInfo.pocket.gold"
+          <!-- <span v-if="userInfo.pocket.gold"
             >P币: {{ (userInfo.pocket.gold / 100).toFixed(0) }}</span
-          >
+          > -->
         </div>
       </div>
     </template>
@@ -54,11 +54,12 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 31px;
-  line-height: 31px;
-  background-color: rgba(225, 230, 255, 1);
-  border-radius: 16px;
+  height: 40px;
+  line-height: 40px;
+  background-color: RGBA(251, 152, 51, 1);
+  border-radius: 30px;
   padding: 0 6px 0 12px;
+  border: 1px solid #08050e;
   .login-title {
     font-size: 13px;
     font-family: Source Han Sans CN;
@@ -68,20 +69,22 @@ export default {
   }
   .login-btn {
     width: 63px;
-    height: 24px;
-    line-height: 24px;
+    height: 30px;
+    line-height: 30px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 30px;
+    border: 1px solid #08050e;
     text-align: center;
   }
   .user-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 24px;
-    line-height: 24px;
+    height: 30px;
+    line-height: 30px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 30px;
+    border: 1px solid #08050e;
     padding: 0 14px 0 4px;
     .avatar {
       margin-right: 10px;

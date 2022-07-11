@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-07 16:55:00
+ * @LastEditTime: 2022-07-11 17:57:36
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -35,8 +35,23 @@
         </div>
       </div>
     </template>
+    <!-- 功能订阅 -->
+    <page-fun-buy-component ref="one"></page-fun-buy-component>
+    <!-- 充值P币 -->
+    <page-pay-info-component ref="two"></page-pay-info-component>
+    <!-- 实体人偶 -->
+    <page-even-component ref="three"></page-even-component>
+    <!-- pose半价 -->
+    <page-pose-component ref="four"></page-pose-component>
+    <!-- 打卡活动区域 -->
+    <div class="wrap-content">
+      <img :src="punchCardImg" alt="" referrerpolicy="no-referrer" />
+    </div>
+    <!-- 九宫格抽奖 -->
+    <!-- 第三方链接 -->
+    <part-component></part-component>
     <!-- 底部 -->
-    <!-- <footer-component></footer-component> -->
+    <footer-component></footer-component>
     <!--登录注册页面-->
     <login-and-register
       :show-dialog="showLoginDialog"
@@ -76,8 +91,14 @@ import PaySuccessComponent from "@/components/pay-success";
 
 import infoFixed from "./common/fixed";
 import CountDown from "./common/count-down";
-// import footerComponent from "./footer";
+import footerComponent from "./footer";
+import partComponent from "./common/part/index.vue";
+
 import pageInfoComponent from "./component/function-desc.vue";
+import pageFunBuyComponent from "./component/function-buy.vue";
+import pagePayInfoComponent from "./component/pay-info.vue";
+import pageEvenComponent from "./component/even.vue";
+import pagePoseComponent from "./component/pose.vue";
 
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
@@ -99,12 +120,17 @@ export default {
   components: {
     infoFixed,
     CountDown,
+    partComponent,
     pageInfoComponent,
+    pageFunBuyComponent,
+    pagePayInfoComponent,
+    pageEvenComponent,
+    pagePoseComponent,
     logout,
     loginAndRegister,
     PayComponent,
     PaySuccessComponent,
-    // footerComponent,
+    footerComponent,
   },
   computed: {
     ...mapState({
@@ -116,6 +142,7 @@ export default {
   data() {
     return {
       headerImg: BASE_IMAGE_SUMMARY_URL + "/header-banner.png",
+      punchCardImg: BASE_IMAGE_SUMMARY_URL + "/vote-bg.png",
       endTime: new Date("2022/07/31 23:59:59").getTime() / 1000,
       showLoginDialog: false,
       showLogoutDialog: false,
@@ -128,8 +155,8 @@ export default {
       selectList: [
         { name: "功能订阅", ref: "one" },
         { name: "充值送人偶", ref: "two" },
-        { name: "Pose库半价", ref: "three" },
-        { name: "实体人偶", ref: "four" },
+        { name: "实体人偶", ref: "three" },
+        { name: "Pose库半价", ref: "four" },
       ],
       pageConfig: {},
       poseList: [],
@@ -198,6 +225,7 @@ export default {
       if (this.$refs[ele]) {
         this.$refs[ele].$el.scrollIntoView({
           behavior: "smooth",
+          top: 20,
         });
       }
     },
@@ -323,6 +351,7 @@ export default {
   .select-wrap {
     position: sticky;
     top: 0 !important;
+    z-index: 99;
     display: flex;
     // justify-content: space-around;
     justify-content: space-between;
@@ -338,7 +367,8 @@ export default {
     font-size: 15px;
     font-weight: 400;
     font-family: zihun105hao-jianyahei;
-    margin-bottom: 47px;
+    // margin-bottom: 47px;
+    background-color: rgba(16, 73, 61, 1);
     .select-item {
       width: 98px;
       display: flex;

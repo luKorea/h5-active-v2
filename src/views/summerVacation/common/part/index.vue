@@ -18,7 +18,7 @@
 <script>
 import { openUrl, copyShareLink } from "@/utils";
 import urlLink from "@/utils/link";
-import { BASE_IMAGE_ACTIVE_URL } from "@/request/config";
+import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
 
 export default {
   name: "send-link",
@@ -26,23 +26,23 @@ export default {
     return {
       list: [
         {
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/weibo.png",
+          imgUrl: BASE_IMAGE_SUMMARY_URL + "/weibo.png",
           url: urlLink.weiboLink,
           type: "weibo",
         },
         {
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/redbook.png",
+          imgUrl: BASE_IMAGE_SUMMARY_URL + "/redbook.png",
           url: urlLink.redBookLink1,
           type: "redBook",
         },
         {
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/qq.png",
+          imgUrl: BASE_IMAGE_SUMMARY_URL + "/service-btn.png",
           url: urlLink.voteQQLink,
           type: "qq",
           urlForWechat: urlLink.voteQQLink,
         },
         {
-          imgUrl: BASE_IMAGE_ACTIVE_URL + "/share.png",
+          imgUrl: BASE_IMAGE_SUMMARY_URL + "/share.png",
           url: window.location.origin + window.location.pathname,
           type: "share",
         },
@@ -94,12 +94,12 @@ export default {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    width: 80%;
+    width: 88%;
     margin: 20px 0;
     .img-item {
-      width: 140px;
-      height: 28px;
-      margin-bottom: 10px;
+      width: 144px;
+      height: 33px;
+      margin-bottom: 12px;
       img {
         width: 100%;
         height: 100%;

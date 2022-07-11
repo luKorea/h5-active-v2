@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-07 15:02:56
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-11 16:52:09
+ * @LastEditTime: 2022-07-11 17:43:32
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-desc.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -34,7 +34,7 @@
       <div class="four">
         <img :src="pageFour.bgImg" alt="" referrerpolicy="no-referrer" />
       </div>
-      <div class="four-btn" @click="goAnchor('three')">
+      <div class="four-btn" @click="goAnchor('four')">
         <img :src="pageFour.btnImg" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
