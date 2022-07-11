@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-07 14:39:21
+ * @LastEditTime: 2022-07-11 10:27:17
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/getCode.js
  */
@@ -31,8 +31,9 @@ export function getCode(appid, code) {
       type: 1,
     }).then((res) => {
       if (res.code === 200) {
-        console.log(res.data.openId, "用户openID");
+        console.log(res.data, "用户openID");
         localCache.setCache("openId", res.data.openId);
+        localCache.setCache("wxConfig", res.data);
       } else errorInfo(res.data.msg);
     });
   }
