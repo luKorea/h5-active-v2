@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-18 14:46:55
- * @LastEditTime: 2022-07-11 10:23:33
+ * @LastEditTime: 2022-07-12 17:29:07
  * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/main.js
@@ -16,6 +16,7 @@ import globalRegister from "@/global";
 import VueClipboard from "vue-clipboard2";
 import { Dialog } from "vant";
 import smoothscroll from "smoothscroll-polyfill";
+import VueLuckyCanvas from "@lucky-canvas/vue";
 
 import wx from "weixin-js-sdk";
 
@@ -24,6 +25,7 @@ smoothscroll.polyfill();
 // new Vconsole();
 
 Vue.use(Dialog);
+Vue.use(VueLuckyCanvas);
 
 Vue.config.productionTip = false;
 Vue.prototype.$wx = wx;

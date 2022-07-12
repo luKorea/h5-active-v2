@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 15:36:43
+ * @LastEditTime: 2022-07-12 18:24:42
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -79,8 +79,9 @@
 import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
 import userInfoComponent from "../common/user-info/user-info.vue";
 import { generatorDrawList } from "@/utils";
-import { getPriceInfo } from "@/api/lottery";
+import { getPriceInfo, refreshCount, startLottery } from "@/api/lottery";
 import { mapState } from "vuex";
+import { Dialog } from "vant";
 
 export default {
   name: "lottery-page",
@@ -96,6 +97,45 @@ export default {
       status: 1, // 1. 我的奖品  2. 奖品说明
       dataList: {},
       info: [],
+      currentInfo: {}, //中奖信息
+      list: [
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift1.png",
+          id: 1,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift2.png",
+          id: 2,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift3.png",
+          id: 3,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift8.png",
+          id: 8,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/do-btn.png",
+          id: 9,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift4.png",
+          id: 4,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift7.png",
+          id: 7,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift6.png",
+          id: 6,
+        },
+        {
+          img: "https://f3.pofiapp.com/draw/middle_2022/gift5.png",
+          id: 5,
+        },
+      ],
     };
   },
 
@@ -103,6 +143,12 @@ export default {
     this.dataList = generatorDrawList();
     if (this.token && this.uid) {
       this.getMyPrice();
+      this.refreshCountPlay();
+    }
+    for (let i = 1; i < 9; i++) {
+      this.drawItems[this.drawItems.length] = document.getElementById(
+        "draw-item-" + i
+      );
     }
   },
   computed: {
@@ -128,6 +174,46 @@ export default {
     changeText(e) {
       if (+e === this.status) return;
       this.status = +e;
+    },
+    // 刷新次数
+    refreshCountPlay() {
+      refreshCount({
+        uid: this.uid,
+        loginKey: this.token,
+      }).then((res) => {
+        if (res.state) {
+          this.count = res.data;
+        }
+      });
+    },
+    startLotteryPlay() {
+      if (!this.uid) {
+        this.handleLoginDialog();
+        return;
+      }
+      if (this.isDrawing) {
+        return;
+      }
+      startLottery({
+        uid: this.uid,
+        loginKey: this.token,
+      }).then((res) => {
+        if (res.state) {
+          this.currentInfo = res.data;
+          this.refreshCountPlay();
+          // 调用stop停止旋转并传递中奖索引;
+        } else if (res.code === 77) {
+          this.refreshCountPlay();
+          Dialog.alert({
+            message: "欧气增加了一点点，再来一次~",
+          });
+        } else if (res.code === 78) {
+          this.refreshCountPlay();
+          Dialog.alert({
+            message: "今天的抽奖额度已用完，明天再来吧！",
+          });
+        }
+      });
     },
   },
 };
