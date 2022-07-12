@@ -207,7 +207,7 @@ input::placeholder {
 .wrap-content {
   position: relative;
 }
-.wrap-content .user-info {
+.wrap-content .user-info1 {
   position: absolute;
   display: flex;
   justify-content: center;

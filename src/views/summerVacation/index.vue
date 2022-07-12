@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-11 17:57:36
+ * @LastEditTime: 2022-07-12 16:45:44
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,9 +36,23 @@
       </div>
     </template>
     <!-- 功能订阅 -->
-    <page-fun-buy-component ref="one"></page-fun-buy-component>
+    <page-fun-buy-component
+      ref="one"
+      @handleLoginDialog="showLoginDialog = true"
+      @handlePayDialog="handleChangePayModal"
+      @showText="showText"
+      @showRule="showRule"
+      :page-config="pageConfig"
+    ></page-fun-buy-component>
     <!-- 充值P币 -->
-    <page-pay-info-component ref="two"></page-pay-info-component>
+    <page-pay-info-component
+      ref="two"
+      :page-config="pageConfig"
+      @handlePayDialog="handleChangePayModal"
+      @handleLoginDialog="showLoginDialog = true"
+      @showText="showText"
+      @showRule="showRule"
+    ></page-pay-info-component>
     <!-- 实体人偶 -->
     <page-even-component ref="three"></page-even-component>
     <!-- pose半价 -->
@@ -48,6 +62,9 @@
       <img :src="punchCardImg" alt="" referrerpolicy="no-referrer" />
     </div>
     <!-- 九宫格抽奖 -->
+    <page-lottery-component
+      @handleLoginDialog="showLoginDialog = true"
+    ></page-lottery-component>
     <!-- 第三方链接 -->
     <part-component></part-component>
     <!-- 底部 -->
@@ -79,6 +96,10 @@
       ref="successRef"
       title="充值已到账，请打开APP刷新查看"
     ></pay-success-component>
+    <!-- 规则 -->
+    <rule-modal ref="ruleRef"></rule-modal>
+    <!-- 用户协议 -->
+    <info-modal ref="infoRef"></info-modal>
   </div>
 </template>
 
@@ -93,12 +114,15 @@ import infoFixed from "./common/fixed";
 import CountDown from "./common/count-down";
 import footerComponent from "./footer";
 import partComponent from "./common/part/index.vue";
+import ruleModal from "./common/modal/rule.vue";
+import infoModal from "./common/modal/info.vue";
 
 import pageInfoComponent from "./component/function-desc.vue";
 import pageFunBuyComponent from "./component/function-buy.vue";
 import pagePayInfoComponent from "./component/pay-info.vue";
 import pageEvenComponent from "./component/even.vue";
 import pagePoseComponent from "./component/pose.vue";
+import pageLotteryComponent from "./component/lottery.vue";
 
 import localCache from "@/utils/cache";
 import { getCode } from "@/utils/getCode";
@@ -121,11 +145,14 @@ export default {
     infoFixed,
     CountDown,
     partComponent,
+    ruleModal,
+    infoModal,
     pageInfoComponent,
     pageFunBuyComponent,
     pagePayInfoComponent,
     pageEvenComponent,
     pagePoseComponent,
+    pageLotteryComponent,
     logout,
     loginAndRegister,
     PayComponent,
@@ -327,6 +354,12 @@ export default {
       };
       console.log(data, "ali");
       aliPayAction(data);
+    },
+    showText() {
+      this.$refs["infoRef"].showDialog = true;
+    },
+    showRule() {
+      this.$refs["ruleRef"].showDialog = true;
     },
   },
 };

@@ -23,6 +23,14 @@ export const checkUserHasEvent = (params) => {
   });
 };
 
+// pose库列表
+export const getPoseList = () => {
+  return request.post({
+    url: "/api/event/summer2022/poseList",
+    showLoading: false,
+  });
+};
+
 // Pose库随机展示
 export const randomPose = (params) => {
   return request.post({

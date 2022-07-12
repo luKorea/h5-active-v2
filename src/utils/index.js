@@ -2,12 +2,13 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-11 14:45:47
+ * @LastEditTime: 2022-07-12 16:44:00
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
 import { Toast } from "vant";
 import dayjs from "dayjs";
+import urlLink from "./link";
 
 export const reduceTime = (endTime) => {
   const nowTime = (dayjs().valueOf() / 1000).toFixed(0);
@@ -168,35 +169,48 @@ export const RandomId = (n) => {
   return res;
 };
 
-export function openApp() {
+export function openAppUrl(url) {
+  // let loadDateTime = new Date();
+  // window.setTimeout(function () {
+  //   let timeOutDateTime = new Date();
+  //   if (timeOutDateTime - loadDateTime < 5000) {
+  //     // 跳转至app下载页 以微信为例
+  //     window.location = urlLink.appLink;
+  //   } else {
+  //     window.close();
+  //   }
+  // }, 1000);
+  // 打开本地的app 以微信为例
+  window.location = url;
+}
+
+export function openApp(url) {
   if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
     let loadDateTime = new Date();
     window.setTimeout(function () {
       let timeOutDateTime = new Date();
       if (timeOutDateTime - loadDateTime < 5000) {
         // 跳转至app下载页 以微信为例
-        window.location =
-          "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.mm";
+        window.location = urlLink.appLink;
       } else {
         window.close();
       }
     }, 25);
     // 打开本地的app 以微信为例
-    window.location = "poficreate://";
+    window.location = url;
   } else if (navigator.userAgent.match(/android/i)) {
     let loadDateTime = new Date();
     window.setTimeout(function () {
       let timeOutDateTime = new Date();
       if (timeOutDateTime - loadDateTime < 5000) {
         // 跳转至app下载页
-        window.location =
-          "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.mm";
+        window.location = urlLink.appLink;
       } else {
         window.close();
       }
     }, 25);
     // 打开本地的app
-    window.location = "poficreate://";
+    window.location = url;
   }
 }
 
@@ -217,16 +231,20 @@ export function random(min, untilMax) {
     return Math.floor(Math.random() * (untilMax - min)) + min;
   }
 }
-export function generatorDrawList(giftList, startTime = 3, endTime = 31) {
-  giftList = giftList ?? [
-    "实体人偶奖",
-    "专业版Pro奖",
-    "限定人偶大礼包",
-    "BJD大Q",
-    "BJD薇薇安",
-    "莉莉丝",
-    "BJD小Q",
-  ];
+const defaultGiftList = [
+  "实体人偶奖",
+  "专业版Pro奖",
+  "限定人偶大礼包",
+  "BJD大Q",
+  "BJD薇薇安",
+  "莉莉丝",
+  "BJD小Q",
+];
+export function generatorDrawList(
+  giftList = defaultGiftList,
+  startTime = 7,
+  endTime = 31
+) {
   let numRank = [
     "135",
     "136",
@@ -320,3 +338,10 @@ export function generatorDrawList(giftList, startTime = 3, endTime = 31) {
     list: temp,
   };
 }
+
+export const clearRouterQuery = (params) => {
+  if (Object.keys(params.$route.query).length > 0) {
+    let path = params.$route.path; //先获取路由路径
+    params.$router.push(path); //再跳转路由路径，query参数没带过去，所以被清除了
+  }
+};
