@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 16:19:37
+ * @LastEditTime: 2022-07-13 18:07:26
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -43,8 +43,20 @@
           </template>
         </div>
         <!--购买pro -->
-        <div class="pro-btn" @click="handlePayProInfo">
-          <img :src="buyImg" alt="" referrerpolicy="no-referrer" />
+        <div class="pro-btn">
+          <img
+            v-if="!pageConfig.joinPro || pageConfig.joinPro === 0"
+            :src="buyImg"
+            alt=""
+            @click="handlePayProInfo"
+            referrerpolicy="no-referrer"
+          />
+          <img
+            v-if="pageConfig.joinPro && pageConfig.joinPro === 1"
+            :src="nothingImg"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
         </div>
         <!-- 介绍区域 -->
         <div class="desc-wrap">
@@ -87,9 +99,21 @@
             </div>
           </template>
         </div>
-        <!--购买pro -->
+        <!--购买SVIP -->
         <div class="vip-btn" @click="handlePayVipInfo">
-          <img :src="buyImg" alt="" referrerpolicy="no-referrer" />
+          <img
+            v-if="!pageConfig.joinSvip || pageConfig.joinSvip === 0"
+            :src="buyImg"
+            alt=""
+            @click="handlePayProInfo"
+            referrerpolicy="no-referrer"
+          />
+          <img
+            v-if="pageConfig.joinSvip && pageConfig.joinSvip === 1"
+            :src="nothingImg"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
         </div>
         <!-- 介绍区域 -->
         <div class="vip-desc-wrap">
@@ -129,6 +153,7 @@ export default {
     return {
       headerImg: BASE_IMAGE_SUMMARY_URL + "/fun-bg.png",
       buyImg: BASE_IMAGE_SUMMARY_URL + "/buy-btn.png",
+      nothingImg: BASE_IMAGE_SUMMARY_URL + "/nothing-buy.png",
       checked: true,
       checkedVip: true,
       proList: [

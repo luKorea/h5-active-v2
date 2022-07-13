@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 17:09:53
+ * @LastEditTime: 2022-07-13 18:07:36
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -42,8 +42,20 @@
             </template>
           </div>
           <!--购买pro -->
-          <div class="pro-btn" @click="handlePayInfo">
-            <img :src="buyImg" alt="" referrerpolicy="no-referrer" />
+          <div class="pro-btn">
+            <img
+              v-if="!pageConfig.joinPB || pageConfig.joinPB === 0"
+              :src="buyImg"
+              alt=""
+              @click="handlePayInfo"
+              referrerpolicy="no-referrer"
+            />
+            <img
+              v-if="pageConfig.joinPB && pageConfig.joinPB === 1"
+              :src="nothingImg"
+              alt=""
+              referrerpolicy="no-referrer"
+            />
           </div>
           <!-- 介绍区域 -->
           <div class="desc-wrap">
@@ -106,6 +118,7 @@ export default {
       headerImg: BASE_IMAGE_SUMMARY_URL + "/pay-bg.png",
       buyImg: BASE_IMAGE_SUMMARY_URL + "/buy-btn.png",
       appImg: BASE_IMAGE_SUMMARY_URL + "/go-app.png",
+      nothingImg: BASE_IMAGE_SUMMARY_URL + "/nothing-buy.png",
       list: [
         {
           hasImg: BASE_IMAGE_SUMMARY_URL + "/has-minuo.png",
