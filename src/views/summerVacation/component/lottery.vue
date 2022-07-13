@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 16:19:16
+ * @LastEditTime: 2022-07-13 18:24:01
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -115,10 +115,16 @@
         </div>
         <template v-if="info && info.length && status === 2">
           <div class="text-price">
-            <div class="text-price-item" v-for="item in info" :key="item.uid">
-              <span class="text">{{ item.createTime }}</span>
-              <span class="text">{{ item.name }}</span>
-              <span class="text" @click="showLotterySuccess(item)">查看</span>
+            <div
+              class="text-price-item"
+              v-for="(item, index) in info"
+              :key="item.uid"
+            >
+              <template v-if="index === 0">
+                <span class="text">{{ item.createTime }}</span>
+                <span class="text">{{ item.name }}</span>
+                <span class="text" @click="showLotterySuccess(item)">查看</span>
+              </template>
             </div>
           </div>
         </template>
@@ -363,7 +369,7 @@ export default {
       bottom: 240px;
       width: 90%;
       .text-price-item {
-        width: 73%;
+        width: 75%;
         margin: 0 auto;
         display: flex;
         // justify-content: space-around;
@@ -373,7 +379,7 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #1e1e1e;
-          margin-right: 12px;
+          margin-right: 31px;
           &:last-child {
             margin-right: 0;
           }
@@ -417,7 +423,7 @@ export default {
   .count {
     position: absolute;
     top: 234px;
-    right: 120px;
+    right: 134px;
     font-size: 14px;
     font-family: Source Han Sans CN;
     font-weight: 500;
