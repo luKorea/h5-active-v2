@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 16:08:57
+ * @LastEditTime: 2022-07-13 18:29:48
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -193,6 +193,12 @@ export default {
   mounted() {
     document.title = "Pofi 暑假爆肝计划";
     this.activeIsState = reduceEndTime(this.endTime);
+    const state = this.$route.query.state;
+    if (state && state === "success") {
+      this.$nextTick(() => {
+        this.openSuccessDialog();
+      });
+    }
     if (this.token && this.uid) {
       this.getPageConfig();
     }
@@ -340,6 +346,9 @@ export default {
           this.openSuccessDialog();
         })
         .catch((err) => errorInfo(err));
+    },
+    openSuccessDialog() {
+      this.$refs["successRef"].showDialog = true;
     },
     // 支付宝支付
     payAli() {
