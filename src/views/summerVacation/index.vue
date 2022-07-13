@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 16:45:44
+ * @LastEditTime: 2022-07-13 16:08:57
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -138,6 +138,7 @@ import {
   getAward,
 } from "@/api/summary";
 import smoothscroll from "smoothscroll-polyfill";
+import { Dialog } from "vant";
 
 export default {
   name: "summaryContainer",
@@ -235,6 +236,9 @@ export default {
       }).then((res) => {
         if (res.code === 200) {
           console.log(res.data);
+          Dialog.alert({
+            message: "9P币已到账，请前往APP查看",
+          });
           // this.pageConfig = res.data;
         }
       });

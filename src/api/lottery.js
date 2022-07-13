@@ -6,6 +6,7 @@ export const refreshCount = (params) => {
   return request.post({
     url: "/api/doll/draw/playNum",
     params,
+    showLoading: false,
   });
 };
 
@@ -14,6 +15,7 @@ export const startLottery = (params) => {
   return request.post({
     url: "/api/doll/draw/play",
     params,
+    showLoading: true,
   });
 };
 

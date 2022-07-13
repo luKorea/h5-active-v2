@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 16:44:00
+ * @LastEditTime: 2022-07-13 15:58:27
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -170,18 +170,35 @@ export const RandomId = (n) => {
 };
 
 export function openAppUrl(url) {
-  // let loadDateTime = new Date();
-  // window.setTimeout(function () {
-  //   let timeOutDateTime = new Date();
-  //   if (timeOutDateTime - loadDateTime < 5000) {
-  //     // 跳转至app下载页 以微信为例
-  //     window.location = urlLink.appLink;
-  //   } else {
-  //     window.close();
-  //   }
-  // }, 1000);
-  // 打开本地的app 以微信为例
-  window.location = url;
+  function failed() {
+    window.location.href = urlLink.appLink;
+  }
+
+  function transfer(cb) {
+    window.location.href = url;
+    const initialTime = new Date();
+    let counter = 0;
+    let waitTime = 0;
+    const checkOpen = setInterval(() => {
+      counter++;
+      waitTime = new Date() - initialTime;
+      if (waitTime > 3500) {
+        clearInterval(checkOpen);
+        cb();
+      }
+      if (counter < 1000) {
+        return;
+      }
+    }, 20);
+
+    document.addEventListener("visibilitychange", () => {
+      const isHidden = document.hidden;
+      if (isHidden) {
+        clearInterval(checkOpen);
+      }
+    });
+  }
+  transfer(failed);
 }
 
 export function openApp(url) {

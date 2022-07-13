@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-12 18:24:42
+ * @LastEditTime: 2022-07-13 16:19:16
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,7 +16,79 @@
           @handleLoginDialog="handleLoginDialog"
         ></user-info-component>
       </div>
+      <!-- 剩余次数 -->
+      <div class="count">{{ count }}/3</div>
       <!-- 抽奖区域 -->
+      <div class="luck-wrap">
+        <div class="event-draw-group">
+          <div id="draw-item-1" class="event-draw-item draw-active">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift1.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-2" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift2.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-3" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift3.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-8" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift8.png'"
+              alt=""
+            />
+          </div>
+          <div @click="startLotteryPlay" class="event-draw-do">
+            <img
+              class="event-do-draw-img"
+              referrerpolicy="no-referrer"
+              :src="
+                !isDrawing ? newUrl + '/no-start.png' : newUrl + '/start.png'
+              "
+              alt=""
+            />
+          </div>
+          <div id="draw-item-4" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift4.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-7" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift7.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-6" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift6.png'"
+              alt=""
+            />
+          </div>
+          <div id="draw-item-5" class="event-draw-item">
+            <img
+              referrerpolicy="no-referrer"
+              :src="newUrl + '/gift5.png'"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
       <!-- 奖品区域 -->
       <div class="price-wrap">
         <div class="text-wrap">
@@ -41,6 +113,15 @@
         <div class="item" v-else>
           <img :src="priceImg" alt="" referrerpolicy="no-referrer" />
         </div>
+        <template v-if="info && info.length && status === 2">
+          <div class="text-price">
+            <div class="text-price-item" v-for="item in info" :key="item.uid">
+              <span class="text">{{ item.createTime }}</span>
+              <span class="text">{{ item.name }}</span>
+              <span class="text" @click="showLotterySuccess(item)">查看</span>
+            </div>
+          </div>
+        </template>
       </div>
       <!-- 假数据区域 -->
       <div class="swipe-wrap">
@@ -71,6 +152,11 @@
           </div>
         </div>
       </div>
+      <!-- 中奖弹框-->
+      <lotterySuccessPage
+        ref="lotteryRef"
+        :info="currentInfo"
+      ></lotterySuccessPage>
     </div>
   </div>
 </template>
@@ -78,64 +164,36 @@
 <script>
 import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
 import userInfoComponent from "../common/user-info/user-info.vue";
-import { generatorDrawList } from "@/utils";
+import { generatorDrawList, errorInfo, copyShareLink } from "@/utils";
 import { getPriceInfo, refreshCount, startLottery } from "@/api/lottery";
 import { mapState } from "vuex";
 import { Dialog } from "vant";
+import lotterySuccessPage from "@/components/lottery-success/index.vue";
 
 export default {
   name: "lottery-page",
   components: {
     userInfoComponent,
+    lotterySuccessPage,
   },
   data() {
     return {
-      headerImg: BASE_IMAGE_SUMMARY_URL + "/fuli-bg.png",
+      headerImg: BASE_IMAGE_SUMMARY_URL + "/lottery-bg.png",
       priceImg: BASE_IMAGE_SUMMARY_URL + "/price.png",
       getImg: BASE_IMAGE_SUMMARY_URL + "/replace1.png",
       swipeImg: BASE_IMAGE_SUMMARY_URL + "/swipe-banner.png",
+      newUrl: BASE_IMAGE_SUMMARY_URL,
       status: 1, // 1. 我的奖品  2. 奖品说明
       dataList: {},
       info: [],
+      // 盲盒抽奖区域
       currentInfo: {}, //中奖信息
-      list: [
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift1.png",
-          id: 1,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift2.png",
-          id: 2,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift3.png",
-          id: 3,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift8.png",
-          id: 8,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/do-btn.png",
-          id: 9,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift4.png",
-          id: 4,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift7.png",
-          id: 7,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift6.png",
-          id: 6,
-        },
-        {
-          img: "https://f3.pofiapp.com/draw/middle_2022/gift5.png",
-          id: 5,
-        },
-      ],
+      isDrawing: false,
+      count: 3,
+      currElement: 0,
+      rotateCount: 0,
+      needRotateCount: 0,
+      drawItems: [],
     };
   },
 
@@ -161,6 +219,10 @@ export default {
     handleLoginDialog() {
       this.$emit("handleLoginDialog");
     },
+    showLotterySuccess(item) {
+      this.currentInfo = item;
+      this.$refs["lotteryRef"].showDialog = true;
+    },
     getMyPrice() {
       getPriceInfo({
         uid: this.uid,
@@ -174,6 +236,9 @@ export default {
     changeText(e) {
       if (+e === this.status) return;
       this.status = +e;
+      if (+e === 2 && this.token) {
+        this.getMyPrice();
+      }
     },
     // 刷新次数
     refreshCountPlay() {
@@ -186,6 +251,38 @@ export default {
         }
       });
     },
+    markTargetIndex(targetIndex) {
+      this.isDrawing = true;
+      this.rotateCount = 0;
+      this.currElement = 0;
+      this.needRotateCount = 80 + targetIndex - 1;
+      this.postRefreshItem();
+      this.refreshCountPlay();
+    },
+    postRefreshItem() {
+      let _this = this;
+      _this.rotateCount++;
+      _this.currElement++;
+      if (_this.currElement >= _this.drawItems.length) {
+        _this.currElement = 0;
+      }
+      let lastElement = _this.currElement - 1;
+      if (lastElement < 0) {
+        lastElement = _this.drawItems.length - 1;
+      }
+      _this.drawItems[lastElement].classList.remove("draw-active");
+      _this.drawItems[_this.currElement].classList.add("draw-active");
+      if (_this.needRotateCount !== _this.rotateCount) {
+        let timeout = 30;
+        if (_this.needRotateCount - _this.rotateCount < 14) {
+          timeout = (14 - (_this.needRotateCount - _this.rotateCount)) * 40;
+          console.log(timeout);
+        }
+        setTimeout(_this.postRefreshItem, timeout);
+      } else {
+        this.isDrawing = false;
+      }
+    },
     startLotteryPlay() {
       if (!this.uid) {
         this.handleLoginDialog();
@@ -194,25 +291,32 @@ export default {
       if (this.isDrawing) {
         return;
       }
+      copyShareLink(this.uid, this, "成功");
       startLottery({
         uid: this.uid,
         loginKey: this.token,
       }).then((res) => {
         if (res.state) {
           this.currentInfo = res.data;
-          this.refreshCountPlay();
+          this.markTargetIndex(res.data.id);
+          setTimeout(() => {
+            this.$refs["lotteryRef"].showDialog = true;
+          }, 6500);
           // 调用stop停止旋转并传递中奖索引;
         } else if (res.code === 77) {
-          this.refreshCountPlay();
-          Dialog.alert({
-            message: "欧气增加了一点点，再来一次~",
-          });
+          this.markTargetIndex(5);
+          setTimeout(() => {
+            this.currentIndex = 9;
+            Dialog.alert({
+              message: "欧气增加了一点点，再来一次~",
+            });
+          }, 6500);
         } else if (res.code === 78) {
-          this.refreshCountPlay();
+          this.currentIndex = 1;
           Dialog.alert({
             message: "今天的抽奖额度已用完，明天再来吧！",
           });
-        }
+        } else errorInfo(res.msg);
       });
     },
   },
@@ -220,6 +324,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url("./lottery.less");
 .lottery-wrap {
   margin-top: 53px;
   .price-wrap {
@@ -251,6 +356,28 @@ export default {
       img {
         width: 100%;
         height: 100%;
+      }
+    }
+    .text-price {
+      position: absolute;
+      bottom: 240px;
+      width: 90%;
+      .text-price-item {
+        width: 73%;
+        margin: 0 auto;
+        display: flex;
+        // justify-content: space-around;
+        align-items: center;
+        .text {
+          font-size: 14px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #1e1e1e;
+          margin-right: 12px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
       }
     }
   }
@@ -286,6 +413,15 @@ export default {
         }
       }
     }
+  }
+  .count {
+    position: absolute;
+    top: 234px;
+    right: 120px;
+    font-size: 14px;
+    font-family: Source Han Sans CN;
+    font-weight: 500;
+    color: #1e1e1e;
   }
 }
 </style>

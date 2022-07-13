@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-03-03 16:03:30
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-06-10 09:20:00
+ * @LastEditTime: 2022-07-13 14:36:42
  * @Description: file content
  * @FilePath: /h5-active-v2/src/components/pay/index.vue
 -->

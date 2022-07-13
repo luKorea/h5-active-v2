@@ -1,0 +1,439 @@
+
+.event-draw-root {
+  position: relative;
+  /* margin-top: -60px; */
+  width: 100%;
+}
+
+.event-draw-bg {
+  width: 100%;
+}
+
+.event-draw-time {
+  height: 36px;
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+  top: 128px;
+}
+
+.event-draw-group {
+  display: grid;
+  // width: 522px;
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+  top: 263px;
+  grid-template-columns: auto auto auto;
+  // grid-template-rows: 180px 180px 180px;
+}
+
+
+.event-draw-item {
+  width: 106px;
+  height: 106px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-draw-item img {
+  width: 94px;
+  height: 94px;
+  padding: 0;
+}
+
+.draw-active {
+  width: 94px;
+  height: 94px;
+  border: 4px solid #ff264a;
+  // box-sizing: border-box;
+}
+
+.event-draw-do {
+  width: 106px;
+  height: 106px;
+  position: relative;
+}
+
+.event-do-draw-img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.do-draw-basic-root {
+  width: 40px;
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+  cursor: pointer;
+  bottom: 13px;
+}
+
+.do-draw-mask {
+  position: fixed;
+  width: 80%;
+  transform: translate(-50%);
+  left: 50%;
+  top: 2px;
+  z-index: 2;
+}
+
+.do-draw-count {
+  position: fixed;
+  width: 80%;
+  transform: translate(-50%);
+  left: 50%;
+  z-index: 1;
+  top: -1px;
+  color: white;
+}
+
+.event-draw-note-root {
+  position: absolute;
+  width: 488px;
+  bottom: 60px;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: left;
+  line-height: 35px;
+}
+
+.event-draw-note {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+}
+
+.event-draw-note-focus {
+  color: rgba(255, 38, 74, 0.5);
+  font-size: 20px;
+  font-family: source-han-sans-simplified-c, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.event-draw-member-gift {
+  color: #b4b4b4;
+  text-align: center;
+}
+
+.event-draw-rotate {
+  width: 420px;
+  top: 12px;
+  font-size: 20px;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%);
+}
+
+.event-share-item {
+  width: 156px;
+  height: 46px;
+  cursor: pointer;
+}
+
+.event-intro-row {
+  display: table-row;
+  width: 100%;
+}
+
+.event-intro-no {
+  width: 30px;
+  color: #ff264a;
+  display: table-cell;
+  text-align: left;
+}
+
+.event-intro-content {
+  color: #4d6556;
+  line-height: 30px;
+  text-align: left;
+  display: table-cell;
+}
+
+.logo-split-line {
+  align-self: center !important;
+  background-color: #bcbcbc !important;
+  width: 2px !important;
+  margin-left: 50px !important;
+  margin-right: 40px !important;
+}
+
+.common-dialog {
+  background: linear-gradient(#262626, #363636) !important;
+  border-radius: 30px !important;
+  border-color: rgba(32, 32, 32, 1);
+  border-width: 12px;
+  border-style: solid;
+}
+
+.el-dialog__header {
+  display: none;
+}
+
+.el-dialog__body {
+  padding: 0 !important;
+  display: grid;
+  width: 100%;
+  /*background: url("https://f3.pofiapp.com/draw/my_gift_bg_mask.png") no-repeat center;*/
+}
+
+.common-dialog-title {
+  color: #c9c9c9;
+  font-size: 24px;
+  width: 100%;
+  text-align: center;
+}
+
+.el-input__inner {
+  border-width: 0 !important;
+  background-color: #737373 !important;
+  border-radius: 20px !important;
+  color: white !important;
+}
+
+.pink-radius {
+  background-color: #ff264a;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  padding: 5px 0;
+  width: 100px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.gray-radius {
+  background-color: #313131;
+  border-radius: 20px;
+  text-align: center;
+  color: #525252;
+  padding: 5px 0;
+  width: 100px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.dialog_close {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.el-loading-spinner i {
+  color: #ff264a !important;
+}
+
+.my-gift-content {
+  min-height: 200px;
+  border-radius: 0 0 38px 38px;
+  z-index: 1;
+  /*background: #363636 url("https://f3.pofiapp.com/draw/my_gift_bg_mask.png") no-repeat center;*/
+  background: #363636;
+}
+
+.exchange-step {
+  margin-top: -15px;
+  border-radius: 0 0 38px 38px;
+  z-index: 1;
+  background: #363636;
+}
+
+.my-gift-dialog {
+  background: #202020 !important;
+  border-radius: 50px !important;
+  border-color: #202020;
+  border-width: 12px;
+  border-style: solid;
+}
+
+.my-gift-gift-row {
+  display: table-row;
+  width: 100%;
+}
+
+.my-gift-gift-date {
+  width: 30px;
+  color: #c9c9c9;
+  display: table-cell;
+  text-align: left;
+}
+
+.my-gift-gift-name {
+  width: 30px;
+  color: #c9c9c9;
+  display: table-cell;
+  text-align: left;
+}
+
+.my-gift-gift-status {
+  width: 30px;
+  color: #c9c9c9;
+  display: table-cell;
+  text-align: center;
+  cursor: pointer;
+}
+
+.has-result-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 40px;
+  background-color: #c9c9c9;
+}
+
+.has-result-bingo {
+  width: 140px;
+}
+
+.exchange-code {
+  background-color: #737373;
+  border-radius: 24px;
+  border-width: 0;
+  text-align: center;
+  color: white;
+  width: 380px;
+  font-size: 14px;
+  margin: 10px 0;
+  padding: 10px 10px;
+}
+
+.float-label1 {
+  position: fixed;
+  display: grid;
+  grid-template-rows: auto;
+  /* height: 270px; */
+  /* right: 35px; */
+  top: 215px;
+  right: 0;
+  z-index: 5;
+  background-color: RGBA(34, 35, 41, 0.5);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding: 0px 4px 12px 12px;
+}
+
+.float-item {
+  width: 73px;
+  height: 73px;
+  cursor: pointer;
+  position: relative;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.small-avatar {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+.avatar-root {
+  position: absolute !important;
+  top: 53%;
+  /* transform: translate(-50%, -50%); */
+  left: 50%;
+  border: 2px solid rgb(218, 132, 46);
+  border-radius: 9px;
+  width: 73px;
+  height: 73px;
+  box-sizing: border-box;
+}
+
+.online-dot {
+  width: 8px;
+  background: linear-gradient(#62bf51, #bcda57);
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 7px;
+  right: 2px;
+}
+
+.log-out-root {
+  width: 250px;
+  justify-self: center;
+  display: grid;
+  margin-bottom: 20px;
+  grid-template-columns: auto auto;
+}
+
+.log-out-btn {
+  border-radius: 35px;
+  color: white;
+  background-color: #4c4c4c;
+  font-size: 18px;
+  width: 70px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.wechat_share {
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ease-btn {
+    width: 100%;
+    position: absolute;
+    top: 383px;
+    left: 0;
+   -webkit-animation: scaleDrew .5s ease-in-out infinite;
+           animation: scaleDrew .5s ease-in-out infinite;
+}
+@-webkit-keyframes scaleDrew {
+    0% {
+      transform: scale(1);
+    }
+
+    25% {
+      transform: scale(1.05);
+    }
+
+    50% {
+      transform: scale(1);
+    }
+
+    75% {
+      transform: scale(1.05);
+    }
+  }
+@keyframes scaleDrew {
+    0% {
+      transform: scale(1);
+    }
+
+    25% {
+      transform: scale(1.05);
+    }
+
+    50% {
+      transform: scale(1);
+    }
+
+    75% {
+      transform: scale(1.05);
+    }
+  }

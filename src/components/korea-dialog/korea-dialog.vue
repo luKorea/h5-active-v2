@@ -2,7 +2,7 @@
 <template>
   <van-overlay :show="showDialog" z-index="999" :lock-scroll="false">
     <div class="modal-content" style="max-width: 540px">
-      <div class="modal-info">
+      <div class="modal-info" :style="{ top: bgTop }">
         <div class="close-wrap" :style="{ top: closeBtnTop }">
           <a class="close-btn" @click="closeDialog($event)">
             <img :src="closeBtnImg" alt="" />
@@ -49,6 +49,10 @@ export default {
     bgImg: {
       type: String,
       default: require("@/assets/image/modal-bg.png"),
+    },
+    bgTop: {
+      type: String,
+      default: "0px",
     },
     bgStyle: {
       type: Object,
@@ -114,7 +118,7 @@ export default {
   top: 45%;
   left: 50%;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
   font-size: 16px;
   -webkit-transform: translate3d(-50%, -50%, 0);
   transform: translate3d(-50%, -50%, 0);
@@ -136,6 +140,7 @@ export default {
     img {
       width: 100%;
       height: 100%;
+      // padding: 0;
     }
   }
 
