@@ -103,12 +103,12 @@
           </template>
         </div>
         <!--购买SVIP -->
-        <div class="vip-btn" @click="handlePayVipInfo">
+        <div class="vip-btn">
           <img
             v-if="!pageConfig.joinSvip || pageConfig.joinSvip === 0"
             :src="buyImg"
             alt=""
-            @click="handlePayProInfo"
+            @click="handlePayVipInfo"
             referrerpolicy="no-referrer"
           />
           <img
