@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 18:24:01
+ * @LastEditTime: 2022-07-14 09:44:41
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,7 +17,7 @@
         ></user-info-component>
       </div>
       <!-- 剩余次数 -->
-      <div class="count">{{ count }}/3</div>
+      <div class="count">{{ 3 - count }}/3</div>
       <!-- 抽奖区域 -->
       <div class="luck-wrap">
         <div class="event-draw-group">
@@ -118,12 +118,19 @@
             <div
               class="text-price-item"
               v-for="(item, index) in info"
-              :key="item.uid"
+              :key="index"
             >
               <template v-if="index === 0">
-                <span class="text">{{ item.createTime }}</span>
-                <span class="text">{{ item.name }}</span>
-                <span class="text" @click="showLotterySuccess(item)">查看</span>
+                <span class="text" style="width: 110px">{{
+                  item.createTime
+                }}</span>
+                <span class="text" style="width: 120px">{{ item.name }}</span>
+                <span
+                  class="text"
+                  style="position: relative; left: 3px"
+                  @click="showLotterySuccess(item)"
+                  >查看</span
+                >
               </template>
             </div>
           </div>
@@ -195,7 +202,7 @@ export default {
       // 盲盒抽奖区域
       currentInfo: {}, //中奖信息
       isDrawing: false,
-      count: 3,
+      count: 0,
       currElement: 0,
       rotateCount: 0,
       needRotateCount: 0,
@@ -204,7 +211,15 @@ export default {
   },
 
   mounted() {
-    this.dataList = generatorDrawList();
+    this.dataList = generatorDrawList([
+      "实体人偶奖",
+      "专业版Pro奖",
+      "BJD小Q",
+      "BJD大Q",
+      "BJD米诺",
+      "人鱼大Q",
+      "哈娜",
+    ]);
     if (this.token && this.uid) {
       this.getMyPrice();
       this.refreshCountPlay();
@@ -369,17 +384,17 @@ export default {
       bottom: 240px;
       width: 90%;
       .text-price-item {
-        width: 75%;
+        width: 77%;
         margin: 0 auto;
         display: flex;
-        // justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         .text {
           font-size: 14px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #1e1e1e;
-          margin-right: 31px;
+          // margin-right: 31px;
           &:last-child {
             margin-right: 0;
           }

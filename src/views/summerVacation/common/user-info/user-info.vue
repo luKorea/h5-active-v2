@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-04-21 13:49:40
- * @LastEditTime: 2022-07-11 18:04:45
+ * @LastEditTime: 2022-07-14 09:34:21
  * @LastEditors: korealu 643949593@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /h5-active-v2/src/components/user-info/user-info.vue
@@ -37,8 +37,8 @@ export default {
   name: "userInfoComponent",
   computed: {
     ...mapState({
-      token: (state) => state.activeModule.token,
-      userInfo: (state) => state.activeModule.userInfo,
+      token: (state) => state.summaryModule.token,
+      userInfo: (state) => state.summaryModule.userInfo,
     }),
   },
   methods: {
