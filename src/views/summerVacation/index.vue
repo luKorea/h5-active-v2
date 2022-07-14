@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-14 15:58:33
+ * @LastEditTime: 2022-07-14 16:57:55
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -200,6 +200,13 @@ export default {
   mounted() {
     document.title = "Pofi 暑假爆肝计划";
     this.activeIsState = reduceEndTime(this.endTime);
+    if (this.activeIsState) {
+      Dialog.confirm({
+        message: "活动已结束",
+        showCancelButton: false,
+        showConfirmButton: false,
+      });
+    }
     const state = this.$route.query.state;
     if (state && state === "success") {
       this.$nextTick(() => {
