@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-07 17:12:17
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-08 10:44:09
+ * @LastEditTime: 2022-07-14 17:04:07
  * @FilePath: /h5-active-v2/src/views/presentTheWork/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEv
 -->
@@ -46,6 +46,14 @@ export default {
         {
           text: "活动落地页",
           value: 0,
+        },
+        {
+          text: "海外下载页",
+          url: "https://event.pofi.art/pofiDownload",
+        },
+        {
+          text: "翎夕活动",
+          url: "https://event.pofi.art/pofiActive",
         },
         {
           text: "暑假爆肝活动",
