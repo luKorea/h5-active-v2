@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 15:33:51
+ * @LastEditTime: 2022-07-14 15:48:45
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -39,6 +39,20 @@
           </div>
         </div>
       </template>
+      <div class="desc-wrap">
+        <van-checkbox
+          v-model="state"
+          disabled
+          shape="square"
+          checked-color="#000"
+          icon-size="14px"
+        ></van-checkbox>
+        <div class="text" @click="getData">
+          <span class="o">9P币返还({{ state ? 1 : 0 }}/1)</span>
+          <span style="color: rgba(251, 152, 51, 1)"> 刷新 </span>
+          <van-icon name="replay" color="rgba(251, 152, 51, 1)" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -47,8 +61,21 @@
 import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
 import { randomPose } from "@/api/summary";
 import { openAppUrl, errorInfo } from "@/utils";
+import { mapState } from "vuex";
 export default {
   name: "pose-buy",
+  props: {
+    state: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    ...mapState({
+      token: (state) => state.summaryModule.token,
+      uid: (state) => state.summaryModule.uid,
+    }),
+  },
   data() {
     return {
       headerImg: BASE_IMAGE_SUMMARY_URL + "/pb-bg.png",
@@ -82,6 +109,11 @@ export default {
       } else {
         openAppUrl(url);
       }
+    },
+    getData() {
+      if (this.token && this.uid) {
+        this.$emit("getData");
+      } else this.handleLoginDialog();
     },
   },
 };
@@ -153,6 +185,29 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .desc-wrap {
+    position: absolute;
+    bottom: 75px;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0 0 40px;
+    text-align: center;
+    .text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #1e1e1e;
+      margin-left: 6px;
+      .o {
+        margin-right: 10px;
       }
     }
   }

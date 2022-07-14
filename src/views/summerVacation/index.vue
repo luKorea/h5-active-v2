@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 18:29:48
+ * @LastEditTime: 2022-07-14 15:58:33
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -56,7 +56,12 @@
     <!-- 实体人偶 -->
     <page-even-component ref="three"></page-even-component>
     <!-- pose半价 -->
-    <page-pose-component ref="four"></page-pose-component>
+    <page-pose-component
+      ref="four"
+      @getData="getPageConfig"
+      @handleLoginDialog="showLoginDialog = true"
+      :state="awardState"
+    ></page-pose-component>
     <!-- 打卡活动区域 -->
     <div class="wrap-content">
       <img :src="punchCardImg" alt="" referrerpolicy="no-referrer" />
@@ -139,6 +144,7 @@ import {
 } from "@/api/summary";
 import smoothscroll from "smoothscroll-polyfill";
 import { Dialog } from "vant";
+var VueScrollTo = require("vue-scrollto");
 
 export default {
   name: "summaryContainer",
@@ -188,6 +194,7 @@ export default {
       ],
       pageConfig: {},
       poseList: [],
+      awardState: false,
     };
   },
   mounted() {
@@ -240,8 +247,8 @@ export default {
         loginKey: this.token,
         uid: this.uid,
       }).then((res) => {
+        this.awardState = true;
         if (res.code === 200) {
-          console.log(res.data);
           Dialog.alert({
             message: "9P币已到账，请前往APP查看",
           });
@@ -260,10 +267,13 @@ export default {
       this.selectBtnIndex = ele;
       smoothscroll.polyfill();
       if (this.$refs[ele]) {
-        this.$refs[ele].$el.scrollIntoView({
-          behavior: "smooth",
-          top: 20,
+        VueScrollTo.scrollTo(this.$refs[ele].$el, 1000, {
+          offset: -50,
         });
+        console.log(VueScrollTo);
+        // this.$refs[ele].$el.scrollIntoView({
+        //   behavior: "smooth",
+        // });
       }
     },
     handleChangeItem(ele) {
