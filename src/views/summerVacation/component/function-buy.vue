@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-14 10:52:19
+ * @LastEditTime: 2022-07-14 18:02:52
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -199,7 +199,7 @@ export default {
           img: BASE_IMAGE_SUMMARY_URL + "/yadan.png",
           id: "SFUNC_SVIP_365D_A",
           title: "充值SVIP套餐将支付218元",
-          subTitle: "可获得专业版一年+128P币+BJD亚当",
+          subTitle: "全功能12个月+128P币+BJD亚当",
         },
         {
           hasImg: BASE_IMAGE_SUMMARY_URL + "/has-xiawa.png",
@@ -207,7 +207,7 @@ export default {
           img: BASE_IMAGE_SUMMARY_URL + "/xiawa.png",
           id: "SFUNC_SVIP_365D_B",
           title: "充值SVIP套餐将支付218元",
-          subTitle: "可获得专业版一年+128P币+BJD夏娃",
+          subTitle: "全功能12个月+128P币+BJD夏娃",
         },
         {
           hasImg: BASE_IMAGE_SUMMARY_URL + "/has-pb.png",
@@ -215,7 +215,7 @@ export default {
           img: BASE_IMAGE_SUMMARY_URL + "/pb.png",
           id: "SFUNC_SVIP_365D_C",
           title: "充值SVIP套餐将支付218元",
-          subTitle: "可获得专业版一年+128P币+18P币",
+          subTitle: "全功能12个月+128P币+18P币",
         },
       ],
       selectVipIndex: -1,
