@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 18:07:26
+ * @LastEditTime: 2022-07-14 10:52:19
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -59,7 +59,10 @@
           />
         </div>
         <!-- 介绍区域 -->
-        <div class="desc-wrap">
+        <div
+          class="desc-wrap"
+          v-if="!pageConfig.joinPro || pageConfig.joinPro === 0"
+        >
           <van-checkbox
             v-model="checked"
             checked-color="#000"
@@ -116,7 +119,10 @@
           />
         </div>
         <!-- 介绍区域 -->
-        <div class="vip-desc-wrap">
+        <div
+          class="vip-desc-wrap"
+          v-if="!pageConfig.joinSvip || pageConfig.joinSvip === 0"
+        >
           <van-checkbox
             v-model="checkedVip"
             checked-color="#000"
