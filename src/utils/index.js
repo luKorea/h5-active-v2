@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-13 15:58:27
+ * @LastEditTime: 2022-07-14 11:53:12
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/index.js
  */
@@ -197,6 +197,11 @@ export function openAppUrl(url) {
         clearInterval(checkOpen);
       }
     });
+    if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+      window.addEventListener("pagehide", function () {
+        clearInterval(checkOpen);
+      });
+    }
   }
   transfer(failed);
 }
