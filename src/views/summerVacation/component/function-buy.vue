@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-14 18:02:52
+ * @LastEditTime: 2022-07-15 09:45:28
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -157,7 +157,8 @@ export default {
   },
   data() {
     return {
-      headerImg: BASE_IMAGE_SUMMARY_URL + "/fun-bg.png",
+      headerImg:
+        BASE_IMAGE_SUMMARY_URL + "/fun-bg.png" + "?" + new Date().toString(),
       buyImg: BASE_IMAGE_SUMMARY_URL + "/buy-btn.png",
       nothingImg: BASE_IMAGE_SUMMARY_URL + "/nothing-buy.png",
       checked: true,
