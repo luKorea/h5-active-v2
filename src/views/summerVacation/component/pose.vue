@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-11 17:29:02
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-14 15:48:45
+ * @LastEditTime: 2022-07-14 20:42:12
  * @FilePath: /h5-active-v2/src/views/summerVacation/component/function-buy.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,13 +54,33 @@
         </div>
       </div>
     </div>
+
+    <!--浮层 -->
+    <van-overlay
+      @click="showDialog = false"
+      :show="showDialog"
+      z-index="999"
+      :lock-scroll="false"
+    >
+      <div class="over-wrap">
+        <div class="over-img">
+          <img :src="arrowImg" alt="" referrerpolicy="no-referrer" />
+        </div>
+        <div class="over-info">
+          <div class="over-text">点击右上角按钮，在默认浏览器打开</div>
+          <div class="over-room">
+            <img :src="roomImg" alt="" referrerpolicy="no-referrer" />
+          </div>
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 
 <script>
 import { BASE_IMAGE_SUMMARY_URL } from "@/request/config";
 import { randomPose } from "@/api/summary";
-import { openAppUrl, errorInfo } from "@/utils";
+import { openAppUrl } from "@/utils";
 import { mapState } from "vuex";
 export default {
   name: "pose-buy",
@@ -82,6 +102,9 @@ export default {
       itemImg: BASE_IMAGE_SUMMARY_URL + "/pose-item.png",
       buyImg: BASE_IMAGE_SUMMARY_URL + "/pose-buy-btn.png",
       list: [],
+      showDialog: false,
+      arrowImg: BASE_IMAGE_SUMMARY_URL + "/arrow.png",
+      roomImg: BASE_IMAGE_SUMMARY_URL + "/rom.png",
     };
   },
 
@@ -105,8 +128,9 @@ export default {
     },
     goApp(url) {
       if (this._isWechat()) {
-        errorInfo("请在浏览器中查看");
+        this.showDialog = true;
       } else {
+        this.showDialog = false;
         openAppUrl(url);
       }
     },
@@ -208,6 +232,48 @@ export default {
       margin-left: 6px;
       .o {
         margin-right: 10px;
+      }
+    }
+  }
+  .over-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .over-img {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      position: relative;
+      right: 20px;
+      top: 20px;
+      img {
+        width: 180px;
+        height: 262px;
+        padding: 0;
+      }
+    }
+    .over-info {
+      width: 100%;
+      display: flex;
+      position: relative;
+      top: 50px;
+      justify-content: center;
+      align-items: center;
+      .over-text {
+        font-size: 13px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: #c9c9c9;
+      }
+      .over-room {
+        width: 18px;
+        height: 18px;
+        img {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+        }
       }
     }
   }
