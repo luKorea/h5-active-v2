@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-18 16:10:07
+ * @LastEditTime: 2022-07-19 10:14:51
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,7 +54,10 @@
       @showRule="showRule"
     ></page-pay-info-component>
     <!-- 实体人偶 -->
-    <page-even-component ref="three"></page-even-component>
+    <page-even-component
+      ref="three"
+      @showEven="showEvenDialog = true"
+    ></page-even-component>
     <!-- pose半价 -->
     <page-pose-component
       ref="four"
@@ -105,6 +108,12 @@
     <rule-modal ref="ruleRef"></rule-modal>
     <!-- 用户协议 -->
     <info-modal ref="infoRef"></info-modal>
+    <!-- 实体人偶 -->
+    <van-dialog v-model="showEvenDialog" :show-cancel-button="false">
+      <div class="dialog-img">
+        <img :src="qrCode" referrerpolicy="no-referrer" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -180,6 +189,8 @@ export default {
       endTime: new Date("2022/07/31 23:59:59").getTime() / 1000,
       showLoginDialog: false,
       showLogoutDialog: false,
+      showEvenDialog: false,
+      qrCode: require("@/assets/image/qrcode-drawer.jpeg"),
       payInfo: {
         title: "充值128P币送米诺",
         id: "MDRCG12800",

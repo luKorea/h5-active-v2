@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-11 16:51:53
+ * @LastEditTime: 2022-07-19 09:50:15
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */
@@ -13,7 +13,7 @@ export default {
   weiboLink: "https://weibo.com/pofiapp",
   redBookLink: "https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33",
   redBookLink1:
-    "https://www.xiaohongshu.com/user/profile/603381480000000001005d5a?xhsshare=CopyLink&appuid=603381480000000001005d5a&apptime=1654743440",
+    "https://www.xiaohongshu.com/vendor/61557aeb9e3eba00017c8b33?naviHidden=yes&xhsshare=CopyLink&appuid=5ed3b46f0000000001006c3d&apptime=1658195300",
   shareToFriendLink: window.location.href,
   wechatOpenQQLink: "https://wpa1.qq.com/ivgX4lEz?_type=wpa&qidian=true",
   qqLink: "https://wpa1.qq.com/ivgX4lEz?_type=wpa&qidian=true",
