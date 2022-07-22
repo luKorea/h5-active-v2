@@ -2,7 +2,7 @@
  * @Author: korealu
  * @Date: 2022-01-18 14:46:55
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-19 09:50:15
+ * @LastEditTime: 2022-07-20 18:13:50
  * @Description: file content
  * @FilePath: /h5-active-v2/src/utils/link.js
  */

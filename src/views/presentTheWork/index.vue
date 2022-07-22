@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-07 17:12:17
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-14 17:04:07
+ * @LastEditTime: 2022-07-22 10:21:26
  * @FilePath: /h5-active-v2/src/views/presentTheWork/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEv
 -->
@@ -137,7 +137,9 @@ export default {
   // background-color: rgb(217, 207, 207);
   // background: linear-gradient(90deg, #dcf8ef, #fee2f8);
   // background: linear-gradient(90deg, #cd9cf2, #f6f3ff);
-  background: linear-gradient(90deg, #1d6fa3, #65fdf0);
+  // background: linear-gradient(90deg, #1d6fa3, #65fdf0);
+  background-image: url("../../assets/image/my-bg.jpeg");
+  background-position: center center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,7 +161,7 @@ export default {
   }
   .item {
     width: 90%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     margin-bottom: 10px;
     padding: 40px 10px;
@@ -168,7 +170,7 @@ export default {
       font-size: 16px;
       text-align: center;
       margin-bottom: 10px;
-      color: #fff;
+      // color: #fff;
     }
     .img {
       width: 100%;
