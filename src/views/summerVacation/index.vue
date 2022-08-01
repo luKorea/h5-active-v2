@@ -2,7 +2,7 @@
  * @Author: korealu 643949593@qq.com
  * @Date: 2022-07-06 10:38:33
  * @LastEditors: korealu 643949593@qq.com
- * @LastEditTime: 2022-07-20 18:13:13
+ * @LastEditTime: 2022-08-01 10:49:40
  * @FilePath: /h5-active-v2/src/views/summerVacation/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,7 +22,7 @@
     ></info-fixed>
     <page-info-component @goAnchor="goAnchor"></page-info-component>
     <!-- item选项吸顶 -->
-    <template v-if="selectList && selectList.length > 0">
+    <!-- <template v-if="selectList && selectList.length > 0">
       <div class="select-wrap">
         <div
           class="select-item"
@@ -34,37 +34,37 @@
           {{ item.name }}
         </div>
       </div>
-    </template>
+    </template> -->
     <!-- 功能订阅 -->
-    <page-fun-buy-component
+    <!-- <page-fun-buy-component
       ref="one"
       @handleLoginDialog="showLoginDialog = true"
       @handlePayDialog="handleChangePayModal"
       @showText="showText"
       @showRule="showRule"
       :page-config="pageConfig"
-    ></page-fun-buy-component>
+    ></page-fun-buy-component> -->
     <!-- 充值P币 -->
-    <page-pay-info-component
+    <!-- <page-pay-info-component
       ref="two"
       :page-config="pageConfig"
       @handlePayDialog="handleChangePayModal"
       @handleLoginDialog="showLoginDialog = true"
       @showText="showText"
       @showRule="showRule"
-    ></page-pay-info-component>
+    ></page-pay-info-component> -->
     <!-- 实体人偶 -->
-    <page-even-component
+    <!-- <page-even-component
       ref="three"
       @showEven="showEvenDialog = true"
-    ></page-even-component>
+    ></page-even-component> -->
     <!-- pose半价 -->
-    <page-pose-component
+    <!-- <page-pose-component
       ref="four"
       @getData="getPageConfig"
       @handleLoginDialog="showLoginDialog = true"
       :state="awardState"
-    ></page-pose-component>
+    ></page-pose-component> -->
     <!-- 打卡活动区域 -->
     <div class="wrap-content">
       <img :src="punchCardImg" alt="" referrerpolicy="no-referrer" />
@@ -132,10 +132,10 @@ import ruleModal from "./common/modal/rule.vue";
 import infoModal from "./common/modal/info.vue";
 
 import pageInfoComponent from "./component/function-desc.vue";
-import pageFunBuyComponent from "./component/function-buy.vue";
-import pagePayInfoComponent from "./component/pay-info.vue";
-import pageEvenComponent from "./component/even.vue";
-import pagePoseComponent from "./component/pose.vue";
+// import pageFunBuyComponent from "./component/function-buy.vue";
+// import pagePayInfoComponent from "./component/pay-info.vue";
+// import pageEvenComponent from "./component/even.vue";
+// import pagePoseComponent from "./component/pose.vue";
 import pageLotteryComponent from "./component/lottery.vue";
 
 import localCache from "@/utils/cache";
@@ -164,10 +164,10 @@ export default {
     ruleModal,
     infoModal,
     pageInfoComponent,
-    pageFunBuyComponent,
-    pagePayInfoComponent,
-    pageEvenComponent,
-    pagePoseComponent,
+    // pageFunBuyComponent,
+    // pagePayInfoComponent,
+    // pageEvenComponent,
+    // pagePoseComponent,
     pageLotteryComponent,
     logout,
     loginAndRegister,
@@ -211,13 +211,13 @@ export default {
   mounted() {
     document.title = "Pofi 暑假爆肝计划";
     this.activeIsState = reduceEndTime(this.endTime);
-    if (this.activeIsState) {
-      Dialog.confirm({
-        message: "活动已结束",
-        showCancelButton: false,
-        showConfirmButton: false,
-      });
-    }
+    // if (this.activeIsState) {
+    //   Dialog.confirm({
+    //     message: "活动已结束",
+    //     showCancelButton: false,
+    //     showConfirmButton: false,
+    //   });
+    // }
     const state = this.$route.query.state;
     if (state && state === "success") {
       this.$nextTick(() => {
